@@ -3,7 +3,7 @@
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
-import keys from 'keys'; // hidden keys in gitignore
+import keys from './keys'; // hidden keys in gitignore
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
@@ -31,9 +31,9 @@ var plus = google.plus('v1');
 
 // Client ID and client secret are available at
 // https://code.google.com/apis/console
-var CLIENT_ID = keys.GOOGLE_CLIENT_ID;
-var CLIENT_SECRET = keys.GOOGLE_CLIENT_SECRET;
-var REDIRECT_URL = 'http://localhost:3000/auth/google/callback';
+const CLIENT_ID = keys.GOOGLE_CLIENT_ID;
+const CLIENT_SECRET = keys.GOOGLE_CLIENT_SECRET;
+const REDIRECT_URL = 'http://localhost:3000/auth/google/callback';
 
 var oauth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
@@ -42,38 +42,27 @@ var rl = readline.createInterface({
   output: process.stdout
 });
 
-function getAccessToken (oauth2Client, callback) {
-  // generate consent page url
-  var url = oauth2Client.generateAuthUrl({
-    access_type: 'offline', // will return a refresh token
-    scope: 'https://www.googleapis.com/auth/plus.me' // can be a space-delimited string or an array of scopes
-  });
-
-  console.log('Visit the url: ', url);
-  rl.question('Enter the code here:', function (code) {
-    // request access token
-    oauth2Client.getToken(code, function (err, tokens) {
-      if (err) {
-        return callback(err);
-      }
-      // set tokens to the client
-      // TODO: tokens should be set by OAuth2 client.
-      oauth2Client.setCredentials(tokens);
-      callback();
-    });
-  });
-}
-
-// retrieve an access token
-getAccessToken(oauth2Client, function () {
-  // retrieve user profile
-  plus.people.get({ userId: 'me', auth: oauth2Client }, function (err, profile) {
-    if (err) {
-      return console.log('An error occured', err);
-    }
-    console.log(profile.displayName, ':', profile.tagline);
-  });
-});
+// function getAccessToken (oauth2Client, callback) {
+//   // generate consent page url
+//   var url = oauth2Client.generateAuthUrl({
+//     access_type: 'offline', // will return a refresh token
+//     scope: 'https://www.googleapis.com/auth/plus.me' // can be a space-delimited string or an array of scopes
+//   });
+//
+//   console.log('Visit the url: ', url);
+//   rl.question('Enter the code here:', function (code) {
+//     // request access token
+//     oauth2Client.getToken(code, function (err, tokens) {
+//       if (err) {
+//         return callback(err);
+//       }
+//       // set tokens to the client
+//       // TODO: tokens should be set by OAuth2 client.
+//       oauth2Client.setCredentials(tokens);
+//       callback();
+//     });
+//   });
+// }
 
 // Configure view engine to render EJS templates.
 
@@ -87,6 +76,30 @@ app.use(require('express-session')({ secret: keys.sessionSecret, resave: true, s
 app.use(passport.initialize());
 
 app.use(passport.session());
+
+passport.use(new GoogleStrategy({
+    clientID: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    callbackURL: callbackURL
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, (err, user) => {
+      oauth2Client.setCredentials(tokens);
+      return cb(err, user);
+    });
+  }
+));
+
+// retrieve an access token
+getAccessToken(oauth2Client, function () {
+  // retrieve user profile
+  plus.people.get({ userId: 'me', auth: oauth2Client }, function (err, profile) {
+    if (err) {
+      return console.log('An error occured', err);
+    }
+    console.log(profile.displayName, ':', profile.tagline);
+  });
+});
 
 // Define routes.
 
