@@ -3,9 +3,24 @@
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
+// import Gmail from 'node-gmail-api';
 import keys from './keys'; // hidden keys in gitignore
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
+
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
+
+/* Connect to database */
+mongoose.connect("mongodb://localhost/meanmail");
+
+var userSchema = new Schema({
+  googleId: String
+});
+
+const User = mongoose.model("User", userSchema);
 
 const app = express();
 const port = 3000;
@@ -29,9 +44,45 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ googleId: profile.id }, (err, user) => {
-      return cb(err, user);
+    // var gmail = new Gmail(accessToken);
+    // var s = gmail.messages('label:INBOX', {max: 10});
+    var Gmail = require('node-gmail-api'), gmail = new Gmail(accessToken), s = gmail.messages('label:inbox', {max: 10});
+    console.log(accessToken);
+    // console.log(profile);
+    // console.log(s);
+    s.on('data', function (d) {
+      console.log(d.snippet);
     });
+    User.findOne({
+            'googleId': profile.id
+        }, (err, user) => {
+            if (err) {
+                return cb(err);
+            }
+            // user not found. create
+            if (!user) {
+                user = new User({
+                    googleId: profile.id,
+                    emails: s
+                });
+                user.save((err) => {
+                    if (err) console.log(err);
+                    return cb(err, user);
+                });
+            } else {
+                //found user. Return
+                user.emails = s;
+                user.save((err) => {
+                    if (err) console.log(err);
+                    return cb(err, user);
+                });
+                // console.log(s.snippet);
+                // s.on('data', function (d) {
+                //   console.log(d.snippet);
+                // });
+                return cb(err, user);
+            }
+        });
   }
 ));
 
@@ -42,6 +93,11 @@ app.get('/',
     res.render('home', { user: req.user });
   });
 
+  // app.get('/fail',
+  //   (req, res) => {
+  //     res.render('fail');
+  //   });
+
 app.get('/login',
   (req, res) =>{
     res.render('login');
@@ -51,7 +107,7 @@ app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] }));
 
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect home.
     res.redirect('/');
