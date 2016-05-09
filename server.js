@@ -13,6 +13,8 @@ const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
+var a = 0;
+
 /* Connect to database */
 mongoose.connect("mongodb://localhost/meanmail");
 
