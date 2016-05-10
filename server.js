@@ -10,6 +10,10 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 
+let emails = {};
+
+let emailParsed = {};
+
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
@@ -27,8 +31,10 @@ const port = 3000;
 
 // Configure view engine to render EJS templates.
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
+// app.set('views', __dirname + '/views');
+// app.set('view engine', 'html');
 
 app.use(require('express-session')({ secret: keys.sessionSecret, resave: true, saveUninitialized: true }));
 
@@ -45,12 +51,13 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     const gmail = new Gmail(accessToken);
-    let s = gmail.messages('label:INBOX', {max: 10});
+    emails = gmail.messages('label:INBOX', {max: 10});
     console.log(accessToken);
     // console.log(profile);
     // console.log(s);
-    s.on('data', function (d) {
-      console.log(d.snippet);
+    emails.on('data', function (d) {
+      console.log(d);
+      emailParsed = d.snippet;
     });
 
     User.findOne({
@@ -71,7 +78,7 @@ passport.use(new GoogleStrategy({
                 });
             } else {
                 //found user. Return
-                user.emails = s;
+                user.emails = emails;
                 user.save((err) => {
                     if (err) console.log(err);
                     return cb(err, user);
@@ -90,39 +97,46 @@ passport.use(new GoogleStrategy({
 
 app.get('/',
   (req, res) => {
-    res.render('home', { user: req.user });
+    res.render('index', { user: req.user });
   });
 
-app.get('/home',
+app.get('/email',
   (req, res) => {
-    res.render('home', { user: req.user });
+
+    res.send(emails);
+
   });
+
+// app.get('/home',
+//   (req, res) => {
+//     res.render('home', { user: req.user });
+//   });
 
   // app.get('/fail',
   //   (req, res) => {
   //     res.render('fail');
   //   });
 
-app.get('/login',
-  (req, res) =>{
-    res.render('login');
-  });
+// app.get('/login',
+//   (req, res) =>{
+//     res.render('login');
+//   });
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', SCOPES] }));
 
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/home' }),
+  passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect home.
-    res.redirect('/profile');
+    res.redirect('/');
   });
 
-app.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
-  (req, res) => {
-    res.render('profile', { user: req.user });
-  });
+// app.get('/profile',
+//   require('connect-ensure-login').ensureLoggedIn(),
+//   (req, res) => {
+//     res.render('profile', { user: req.user });
+//   });
 
 // serialize / deserialize for passport
 // (only used with session, automatically set as next step from passport.use)
