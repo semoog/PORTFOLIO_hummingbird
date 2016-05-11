@@ -50,9 +50,9 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-let accToken = '';
-let refToken = '';
-let userProfile = {};
+let accToken;
+let refToken;
+let userProfile;
 
 passport.use(new GoogleStrategy({
     clientID: keys.GOOGLE_CLIENT_ID,
@@ -65,7 +65,7 @@ passport.use(new GoogleStrategy({
     refToken = refreshToken;
     userProfile = profile;
 
-    emailParsed = mail.getMail(accToken, refToken, userProfile); // MOVE TO GETMAIL FOR QUERY LABELS??
+    emailParsed = mail.getMail(accToken, refToken, userProfile); // MOVE TO GETMAIL FOR QUERY LABELS
 
     User.findOne({
             'googleId': profile.id
@@ -92,8 +92,6 @@ passport.use(new GoogleStrategy({
 
 // Define routes.
 
-var emptyArr = [];
-
 app.get('/',
   (req, res) => {
     res.render('index', { user: req.user });
@@ -101,6 +99,8 @@ app.get('/',
 
 app.get('/getmail',
   (req, res) => {
+    console.log("getting mail");
+    emailParsed = mail.getMail(accToken, refToken, userProfile);
     res.send(emailParsed);
   });
 
