@@ -13,16 +13,7 @@ module.exports = {
     let emails;
 
     let gmail = new Gmail(accessToken);
-    emails = gmail.messages('label:INBOX', {max: 3});
-
-    // promises (and they still feel oh so wasted on myself)
-
-    
-    emails.on('data',(d) => {
-    //   debugger;
-      emailParsed.mails.push(d);
-      // console.log(d);
-    });
+    emails = gmail.messages('label:INBOX', {max: 50});
 
     function getHeader(headers, index) {
         var header = '';
@@ -35,15 +26,34 @@ module.exports = {
         return header;
     }
 
-    // Sort messages by date in descending order
-    emailParsed.mails.sort(function(a, b) {
-        var d1 = new Date(getHeader(emailParsed.data.mails.payload.headers, 'Date')).valueOf();
-        var d2 = new Date(getHeader(emailParsed.data.mails.payload.headers, 'Date')).valueOf();
-        return d1 < d2 ? 1 : (d1 > d2 ? -1 : 0);
+
+    // PROMISES (and they still feel oh so wasted on myself)
+
+    return new Promise(function(resolve, reject) {
+
+      var count = 0; // REPLACE COUNT WITH ACTUAL DONE STATEMENT REGARDLESS OF MAILBOX SIZE
+
+      emails.on('data',(d) => {
+      //   debugger;
+        emailParsed.mails.push(d);
+        count++;
+        console.log(count);
+        // console.log(d);
+        if (count === 50) {
+          console.log(emailParsed);
+          resolve(emailParsed);
+        }
+      });
+
+      // Sort messages by date in descending order
+      emailParsed.mails.sort(function(a, b) {
+          var d1 = new Date(getHeader(emailParsed.data.mails.payload.headers, 'Date')).valueOf();
+          var d2 = new Date(getHeader(emailParsed.data.mails.payload.headers, 'Date')).valueOf();
+          return d1 < d2 ? 1 : (d1 > d2 ? -1 : 0);
+      });
+
     });
 
-    console.log(emailParsed);
-
-    return emailParsed; // RETURN PROMISE AND RESOLVE AFTER EMAILS ARE DONE BEING PUSHED
+    // return emailParsed; // RETURN PROMISE AND RESOLVE AFTER EMAILS ARE DONE BEING PUSHED
   }
 };

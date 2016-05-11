@@ -122,8 +122,7 @@ angular.module("meanmail").controller("masterCtrl", ($scope, $http) => {
         });
     };
 
-        setTimeout(function () {
-          $scope.getMail();
-        }, 1000);
+    $scope.getMail();
+
 
 });

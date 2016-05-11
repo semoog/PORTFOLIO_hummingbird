@@ -6,16 +6,14 @@ import passport from 'passport';
 import Gmail from 'node-gmail-api';
 import keys from './keys';
 var mail = require('./mailController');
+import async from 'asyncawait/async';
+import await from 'asyncawait/await';
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 
 let emails = {};
-
-let emailParsed = {
-  mails: []
-};
 
 let user = {};
 
@@ -65,7 +63,7 @@ passport.use(new GoogleStrategy({
     refToken = refreshToken;
     userProfile = profile;
 
-    emailParsed = mail.getMail(accToken, refToken, userProfile); // MOVE TO GETMAIL FOR QUERY LABELS
+    // emailParsed = mail.getMail(accToken, refToken, userProfile); // MOVE TO GETMAIL FOR QUERY LABELS
 
     User.findOne({
             'googleId': profile.id
@@ -98,11 +96,13 @@ app.get('/',
   });
 
 app.get('/getmail',
-  (req, res) => {
+  async (function (req, res){
     console.log("getting mail");
-    emailParsed = mail.getMail(accToken, refToken, userProfile);
+
+    let emailParsed = await(mail.getMail(accToken, refToken, userProfile));
+
     res.send(emailParsed);
-  });
+  }));
 
 // app.get('/login',
 //   (req, res) =>{
