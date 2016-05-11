@@ -4,7 +4,8 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import Gmail from 'node-gmail-api';
-import keys from './keys'; // hidden keys in gitignore
+import keys from './keys';
+var mail = require('./mailController');
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
@@ -12,12 +13,17 @@ const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 
 let emails = {};
 
-let emailParsed = {};
+let emailParsed = {
+  mails: []
+};
+
+let user = {};
 
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-/* Connect to database */
+// Connect to database
+
 mongoose.connect("mongodb://localhost/meanmail");
 
 var userSchema = new Schema({
@@ -38,11 +44,15 @@ app.use(express.static('public'));
 
 app.use(require('express-session')({ secret: keys.sessionSecret, resave: true, saveUninitialized: true }));
 
-// passport facebook init
+// passport init
 
 app.use(passport.initialize());
 
 app.use(passport.session());
+
+let accToken = '';
+let refToken = '';
+let userProfile = {};
 
 passport.use(new GoogleStrategy({
     clientID: keys.GOOGLE_CLIENT_ID,
@@ -50,15 +60,12 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
-    const gmail = new Gmail(accessToken);
-    emails = gmail.messages('label:INBOX', {max: 10});
-    console.log(accessToken);
-    // console.log(profile);
-    // console.log(s);
-    emails.on('data', function (d) {
-      console.log(d);
-      emailParsed = d.snippet;
-    });
+
+    accToken = accessToken;
+    refToken = refreshToken;
+    userProfile = profile;
+
+    emailParsed = mail.getMail(accToken, refToken, userProfile); // MOVE TO GETMAIL FOR QUERY LABELS??
 
     User.findOne({
             'googleId': profile.id
@@ -69,53 +76,33 @@ passport.use(new GoogleStrategy({
             // user not found. create
             if (!user) {
                 user = new User({
-                    googleId: profile.id,
-                    emails: s
+                    googleId: profile.id
                 });
                 user.save((err) => {
                     if (err) console.log(err);
                     return cb(err, user);
                 });
             } else {
-                //found user. Return
-                user.emails = emails;
-                user.save((err) => {
-                    if (err) console.log(err);
-                    return cb(err, user);
-                });
-                // console.log(s.snippet);
-                // s.on('data', function (d) {
-                //   console.log(d.snippet);
-                // });
                 return cb(err, user);
             }
         });
+
   }
 ));
 
 // Define routes.
+
+var emptyArr = [];
 
 app.get('/',
   (req, res) => {
     res.render('index', { user: req.user });
   });
 
-app.get('/email',
+app.get('/getmail',
   (req, res) => {
-
-    res.send(emails);
-
+    res.send(emailParsed);
   });
-
-// app.get('/home',
-//   (req, res) => {
-//     res.render('home', { user: req.user });
-//   });
-
-  // app.get('/fail',
-  //   (req, res) => {
-  //     res.render('fail');
-  //   });
 
 // app.get('/login',
 //   (req, res) =>{
@@ -129,6 +116,7 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect home.
+    console.log("Successfully Authenticated.");
     res.redirect('/');
   });
 

@@ -1,10 +1,12 @@
 var GoogleAPIMailClient = window.GoogleAPIMailClient || (function() {
 
-  
+
 
       var clientId,
           apiKey,
-          scopes = 'https://www.googleapis.com/auth/gmail.readonly',
+          scopes =
+          'https://www.googleapis.com/auth/gmail.readonly '+
+          'https://www.googleapis.com/auth/gmail.send',
           Messages = {};
 
       function config(config) {
@@ -43,6 +45,7 @@ var GoogleAPIMailClient = window.GoogleAPIMailClient || (function() {
               $authorizeBtn.off();
               $authorizeBtn.remove();
               $('.table-inbox').removeClass('hidden');
+              $('#compose-button').removeClass("hidden");
 
           } else {
 
@@ -59,7 +62,7 @@ var GoogleAPIMailClient = window.GoogleAPIMailClient || (function() {
           var request = gapi.client.gmail.users.messages.list({
               userId: 'me',
               labelIds: 'INBOX',
-              maxResults: 100
+              maxResults: 25
           });
 
           request.execute(function(response) {
@@ -154,6 +157,54 @@ var GoogleAPIMailClient = window.GoogleAPIMailClient || (function() {
           }
           return '';
       }
+
+      function composeTidy() {
+
+        $('#compose-modal').modal('hide');
+
+        $('#compose-to').val('');
+        $('#compose-subject').val('');
+        $('#compose-message').val('');
+
+        $('#send-button').removeClass('disabled');
+      }
+
+      function sendMessage(headers_obj, message, callback) {
+
+        var email = '';
+
+        for(var header in headers_obj)
+          email += header += ": "+headers_obj[header]+"\r\n";
+
+        email += "\r\n" + message;
+
+        var sendRequest = gapi.client.gmail.users.messages.send({
+          'userId': 'me',
+          'resource': {
+            'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
+          }
+        });
+
+        return sendRequest.execute(callback);
+      }
+
+      window.sendEmail = function sendEmail() {
+
+        $('#send-button').addClass('disabled');
+
+        sendMessage(
+          {
+            'To': $('#compose-to').val(),
+            'Subject': $('#compose-subject').val()
+          },
+          $('#compose-message').val(),
+          composeTidy
+        );
+
+        return false;
+      };
+
+      // $('#compose-modal').on('submit', sendEmail);
 
       // Initialize UI events
       function init() {
