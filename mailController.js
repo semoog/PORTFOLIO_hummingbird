@@ -6,14 +6,21 @@ module.exports = {
 
     getMail: (accessToken, refreshToken, profile) => {
 
-    let emailParsed = {
+    const emailParsed = {
       mails: []
     };
 
-    let emails = {};
+    let emails;
 
-    const gmail = new Gmail(accessToken);
-    emails = gmail.messages('label:INBOX', {max: 50});
+    let gmail = new Gmail(accessToken);
+    emails = gmail.messages('label:INBOX', {max: 3});
+
+
+    emails.on('data',(d) => {
+    //   debugger;
+      emailParsed.mails.push(d);
+      // console.log(d);
+    });
 
     function getHeader(headers, index) {
         var header = '';
@@ -26,18 +33,15 @@ module.exports = {
         return header;
     }
 
-
-    emails.on('data',(d) => {
-      emailParsed.mails.push(d);
-    });
-
     // Sort messages by date in descending order
     emailParsed.mails.sort(function(a, b) {
-        var d1 = new Date(getHeader(emailParsed.mails.payload.headers, 'Date')).valueOf();
-        var d2 = new Date(getHeader(emailParsed.mails.payload.headers, 'Date')).valueOf();
+        var d1 = new Date(getHeader(emailParsed.data.mails.payload.headers, 'Date')).valueOf();
+        var d2 = new Date(getHeader(emailParsed.data.mails.payload.headers, 'Date')).valueOf();
         return d1 < d2 ? 1 : (d1 > d2 ? -1 : 0);
     });
 
-    return emailParsed;
+    console.log(emailParsed);
+
+    return emailParsed; // RETURN PROMISE AND RESOLVE AFTER EMAILS ARE DONE BEING PUSHED
   }
 };

@@ -112,8 +112,8 @@ angular.module("meanmail").controller("masterCtrl", ($scope, $http) => {
 
 
 
-            $(".first").append(parsedMail.emails[4].html);
-            $(".second").append(parsedMail.emails[5].html);
+            // $(".first").append(parsedMail.emails[4].html);
+            // $(".second").append(parsedMail.emails[5].html);
 
             $scope.mails = parsedMail.emails;
 
@@ -122,6 +122,8 @@ angular.module("meanmail").controller("masterCtrl", ($scope, $http) => {
         });
     };
 
-        $scope.getMail();
+        setTimeout(function () {
+          $scope.getMail();
+        }, 1000);
 
 });
