@@ -15,7 +15,9 @@ module.exports = {
     let gmail = new Gmail(accessToken);
     emails = gmail.messages('label:INBOX', {max: 3});
 
+    // promises (and they still feel oh so wasted on myself)
 
+    
     emails.on('data',(d) => {
     //   debugger;
       emailParsed.mails.push(d);
