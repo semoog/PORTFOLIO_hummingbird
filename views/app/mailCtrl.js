@@ -10,8 +10,8 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
             url: 'http://localhost:3000/getmail/' + label
         }).then((response) => {
 
-          // $('.tbody').remove();
-          // $('.table inbox').append("<tbody class='tbody'></tbody>");
+            // $('.tbody').remove();
+            // $('.table inbox').append("<tbody class='tbody'></tbody>");
 
             console.log(response);
 
@@ -45,70 +45,24 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
 
                     if (response.data.mails[i].payload.parts[0].hasOwnProperty("parts")) {
 
-                        // parsedMail.emails[i].part = response.data.mails[i].payload.parts[0].parts.filter((part) => {
-                        //   if (part.mimeType === 'text/html') {
-                        //     // parsedMail.emails[i].htmlPart =
-                        //     console.log("parsedMail index", i, " found text/html P/P");
-                        //     return part.mimeType == 'text/html';
-                        //   }
-                        //   else if (part.mimeType === 'multipart/related') {
-                        //     console.log("parsedMail index", i, " is multipart/related P/P");
-                        //   }
-                        //   else {
-                        //     console.log("parsedMail index", i, " is NOT text/html P/P");
-                        //     parsedMail.emails[i].part = response.data.mails[i].payload.parts[1].parts.filter((part) => {
-                        //       console.log("within filter");
-                        //       if (part.mimeType === 'text/html') {
-                        //         // parsedMail.emails[i].htmlPart =
-                        //         console.log("parsedMail index", i, " found text/html WITHIN PART 1");
-                        //         return part.mimeType == 'text/html';
-                        //       }
-                        //     });
-                        //   }
-                        //
-                        // });
-
                         if (_.find(response.data.mails[i].payload.parts, ['mimeType', 'multipart/related'])) {
-                          mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[1].parts, ['mimeType', 'text/html']);
-                        }
-                        else {
-                          mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'text/html']);
+                            mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[1].parts, ['mimeType', 'text/html']);
+                        } else {
+                            mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'text/html']);
                         }
                         console.log(i, mimetypeObj[i]);
 
-                        // parsedMail.emails[i].html = atob(parsedMail.emails[i].part[0].body.data.replace(/-/g, '+').replace(/_/g, '/'));
                         parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/'));
-
-                        // parsedMail.emails[i].html = atob(parsedMail.emails[i].part[0].body.data.replace(/-/g, '+').replace(/_/g, '/'));
 
                     }
 
                     // PARTS
                     else {
 
-                        // parsedMail.emails[i].part = response.data.mails[i].payload.parts.filter((part) => {
-                        //   if (part.mimeType === 'text/html') {
-                        //     console.log("parsedMail index", i, " found text/html P");
-                        //     return part.mimeType == 'text/html';
-                        //   }
-                        //   else if (part.mimeType === 'multipart/related') {
-                        //     console.log("parsedMail index", i, " is multipart/related P");
-                        //     parsedMail.emails[i].part = response.data.mails[i].payload.parts[1].parts.filter((part) => {
-                        //       return part.mimeType == 'text/html';
-                        //       console.log("found html");
-                        //     });
-                        //   }
-                        //   else {
-                        //     console.log("parsedMail index", i, " is NOT text/html P");
-                        //   }
-                        // });
-
-
                         if (_.find(response.data.mails[i].payload.parts, ['mimeType', 'multipart/related'])) {
-                          mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[1].parts, ['mimeType', 'text/html']);
-                        }
-                        else {
-                          mimetypeObj[i] = _.find(response.data.mails[i].payload.parts, ['mimeType', 'text/html']);
+                            mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[1].parts, ['mimeType', 'text/html']);
+                        } else {
+                            mimetypeObj[i] = _.find(response.data.mails[i].payload.parts, ['mimeType', 'text/html']);
                         }
                         console.log(i, mimetypeObj[i]);
 
@@ -187,27 +141,27 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
             return response;
         });
     };
-          $scope.getMail('INBOX');
+    $scope.getMail('INBOX');
 
-          $('.main-table tbody').on('click', 'tr.message-link', function(e) {
-              var index, title, iframe, messageBody;
+    $('.main-table tbody').on('click', 'tr.message-link', function(e) {
+        var index, title, iframe, messageBody;
 
-              index = $(this).attr('id');
+        index = $(this).attr('id');
 
-              console.log("index: ", index);
+        console.log("index: ", index);
 
-              title = emails[index].subject;
-              $('#myModalTitle').text(title);
+        title = emails[index].subject;
+        $('#myModalTitle').text(title);
 
-              iframe = $('#message-iframe')[0].contentWindow.document;
-              // The message body goes to the iframe's content
-              messageBody = emails[index].html;
-              $('body', iframe).html(messageBody);
+        iframe = $('#message-iframe')[0].contentWindow.document;
+        // The message body goes to the iframe's content
+        messageBody = emails[index].html;
+        $('body', iframe).html(messageBody);
 
-              console.log("opening mail id ", e, index);
-              // Show the modal window
-              $('#message-modal').modal('show');
+        console.log("opening mail id ", e, index);
+        // Show the modal window
+        $('#message-modal').modal('show');
 
-          });
+    });
 
-  });
+});
