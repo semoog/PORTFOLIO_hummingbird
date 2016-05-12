@@ -6,43 +6,14 @@
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <style>
-      /*body {
-        background: #111111;
-      }*/
-      iframe {
-        width: 100%;
-        border: 0;
-        min-height: 80%;
-        height: 600px;
-        display: flex;
-      }
-      .nowrap {
-        white-space: nowrap;
-      }
-    </style>
+    <link rel="stylesheet" href="/css/master.css" media="screen" title="no title" charset="utf-8">
   </head>
-  <body ng-controller="masterCtrl">
+  <body ng-controller="mailCtrl">
     <div class="container">
-      <h1><a href="http://localhost:3000/auth/google">Login</a></h1>
 
-      <!-- <button id="authorize-button" class="btn btn-primary" onclick="parent.location='auth/google'">Authorize</button> -->
+      <div class='loading'></div>
 
-      <!-- <ul class="mails" ng-repeat="mail in mails">
-            <li><a href="#">{{mail.subject}}</a></li>
-      </ul>
-
-      <div class="first">
-
-      </div>
-
-      <hr />
-
-      <div class="second">
-
-      </div> -->
-
-      <table class="table table-striped table-bordered table-inbox">
+      <!-- <table class="table table-striped table-bordered table-inbox">
         <thead>
           <tr>
             <th>From</th>
@@ -54,7 +25,7 @@
              class="btn btn-primary pull-right hidden">Compose</a>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody class="tbody"></tbody>
       </table>
     </div>
 
@@ -104,10 +75,10 @@
             </div>
           </form>
         </div>
-      </div>
+      </div> -->
     </div>
 
-    <script id="row-template" type="x-tmpl-mustache">
+    <!-- <script id="row-template" type="x-tmpl-mustache">
       <tr>
         <td>{{from}}</td>
         <td>
@@ -117,7 +88,7 @@
         </td>
         <td class="nowrap">{{date}}</td>
       </tr>
-    </script>
+    </script> -->
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js" charset="utf-8"></script>
@@ -125,11 +96,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.min.js" type="text/javascript"></script>
-
-    <!-- <script src="bower_components/mustache/mustache.min.js"></script> -->
-    <script src="app.js"></script>
-    <script src="masterCtrl.js" charset="utf-8"></script>
-    <!-- <script src="main.js"></script> -->
+    <script src="app/app.js"></script>
+    <script src="app/masterCtrl.js" charset="utf-8"></script>
+    <script src="app/mailCtrl.js" charset="utf-8"></script>
     <script src="config.js"></script>
     <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
   </body>

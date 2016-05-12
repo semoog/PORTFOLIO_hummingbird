@@ -1,12 +1,15 @@
 /* jshint esversion: 6 */
 
-angular.module("meanmail").controller("masterCtrl", ($scope, $http) => {
+angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
 
-    $scope.getMail = () => {
+    $scope.getMail = (label) => {
         return $http({
             method: 'GET',
-            url: 'http://localhost:3000/getmail'
+            url: 'http://localhost:3000/getmail/' + label
         }).then((response) => {
+
+          // $('.tbody').remove();
+          // $('.table inbox').append("<tbody class='tbody'></tbody>");
 
             console.log(response);
 
@@ -75,16 +78,16 @@ angular.module("meanmail").controller("masterCtrl", ($scope, $http) => {
             function processMessage(message) {
 
                 var row = $('#row-template').html();
-                var sender = message.to;
+                var sender = message.from;
                 var subject = message.subject;
                 var date = message.date.toLocaleString();
                 // Remove the email address, leave only sender's name
-                // var from = sender.replace(/<\S+@\S+\.\S{2,8}>/g, '').replace(/"+/g, '');
-                //
-                // from = from.trim() || sender;
+                var from = message.from.replace(/<\S+@\S+\.\S{2,8}>/g, '').replace(/"+/g, '');
+
+                from = from.trim() || sender;
 
                 var renderedRow = Mustache.render(row, {
-                    // from: from,
+                    from: from,
                     subject: subject,
                     messageId: message.id,
                     date: date
@@ -122,7 +125,6 @@ angular.module("meanmail").controller("masterCtrl", ($scope, $http) => {
         });
     };
 
-    $scope.getMail();
+          $scope.getMail('INBOX');
 
-
-});
+  });

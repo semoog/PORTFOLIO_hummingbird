@@ -4,7 +4,9 @@ import Gmail from 'node-gmail-api';
 
 module.exports = {
 
-    getMail: (accessToken, refreshToken, profile) => {
+    getMail: (accessToken, refreshToken, profile, req) => {
+
+      console.log(req.params.label);
 
     const emailParsed = {
       mails: []
@@ -13,7 +15,7 @@ module.exports = {
     let emails;
 
     let gmail = new Gmail(accessToken);
-    emails = gmail.messages('label:INBOX', {max: 50});
+    emails = gmail.messages(('label:'+String(req.params.label)), {max: 50});
 
     function getHeader(headers, index) {
         var header = '';
