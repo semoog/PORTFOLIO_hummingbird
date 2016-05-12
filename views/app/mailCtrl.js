@@ -113,28 +113,6 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
                 $('.main-table').removeClass('hidden');
             }
 
-            // var extractField = function(json, fieldName) {
-            //   return json.data.payload.headers.filter(function(header) {
-            //     return header.name === fieldName;
-            //   })[0].value;
-            // };
-            //
-            // var date = extractField(response, "Date");
-            // var subject = extractField(response, "Subject");
-            //
-            //   var part = response.data.payload.parts.filter(function(part) {
-            //     return part.mimeType == 'text/html';
-            //   });
-            //
-            //   var html = atob(part[0].body.data.replace(/-/g, '+').replace(/_/g, '/'));
-
-
-
-
-
-            // $(".first").append(parsedMail.emails[4].html);
-            // $(".second").append(parsedMail.emails[5].html);
-
             $scope.mails = parsedMail.emails;
 
 

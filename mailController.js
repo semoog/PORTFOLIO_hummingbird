@@ -39,10 +39,7 @@ module.exports = {
       //   debugger;
         emailParsed.mails.push(d);
         count++;
-        // console.log(count);
-        // console.log(d);
         if (count === 50) {
-          // console.log(emailParsed);
           resolve(emailParsed);
         }
       });
@@ -56,6 +53,5 @@ module.exports = {
 
     });
 
-    // return emailParsed; // RETURN PROMISE AND RESOLVE AFTER EMAILS ARE DONE BEING PUSHED
   }
 };
