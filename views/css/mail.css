@@ -16,6 +16,11 @@ iframe {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.message-link {
+  width: 400px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 body {
   background-color: #3e94ec;
@@ -64,8 +69,10 @@ div.table-title {
 }
 
 th {
-  color:#D5DDE5;;
-  background:#1b1e24;
+  /*color:#D5DDE5;*/
+  color: #fff;
+  /*background:#1b1e24;*/
+  background: #EA4335;
   border-bottom:4px solid #9ea7af;
   border-right: 1px solid #343a45;
   font-size:22px;
@@ -74,6 +81,7 @@ th {
   text-align:left;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   vertical-align:middle;
+  /*width: 1000px;*/
 }
 
 th:first-child {
@@ -92,6 +100,9 @@ tr {
   font-size:16px;
   font-weight:normal;
   text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+  /*width: 400px;*/
+  /*white-space: nowrap;*/
+  text-overflow: ellipsis;
 }
 
 tr:hover td {
@@ -134,6 +145,7 @@ td {
   font-size:18px;
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
   border-right: 1px solid #C1C3D1;
+  text-overflow: ellipsis;
 }
 
 td:last-child {

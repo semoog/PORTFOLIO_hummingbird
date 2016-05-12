@@ -9,12 +9,17 @@ iframe {
   white-space: nowrap;
 }
 
-//FONT IMPORT
+/*FONT IMPORT*/
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,900);
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
 
 body {
   font-family: 'Raleway', sans-serif;
 }
+
+/*.logo {
+  font-family: 'Pacifico', helvetica, sans-serif;
+}*/
 
 .background {
   position: absolute;
@@ -25,7 +30,8 @@ body {
   background-color: #3e94ec;
 }
 
-h1 {
+.logo {
+  font-family: 'Pacifico', helvetica, sans-serif;
   position: relative;
   text-align: center;
   z-index: 3;
@@ -33,6 +39,18 @@ h1 {
   margin-top: 120px;
   font-size: 50px;
   padding: 0 10%;
+  /*background: #6EAFF1;*/
+}
+
+.icon {
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+  z-index: 999;
+}
+
+.btncolor {
+  background: #EA4335;
 }
 
 h2 {
@@ -53,5 +71,6 @@ strong {
   position: absolute;
   width: 100%;
   margin: auto;
+  margin-top: 100px;
   text-align: center;
 }

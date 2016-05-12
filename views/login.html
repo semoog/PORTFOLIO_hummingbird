@@ -5,17 +5,27 @@
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/login.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body ng-controller="masterCtrl">
 
     <i class="background"></i>
-    <h1><strong>nodeMail</strong></h1>
-    <h2>Pure <strong>email</strong> using only one client</h2>
+    <h1 class="logo">hummingbird</h1>
+    <h2>A <strong>light</strong> email client</h2>
+
+    <!-- <div class="icon">
+      <img src="src/hummingbird.svg" alt="hummingbird logo" height="200px" width="200px"/>
+    </div> -->
+
+    <div class="icon" style="width:10em;height:5em">
+      <object data="src/hummingbird.svg" type="image/svg+xml" height="100%" width="100%"></object>
+    </div>
+
 
     <div class="button">
-      <button id="authorize-button" class="btn btn-primary" ng-click="login()">Authorize</button>
+      <button id="authorize-button" class="btn btn-danger btncolor" ng-click="login()">Authorize with Google</button>
     </div>
 
 
