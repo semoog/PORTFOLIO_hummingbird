@@ -1,0 +1,57 @@
+iframe {
+  width: 100%;
+  border: 0;
+  min-height: 80%;
+  height: 600px;
+  display: flex;
+}
+.nowrap {
+  white-space: nowrap;
+}
+
+//FONT IMPORT
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,900);
+
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #F1646C;
+}
+
+h1 {
+  position: relative;
+  text-align: center;
+  z-index: 3;
+  color: #ffffff;
+  margin-top: 120px;
+  font-size: 50px;
+  padding: 0 10%;
+}
+
+h2 {
+  position: relative;
+  text-align: center;
+  z-index: 3;
+  color: #ffffff;
+  margin-top: 20px;
+  font-size: 32px;
+  padding: 0 10%;
+}
+
+strong {
+  font-weight: 900;
+}
+
+.button {
+  position: absolute;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
