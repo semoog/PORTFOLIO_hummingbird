@@ -2,7 +2,7 @@
 
 angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
 
-    var emails;
+    let emails;
 
     $scope.getMail = (label) => {
         return $http({
@@ -15,19 +15,19 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
 
             console.log(response);
 
-            var parsedMail = {
+            const parsedMail = {
                 emails: []
             };
 
-            var mimetypeObj = [];
+            const mimetypeObj = [];
 
-            var extractField = (json, fieldName) => {
+            const extractField = (json, fieldName) => {
                 return json.payload.headers.filter((header) => {
                     return header.name === fieldName;
                 })[0].value;
             };
 
-            for (var i = 0; i < response.data.mails.length; i++) {
+            for (let i = 0; i < response.data.mails.length; i++) {
 
                 parsedMail.emails.push({});
 
@@ -52,7 +52,7 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
                         }
                         console.log(i, mimetypeObj[i]);
 
-                        parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/'));
+                        parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/')).replace(/&#39;/, ' ');
 
                     }
 
@@ -66,8 +66,7 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
                         }
                         console.log(i, mimetypeObj[i]);
 
-                        // parsedMail.emails[i].html = atob(parsedMail.emails[i].part[0].body.data.replace(/-/g, '+').replace(/_/g, '/'));
-                        parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/'));
+                        parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/')).replace(/&#39;/, ' ');
 
                     }
                 }
@@ -75,8 +74,7 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
                 // NO PARTS JUST BODY
                 else {
 
-                    parsedMail.emails[i].html = atob(response.data.mails[i].payload.body.data.replace(/-/g, '+').replace(/_/g, '/'));
-
+                    parsedMail.emails[i].html = atob(response.data.mails[i].payload.body.data.replace(/-/g, '+').replace(/_/g, '/')).replace(/&#39;/, ' ');
 
                 }
 
@@ -85,21 +83,23 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
                 emails[i].index = i;
             }
 
+
+
             function processMessage(message) {
 
-                var row = $('#row-template').html();
-                var sender = message.from;
-                var subject = message.subject;
-                var dateRaw = new Date(message.date);
-                var date = moment(dateRaw).calendar();
-                var snippet = message.snippet;
-                var index = message.index;
+                let row = $('#row-template').html();
+                let sender = message.from;
+                let subject = message.subject;
+                let dateRaw = new Date(message.date);
+                let date = moment(dateRaw).calendar();
+                let snippet = message.snippet;
+                let index = message.index;
                 // Remove the email address, leave only sender's name
-                var from = message.from.replace(/<\S+@\S+\.\S{2,8}>/g, '').replace(/"+/g, '');
+                let from = message.from.replace(/<\S+@\S+\.\S{2,8}>/g, '').replace(/"+/g, '');
 
                 from = from.trim() || sender;
 
-                var renderedRow = Mustache.render(row, {
+                const renderedRow = Mustache.render(row, {
                     from: from,
                     subject: subject,
                     snippet: snippet,
@@ -119,10 +119,13 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
             return response;
         });
     };
+
+
+
     $scope.getMail('INBOX');
 
     $('.main-table tbody').on('click', 'tr.message-link', function(e) {
-        var index, title, iframe, messageBody;
+        let index, title, iframe, messageBody;
 
         index = $(this).attr('id');
 

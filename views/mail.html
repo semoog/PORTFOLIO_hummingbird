@@ -6,7 +6,7 @@
 
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="/css/master.css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/mail.css" media="screen" title="no title" charset="utf-8">
     </head>
     <body ng-controller="mailCtrl">
         <div class="container">
@@ -16,7 +16,7 @@
             <button ng-click="getMail('SPAM')">Spam</button>
             <button ng-click="getMail('INBOX')">Inbox</button>
 
-            <table class="table-fill main-table hidden nocursor">
+            <table class="table-fill main-table nocursor">
                 <thead>
                     <tr>
                         <th class="text-left">From</th>
@@ -78,7 +78,7 @@
 
             <script id="row-template" type="x-tmpl-mustache">
                 <tr class="message-link" data-toggle="modal" id="{{index}}">
-                    <td class="nowrap text-left">{{from}}{{index}}</td>
+                    <td class="nowrap text-left">{{from}}</td>
                     <td class="nowrap text-left"><a>{{subject}}</a>--{{snippet}}</td>
                     <td class="nowrap text-left">{{date}}</td>
                 </tr>
