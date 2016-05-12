@@ -39,10 +39,10 @@ module.exports = {
       //   debugger;
         emailParsed.mails.push(d);
         count++;
-        console.log(count);
+        // console.log(count);
         // console.log(d);
         if (count === 50) {
-          console.log(emailParsed);
+          // console.log(emailParsed);
           resolve(emailParsed);
         }
       });

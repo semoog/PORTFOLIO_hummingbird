@@ -3,22 +3,9 @@
 angular.module("meanmail").controller("masterCtrl", ($scope, $http) => {
 
     $scope.login = () => {
-        // return $http({
-        //     method: 'GET',
-        //     url: 'http://localhost:3000/auth/google'
-        // }).then((response) => {
 
-          // window.location.replace("http://localhost:3000/auth/google");
           $(location).attr('href', 'http://localhost:3000/auth/google');
 
-          // if (response && !response.error) {
-          //
-          //     $authorizeBtn.off();
-          //     $authorizeBtn.remove();
-          //     $('.table-inbox').removeClass('hidden');
-          //     $('#compose-button').removeClass("hidden");
-          //
-          // }
       };
 
       // Initialize UI events

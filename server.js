@@ -108,6 +108,11 @@ passport.use(new GoogleStrategy({
 
 // Define routes.
 
+app.get('/',
+  (req, res) => {
+    res.redirect('/mail');
+  });
+
 app.get('/login',
   (req, res) => {
     res.render('login');
