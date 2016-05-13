@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
 
-angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
+angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
     let emails;
 
@@ -122,17 +122,24 @@ angular.module("meanmail").controller("mailCtrl", ($scope, $http) => {
 
 
 
-    $scope.getMail('INBOX');
+    // setTimeout(function () {
+      $scope.getMail('INBOX');
+    // }, 5000);
 
     $('.main-table tbody').on('click', 'tr.message-link', function(e) {
-        let index, title, iframe, messageBody;
+        let index, title, sender, date, iframe, messageBody;
 
         index = $(this).attr('id');
 
         console.log("index: ", index);
 
         title = emails[index].subject;
-        $('#myModalTitle').text(title);
+        sender = emails[index].from;
+        date = moment(emails[index].date).calendar();
+
+        $('#modalTitle').text(title);
+        $('#modalSender').text(sender);
+        $('#modalDate').text(date);
 
         iframe = $('#message-iframe')[0].contentWindow.document;
         // The message body goes to the iframe's content

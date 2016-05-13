@@ -106,6 +106,18 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+function ensureAuthenticated(req, res, next) {
+  console.log("checking auth...");
+  if (req.isAuthenticated()) {
+    console.log("authentication good");
+    return next();
+  }
+  else {
+    console.log("bad auth. redirecting to login?");
+    res.redirect('/#/login'); // NOT!
+  }
+}
+
 // Define routes.
 
 app.get('/',
@@ -113,29 +125,25 @@ app.get('/',
     res.redirect('/mail');
   });
 
+
 app.get('/login',
   (req, res) => {
-    res.render('login');
+    res.redirect('/#/login');
   });
 
 app.get('/mail',
-  require('connect-ensure-login').ensureLoggedIn(),
+  ensureAuthenticated,
   (req, res) => {
-    res.render('mail', { user: req.user });
+    console.log("redirecting to mail");
+    res.redirect('/#/mail', { user: req.user });
   });
 
 app.get('/getmail/:label',
-  require('connect-ensure-login').ensureLoggedIn(),
+  ensureAuthenticated,
   async (function (req, res){
     console.log("getting mail");
-    if (accToken) {
       let emailParsed = await(mail.getMail(accToken, refToken, userProfile, req));
       res.send(emailParsed);
-    }
-    else {
-      res.sendStatus(401);
-    }
-
   }));
 
 // Google Authentication Routes
@@ -148,7 +156,7 @@ app.get('/auth/google/callback',
   (req, res) => {
     // Successful authentication, redirect home.
     console.log("Successfully Authenticated.");
-    res.redirect('/mail');
+    res.redirect('/#/mail');
   });
 
 // serialize / deserialize for passport

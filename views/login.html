@@ -1,15 +1,6 @@
-<!doctype html>
-<html ng-app="meanmail">
-  <head>
-    <title>Gmail API semo</title>
-    <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
     <link rel="stylesheet" href="/css/login.css" media="screen" title="no title" charset="utf-8">
-  </head>
-  <body ng-controller="masterCtrl">
 
     <i class="background"></i>
     <h1 class="logo">hummingbird</h1>
@@ -19,24 +10,12 @@
       <img src="src/hummingbird.svg" alt="hummingbird logo" height="200px" width="200px"/>
     </div> -->
 
-    <div class="icon" style="width:10em;height:5em">
-      <object data="src/hummingbird.svg" type="image/svg+xml" height="100%" width="100%"></object>
+    <div class="hummingbird-icon">
+      <!-- <object data="src/hummingbird.svg" type="image/svg+xml" height="100%" width="100%"></object> -->
+      <img src="src/hummingbird.png" alt="hummingbird" />
     </div>
 
 
     <div class="button">
       <button id="authorize-button" class="btn btn-danger btncolor" ng-click="login()">Authorize with Google</button>
     </div>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js" charset="utf-8"></script>
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.min.js" type="text/javascript"></script>
-    <script src="app/app.js"></script>
-    <script src="app/masterCtrl.js" charset="utf-8"></script>
-    <script src="config.js"></script>
-    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
-  </body>
-</html>
