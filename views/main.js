@@ -77,7 +77,7 @@ var GoogleAPIMailClient = window.GoogleAPIMailClient || (function() {
                   // Since Google api is asyncronous, we need to wrap all server responses in a Promise.all()
                   var promise = $.Deferred();
                   promises.push(promise);
-
+                  
                   messageRequest.execute(function(message) {
                       // Save the message in a collection
                       Messages[message.id] = message;

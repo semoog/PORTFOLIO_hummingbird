@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
 
-angular.module("meanmail").controller("masterCtrl", ($scope, $http) => {
+angular.module("meanmail").controller("masterCtrl", function ($scope, $http) {
 
     $scope.login = () => {
 
