@@ -2,6 +2,12 @@
 
 angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
+
+      $(document).on('click', '.nav li', function() {
+         $(".nav li").removeClass("active");
+         $(this).addClass("active");
+     });
+
     let emails;
 
     $scope.getMail = (label) => {

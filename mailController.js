@@ -33,16 +33,24 @@ module.exports = {
 
     return new Promise(function(resolve, reject) {
 
+      // console.log(emails);
+
       var count = 0; // REPLACE COUNT WITH ACTUAL DONE STATEMENT REGARDLESS OF MAILBOX SIZE
 
       emails.on('data',(d) => {
       //   debugger;
+        console.log("NEW MAIL * : ", d);
         emailParsed.mails.push(d);
         count++;
-        if (count === 50) {
+        if (count === 50) { // fuck.
+          console.log("resolving.");
           resolve(emailParsed);
         }
       });
+      // .then(res => {
+      //   console.log("resolving.");
+      //   resolve(emailParsed);
+      // });
 
       // Sort messages by date in descending order
       emailParsed.mails.sort(function(a, b) {
