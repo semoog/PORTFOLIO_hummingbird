@@ -4,7 +4,8 @@ angular.module("meanmail").controller("masterCtrl", function ($scope, $http) {
 
     $scope.login = () => {
 
-          $(location).attr('href', 'http://localhost:3000/auth/google');
+          // $(location).attr('href', 'http://localhost:3000/auth/google');
+          window.top.location.href = '/auth/google';
 
       };
 

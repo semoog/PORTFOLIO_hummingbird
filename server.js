@@ -39,7 +39,8 @@ const Schema = mongoose.Schema;
 mongoose.connect("mongodb://localhost/meanmail");
 
 var userSchema = new Schema({
-  googleId: String
+  googleId: String,
+  name: String
 });
 
 const User = mongoose.model("User", userSchema);
@@ -71,11 +72,13 @@ let user = {};
 passport.use(new GoogleStrategy({
     clientID: keys.GOOGLE_CLIENT_ID,
     clientSecret: keys.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
 
     // Store token locally for access later
+
+    console.log(profile);
 
     accToken = accessToken;
     refToken = refreshToken;
@@ -83,16 +86,15 @@ passport.use(new GoogleStrategy({
 
     // Check for or add user to database
 
-    User.findOne({
-            'googleId': profile.id
-        }, (err, user) => {
+    User.findOne({'googleId': profile.id}, (err, user) => {
             if (err) {
                 return cb(err);
             }
             // user not found. create
             if (!user) {
                 user = new User({
-                    googleId: profile.id
+                    googleId: profile.id,
+                    name: profile.displayName
                 });
                 user.save((err) => {
                     if (err) console.log(err);

@@ -1,16 +1,32 @@
-
-        <link rel="stylesheet" href="/css/mail.css" media="screen" title="no title" charset="utf-8">
-
+<div class="mailContainer">
         <h1 class="logo">hummingbird</h1>
 
-        <button ng-click="getMail('SPAM')">Spam</button>
-        <button ng-click="getMail('INBOX')">Inbox</button>
+        <!-- <button ng-click="getMail('SPAM')">Spam</button> -->
+        <!-- <button ng-click="getMail('INBOX')">Inbox</button> -->
+
+          <!-- <div class="col-sm-3 col-md-1 mailNav">
+              <a href="#" class="btn btn-danger btn-sm btn-block" role="button"><i class="glyphicon glyphicon-edit"></i> Compose</a>
+              <hr>
+              <ul class="nav nav-pills nav-stacked">
+                  <li class="active" ng-click="getMail('INBOX')"><a href=""><span class="badge pull-right">32</span> Inbox </a>
+                  </li>
+                  <li><a href="">Starred</a></li>
+                  <li><a href="">Important</a></li>
+                  <li ng-click="getMail('SPAM')"><a href="">Spam</a></li>
+                  <li><a href="">Sent Mail</a></li>
+                  <li><a href=""><span class="badge pull-right">3</span>Drafts</a></li>
+              </ul>
+          </div> -->
 
         <div class="container">
 
-            <div class="loading"></div>
+            <!-- <div class="loading"></div> -->
 
-            <table class="table-fill main-table nocursor" width="60%">
+            <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+            </svg>
+
+            <table class="table-fill main-table nocursor" width="100%">
                 <thead>
                     <tr>
                         <th class="text-left">From</th>
@@ -20,6 +36,11 @@
                 </thead>
                 <tbody class="table-hover">
                 </tbody>
+                <tfoot class="footer">
+                  <tr class="footer">
+
+                  </tr>
+                </tfoot>
             </table>
 
             <div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle">
@@ -27,7 +48,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true" style="color: white">&times;</span>
                             </button>
                             <h4 class="modal-title" id="modalTitle"></h4>
                             <h6 class="modal-title" id="modalSender"></h6>
@@ -80,3 +101,4 @@
                     <td class="text-left">{{date}}</td>
                 </tr>
             </script>
+</div>
