@@ -189,6 +189,10 @@ body {
     border-right: 1px solid #C1C3D1;
     overflow: hidden;
     /*text-overflow: ellipsis;*/ }
+  .mailContainer .tbody {
+    display: block;
+    height: calc(50vh - 1px);
+    min-height: calc(200px + 1 px); }
   .mailContainer .content:after {
     content: "";
     pointer-events: none;

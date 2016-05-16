@@ -163,6 +163,11 @@
         overflow: hidden;
         /*text-overflow: ellipsis;*/
     }
+    .tbody {
+      display: block;
+      height: calc(50vh - 1px);
+      min-height: calc(200px + 1 px);
+    }
     /*FADE*/
     .content:after {
         content: "";
