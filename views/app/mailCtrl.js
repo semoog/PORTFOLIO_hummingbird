@@ -2,6 +2,10 @@
 
 angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
+      // $(document).ready(function() {
+      //   $('.main-table').dynatable();
+      // });
+
 
       $(document).on('click', '.nav li', function() {
          $(".nav li").removeClass("active");
@@ -47,11 +51,28 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
                 if (response.data.mails[i].payload.hasOwnProperty("parts")) {
 
+
+
                     // PARTS WITHIN PARTS
 
                     if (response.data.mails[i].payload.parts[0].hasOwnProperty("parts")) {
 
-                        if (_.find(response.data.mails[i].payload.parts, ['mimeType', 'multipart/related'])) {
+                      // PARTS WITHIN PARTS WITHIN PARTS??
+
+                      if (response.data.mails[i].payload.parts[0].parts[0].hasOwnProperty("parts")) {
+
+                          if (_.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'multipart/related'])) {
+                              mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[1].parts[1].parts, ['mimeType', 'text/html']);
+                          } else {
+                              mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts[0].parts, ['mimeType', 'text/html']);
+                          }
+                          console.log(i, mimetypeObj[i]);
+
+                          parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/')).replace(/&#39;/, ' ');
+
+                      }
+
+                        else if (_.find(response.data.mails[i].payload.parts, ['mimeType', 'multipart/related'])) {
                             mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[1].parts, ['mimeType', 'text/html']);
                         } else {
                             mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'text/html']);
@@ -100,6 +121,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
                 let date = moment(dateRaw).calendar();
                 let snippet = message.snippet;
                 let index = message.index;
+                $scope.curIndex = message.index;
                 // Remove the email address, leave only sender's name
                 let from = message.from.replace(/<\S+@\S+\.\S{2,8}>/g, '').replace(/"+/g, '');
 
@@ -115,13 +137,24 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
                 // REFRESH TABLE??
                 $('.main-table tbody').append(renderedRow);
-                $('.loading').hide();
+                $('.spinner').hide();
                 $('.main-table').removeClass('hidden');
             }
 
             $scope.mails = parsedMail.emails;
 
-
+            // $('.main-table').dynatable({
+            //   table: {
+            //     copyHeaderClass: true
+            //   }
+            // });
+            // var count = -1;
+            // $('tr').each(function(){
+            //   $(this).addClass('message-link');
+            //   $(this).attr('id', count);
+            //   count++;
+            //   // console.log(index);
+            // }); // FIX
             return response;
         });
     };
