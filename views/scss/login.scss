@@ -2,9 +2,12 @@
 @import url(https://fonts.googleapis.com/css?family=Pacifico);
 @import 'variables';
 
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 body {
   // font-family: 'Raleway', sans-serif;
   background-color: $darkGray;
+  color: $white;
   font-family: "Roboto", helvetica, arial, sans-serif;
   font-size: 16px;
   font-weight: 400;

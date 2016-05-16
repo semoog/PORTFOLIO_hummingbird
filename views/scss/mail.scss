@@ -1,5 +1,73 @@
 @import 'variables';
+
 .mailContainer {
+
+    iframe {
+        width: 100%;
+        border: 0;
+        min-height: 80%;
+        height: 75vh;
+        display: flex;
+    }
+    .container {
+        width: 768px; //pixel value
+        height: 60vh;
+        // position: absolute;
+        overflow: scroll;
+        margin-top: 60px;
+        // left: 0;
+        // margin-left: 20px;
+    }
+    .mailbox {
+      height: 160px;
+      //display: block; == default
+      // width: 50vw;
+      background: $lightGray;
+      color: $black;
+      border-bottom: 1px solid $seperator;
+      padding: 20px;
+      padding-left: 20px;
+      cursor: default;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mailbox:last-child {
+      border-bottom: 0px;
+    }
+
+    .mailbox .snippet {
+      overflow: hidden;
+    }
+
+    .mail {
+      overflow: hidden;
+    }
+
+    .mail .date, .snippet {
+      color: $medGray;
+    }
+
+    .unread-badge {
+      width: 10px;
+      height: 10px;
+      background: $bleu;
+      border-radius: 40%;
+      margin-right: 5px;
+    }
+
+    .important-badge {
+      width: 10px;
+      height: 10px;
+      background: $googleRed;
+      border-radius: 40%;
+      margin-right: 5px;
+    }
+
+    uib-pagination {
+      margin: 0 auto;
+    }
+
     .logo {
         font-family: 'Pacifico', helvetica, sans-serif;
         position: relative;
@@ -35,20 +103,6 @@
         height: 128px;
         margin-top: 20px;
     }
-    iframe {
-        width: 100%;
-        border: 0;
-        min-height: 80%;
-        height: 75vh;
-        display: flex;
-    }
-    .container {
-        width: 100vw;
-        height: 80vh;
-        overflow: scroll;
-        margin-top: 60px;
-        // margin-left: 20px;
-    }
     .footer {
       height: 20px;
       background: $ebony;
@@ -56,11 +110,6 @@
     }
     .nowrap {
         white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-    .message-link {
-        width: 100vw;
-        /*white-space: nowrap;*/
         text-overflow: ellipsis;
     }
     .nocursor {
@@ -126,8 +175,8 @@
     tr:hover td {
         background: #4E5066;
         color: #FFFFFF;
-        border-top: 1px solid $darkPurple;
-        border-bottom: 1px solid $darkPurple;
+        // border-top: 1px solid $darkPurple;
+        // border-bottom: 1px solid $darkPurple;
     }
     tr:hover a {
         color: $white;
