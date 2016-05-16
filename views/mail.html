@@ -1,10 +1,10 @@
 <div class="mailContainer">
-        <h1 class="logo">hummingbird</h1>
+    <h1 class="logo">hummingbird</h1>
 
-        <!-- <button ng-click="getMail('SPAM')">Spam</button> -->
-        <!-- <button ng-click="getMail('INBOX')">Inbox</button> -->
+    <!-- <button ng-click="getMail('SPAM')">Spam</button> -->
+    <!-- <button ng-click="getMail('INBOX')">Inbox</button> -->
 
-          <!-- <div class="col-sm-3 col-md-1 mailNav">
+    <!-- <div class="col-sm-3 col-md-1 mailNav">
               <a href="#" class="btn btn-danger btn-sm btn-block" role="button"><i class="glyphicon glyphicon-edit"></i> Compose</a>
               <hr>
               <ul class="nav nav-pills nav-stacked">
@@ -18,87 +18,118 @@
               </ul>
           </div> -->
 
-        <div class="container">
+    <div class="container">
 
-            <!-- <div class="loading"></div> -->
+        <!-- <div class="loading"></div> -->
 
-            <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-            </svg>
+        <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+        </svg>
 
-            <table class="table-fill main-table nocursor" width="100%">
-                <thead>
-                    <tr>
-                        <th class="text-left">From</th>
-                        <th class="text-left">Subject</th>
-                        <th class="text-left">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="table-hover">
-                </tbody>
-                <tfoot class="footer">
-                  <tr class="footer">
+        <!-- <table class="nocursor">
+              <tr class="message-link" data-toggle="modal" id="{{index}}" ng-repeat="mail in mails.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+                <td>{{mail.from}}</td>
+                <td>{{mail.subject}}</td>
+              </tr>
+            </table> -->
 
-                  </tr>
-                </tfoot>
-            </table>
+        <div class="mailbox" ng-repeat="mail in mails.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
 
-            <div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true" style="color: white">&times;</span>
-                            </button>
-                            <h4 class="modal-title" id="modalTitle"></h4>
-                            <h6 class="modal-title" id="modalSender"></h6>
-                            <h6 class="modal-title" id="modalDate"></h6>
-                        </div>
+            <div class="unread-badge pull-left" ng-show="{{mail.unread}}"></div>
+            <div class="important-badge pull-left" ng-show="{{mail.important}}"></div>
+
+            <div class="message-link mail" data-toggle="modal" id="{{mail.index}}">
+
+                <div class="pull-right date">
+                    {{mail.date}}
+                </div>
+
+                <strong>{{mail.sender}}</strong><br/>
+
+                <div class="subject">
+                    <strong>{{mail.subject}}</strong>
+                </div>
+                <br/>
+
+                <div class="snippet">
+                    {{mail.snippet}}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" style="color: white">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalTitle"></h4>
+                        <h6 class="modal-title" id="modalSender"></h6>
+                        <h6 class="modal-title" id="modalDate"></h6>
+                    </div>
+                    <div class="modal-body">
+                        <iframe id="message-iframe" srcdoc="<p>Loading...</p>"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Compose</h4>
+                    </div>
+                    <form onsubmit="return sendEmail();">
                         <div class="modal-body">
-                            <iframe id="message-iframe" srcdoc="<p>Loading...</p>"></iframe>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="compose-to" placeholder="To" required/>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="compose-subject" placeholder="Subject" required/>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea class="form-control" id="compose-message" placeholder="Message" rows="10" required></textarea>
+                            </div>
                         </div>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" id="send-button" class="btn btn-primary">Send</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
 
-            <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title">Compose</h4>
-                        </div>
-                        <form onsubmit="return sendEmail();">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="compose-to" placeholder="To" required/>
-                                </div>
+    </div>
 
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="compose-subject" placeholder="Subject" required/>
-                                </div>
+    View
+    <select ng-model="viewby" ng-change="setItemsPerPage(viewby)">
+        <option>3</option>
+        <option>5</option>
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+    </select>
+    records at a time.
 
-                                <div class="form-group">
-                                    <textarea class="form-control" id="compose-message" placeholder="Message" rows="10" required></textarea>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" id="send-button" class="btn btn-primary">Send</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></uib-pagination>
 
-          </div>
-            <script id="row-template" type="x-tmpl-mustache">
-                <tr class="message-link" data-toggle="modal" id="{{index}}">
-                    <td class="text-left">{{from}}</td>
-                    <td class="content text-left"><a>{{subject}}</a>    {{snippet}}</td>
-                    <td class="text-left">{{date}}</td>
-                </tr>
-            </script>
+    <script id="row-template" type="x-tmpl-mustache">
+        <tr class="message-link" data-toggle="modal" id="{{index}}">
+            <td class="text-left">{{from}}</td>
+            <td class="content text-left">
+                <a>{{subject}}</a>
+                {{snippet}}</td>
+            <td class="text-left">{{date}}</td>
+        </tr>
+    </script>
 </div>

@@ -1,7 +1,11 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 @import url(https://fonts.googleapis.com/css?family=Pacifico);
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer; }
+
 body {
   background-color: #1D1F20;
+  color: #fff;
   font-family: "Roboto", helvetica, arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -65,6 +69,49 @@ body {
 .mailContainer {
   /*** Table Styles **/
   /*FADE*/ }
+  .mailContainer iframe {
+    width: 100%;
+    border: 0;
+    min-height: 80%;
+    height: 75vh;
+    display: flex; }
+  .mailContainer .container {
+    width: 768px;
+    height: 60vh;
+    overflow: scroll;
+    margin-top: 60px; }
+  .mailContainer .mailbox {
+    height: 160px;
+    background: #EBEBEB;
+    color: #000;
+    border-bottom: 1px solid #C1C3D1;
+    padding: 20px;
+    padding-left: 20px;
+    cursor: default;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+  .mailContainer .mailbox:last-child {
+    border-bottom: 0px; }
+  .mailContainer .mailbox .snippet {
+    overflow: hidden; }
+  .mailContainer .mail {
+    overflow: hidden; }
+  .mailContainer .mail .date, .mailContainer .snippet {
+    color: #555555; }
+  .mailContainer .unread-badge {
+    width: 10px;
+    height: 10px;
+    background: #3E94EC;
+    border-radius: 40%;
+    margin-right: 5px; }
+  .mailContainer .important-badge {
+    width: 10px;
+    height: 10px;
+    background: #EA4335;
+    border-radius: 40%;
+    margin-right: 5px; }
+  .mailContainer uib-pagination {
+    margin: 0 auto; }
   .mailContainer .logo {
     font-family: 'Pacifico', helvetica, sans-serif;
     position: relative;
@@ -91,27 +138,12 @@ body {
     width: 128px;
     height: 128px;
     margin-top: 20px; }
-  .mailContainer iframe {
-    width: 100%;
-    border: 0;
-    min-height: 80%;
-    height: 75vh;
-    display: flex; }
-  .mailContainer .container {
-    width: 100vw;
-    height: 80vh;
-    overflow: scroll;
-    margin-top: 60px; }
   .mailContainer .footer {
     height: 20px;
     background: #343436;
     border-top: 2px solid #555555; }
   .mailContainer .nowrap {
     white-space: nowrap;
-    text-overflow: ellipsis; }
-  .mailContainer .message-link {
-    width: 100vw;
-    /*white-space: nowrap;*/
     text-overflow: ellipsis; }
   .mailContainer .nocursor {
     cursor: default; }
@@ -160,9 +192,7 @@ body {
     text-overflow: ellipsis; }
   .mailContainer tr:hover td {
     background: #4E5066;
-    color: #FFFFFF;
-    border-top: 1px solid #22262e;
-    border-bottom: 1px solid #22262e; }
+    color: #FFFFFF; }
   .mailContainer tr:hover a {
     color: #fff; }
   .mailContainer tr:first-child {

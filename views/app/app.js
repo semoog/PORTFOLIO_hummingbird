@@ -1,4 +1,4 @@
-angular.module('meanmail', ['ui.router'])
+angular.module('meanmail', ['ui.bootstrap', 'ui.router'])
 .config(function($stateProvider, $urlRouterProvider) {
 
    $stateProvider
