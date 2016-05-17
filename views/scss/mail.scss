@@ -79,6 +79,10 @@
       overflow: hidden;
     }
 
+    .mail-container--mailbox:hover {
+      background: $seperator;
+    }
+
     .mailbox--mail .date, .snippet {
       color: $medGray;
     }
