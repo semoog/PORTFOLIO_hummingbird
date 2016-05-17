@@ -4,19 +4,35 @@
 
 angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
-      // $(document).ready(function() {
-      //   $('.main-table').dynatable();
-      // });
+    // INIT
 
+    // $(document).ready(function() {
+    //   $('.message-link').slick();
+    // });
 
-    //   $(document).on('click', '.nav li', function() {
-    //      $(".nav li").removeClass("active");
-    //      $(this).addClass("active");
-    //  });
+    $( ".scroll-helper" ).hide();
+
+    $(document).on('click', '.icon-container', function() {
+       $(".icon-container").removeClass("active");
+       $(this).addClass("active");
+    });
+
+    var scrolled = false;
+
+    $(".mail-container").scroll(function() {
+      console.log("scrolled");
+      scrolled = true;
+    });
+
+    $(".mail-container").scroll(function() {
+      $( ".scroll-helper" ).fadeOut('slow');
+    });
 
     $scope.emails = {};
 
     $scope.mails = {};
+
+    // FETCH
 
     $scope.getMail = (label) => {
         return $http({
@@ -27,7 +43,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
             // $('.tbody').remove();
             // $('.table inbox').append("<tbody class='tbody'></tbody>");
 
-            // console.log(response);
+            console.log(response);
 
             const parsedMail = {
                 emails: []
@@ -78,11 +94,14 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
                     if (response.data.mails[i].payload.parts[0].hasOwnProperty("parts")) {
 
+                      console.log("parts/parts", i);
+
                       // PARTS WITHIN PARTS WITHIN PARTS??
 
                       if (response.data.mails[i].payload.parts[0].parts[0].hasOwnProperty("parts")) {
 
                           if (_.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'multipart/related'])) {
+                              console.log("parts/parts/parts/multipart", i);
                               mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[1].parts[1].parts, ['mimeType', 'text/html']);
                           } else {
                               mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts[0].parts, ['mimeType', 'text/html']);
@@ -93,14 +112,16 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
                       }
 
-                        else if (_.find(response.data.mails[i].payload.parts, ['mimeType', 'multipart/related'])) {
-                            mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[1].parts, ['mimeType', 'text/html']);
-                        } else {
-                            mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'text/html']);
-                        }
-                        // console.log(i, mimetypeObj[i]);
+                      else if (_.find(response.data.mails[i].payload.parts, ['mimeType', 'multipart/related'])) {
+                        console.log("parts/parts/multi", i);
+                          mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'text/html']);
+                      } else {
+                          console.log("parts/parts/else", i);
+                          mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'text/html']);
+                      }
+                      // console.log(i, mimetypeObj[i]);
 
-                        parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/')).replace(/&#39;/, ' ');
+                      parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/')).replace(/&#39;/, ' ');
 
                     }
 
@@ -158,28 +179,14 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
                 // REFRESH TABLE??
                 $('.main-table tbody').append(renderedRow);
-                $('.spinner').hide();
+                $('.load').hide();
                 $('.main-table').removeClass('hidden');
             }
 
             $scope.mails = parsedMail.emails;
-            // $('.mailbox').append("<div class='mail' ng-repeat='mail in emails'>{{mail.subject}}</div>");
 
-            // $('.main-table').dynatable({
-            //   table: {
-            //     copyHeaderClass: true
-            //   }
-            // });
-            // var count = -1;
-            // $('tr').each(function(){
-            //   $(this).addClass('message-link');
-            //   $(this).attr('id', count);
-            //   count++;
-            //   // console.log(index);
-            // }); // FIX
             console.log($scope.mails);
-            // $apply();
-            $scope.viewby = 10;
+            $scope.viewby = 50;
             console.log("Mail length: ", $scope.mails.length);
             $scope.totalItems = $scope.mails.length;
             $scope.currentPage = 1;
@@ -198,15 +205,18 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
               $scope.itemsPerPage = num;
               $scope.currentPage = 1; //reset to first page
             };
+            setTimeout(function () {
+              if (scrolled === false) {
+                  $( ".scroll-helper" ).fadeIn('slow');
+              }
+            }, 10000);
             return response;
         });
     };
 
-    // setTimeout(function () {
-      $scope.getMail('INBOX');
-    // }, 5000);
+    $scope.getMail('INBOX');
 
-    $('.container').on('click', 'div.message-link', function(e) {
+    $('.mail-container').on('click', 'div.message-link', function(e) {
         let index, title, sender, date, iframe, messageBody;
 
         index = $(this).attr('id');

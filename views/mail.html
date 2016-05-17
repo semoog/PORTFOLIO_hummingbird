@@ -1,5 +1,4 @@
-<div class="mailContainer">
-    <h1 class="logo">hummingbird</h1>
+<div class="app-container">
 
     <!-- <button ng-click="getMail('SPAM')">Spam</button> -->
     <!-- <button ng-click="getMail('INBOX')">Inbox</button> -->
@@ -18,42 +17,99 @@
               </ul>
           </div> -->
 
-    <div class="container">
+          <div class="app-bar">
+            <h1 class="logo">hummingbird</h1>
+          </div>
+
+          <div class="side-bar pull-right">
+
+          </div>
+
+          <div class="nav-bar pull-left">
+            <div class="icon-container active">
+              <img class="icon" src="src/inbox.svg" alt="" />
+            </div>
+            <div class="icon-container">
+              <img class="icon" src="src/spam.svg" alt="" />
+            </div>
+          </div>
+
+          <svg class="scroll-helper" version="1.1" width="80px" height="80px" viewBox="30.5 -9.5 554 813" enable-background="new 30.5 -9.5 554 813" xml:space="preserve">
+              <path d="M328,0h-44C271.68,0,42,5.28,42,242v308c0,9.9,3.96,242,242,242h44c13.86,0,242-6.16,242-242V242C570,232.1,566.04,0,328,0z
+               M526,550c0,191.62-177.76,198-198,198h-44C92.38,748,86,570.24,86,550V242C86,50.82,263.54,44,284,44h44
+               c191.62,0,198,177.76,198,198V550z"/>
+              <circle cx="306" cy="231" r="45"/>
+          </svg>
+
+          <div class="footer-bar">
+
+            <!-- View
+            <select ng-model="viewby" ng-change="setItemsPerPage(viewby)">
+                <option>3</option>
+                <option>5</option>
+                <option>10</option>
+                <option>20</option>
+                <option>50</option>
+            </select>
+            records at a time.
+
+            <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></uib-pagination> -->
+
+
+          </div>
+
+    <div class="mail-container">
 
         <!-- <div class="loading"></div> -->
 
-        <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-        </svg>
+        <div class='load'>
+          <div class='load1'></div>
+          <div class='load2'></div>
+          <div class='load3'></div>
+          <div class='load4'></div>
+        </div>
 
-        <!-- <table class="nocursor">
-              <tr class="message-link" data-toggle="modal" id="{{index}}" ng-repeat="mail in mails.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-                <td>{{mail.from}}</td>
-                <td>{{mail.subject}}</td>
-              </tr>
-            </table> -->
-
-        <div class="mailbox" ng-repeat="mail in mails.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+        <div class="mail-container--mailbox" ng-repeat="mail in mails.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
 
             <div class="unread-badge pull-left" ng-show="{{mail.unread}}"></div>
             <div class="important-badge pull-left" ng-show="{{mail.important}}"></div>
 
-            <div class="message-link mail" data-toggle="modal" id="{{mail.index}}">
+            <div class="message-link mailbox--mail" data-toggle="modal" id="{{mail.index}}">
 
-                <div class="pull-right date">
-                    {{mail.date}}
+                <div>
+                  <div class="pull-right date">
+                      {{mail.date}}
+                  </div>
+
+                  <strong>{{mail.sender}}</strong><br/>
+
+                  <div class="subject">
+                      <strong>{{mail.subject}}</strong>
+                  </div>
+                  <br/>
+
+                  <div class="snippet">
+                      {{mail.snippet}}
+                  </div>
                 </div>
 
-                <strong>{{mail.sender}}</strong><br/>
+                <!-- <div>
+                  <div class="pull-right date">
+                      {{mail.date}}asdasd
+                  </div>
 
-                <div class="subject">
-                    <strong>{{mail.subject}}</strong>
-                </div>
-                <br/>
+                  <strong>{{mail.sender}}asd</strong><br/>
 
-                <div class="snippet">
-                    {{mail.snippet}}
-                </div>
+                  <div class="subject">
+                      <strong>{{mail.subject}}</strong>asd
+                  </div>
+                  <br/>
+
+                  <div class="snippet">
+                      {{mail.snippet}}asd
+                  </div>
+                </div> -->
+
 
             </div>
 
@@ -111,17 +167,9 @@
 
     </div>
 
-    View
-    <select ng-model="viewby" ng-change="setItemsPerPage(viewby)">
-        <option>3</option>
-        <option>5</option>
-        <option>10</option>
-        <option>20</option>
-        <option>50</option>
-    </select>
-    records at a time.
+    <div class="mail-content pull-right">
 
-    <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></uib-pagination>
+    </div>
 
     <script id="row-template" type="x-tmpl-mustache">
         <tr class="message-link" data-toggle="modal" id="{{index}}">

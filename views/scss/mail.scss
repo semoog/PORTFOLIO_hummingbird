@@ -1,6 +1,38 @@
 @import 'variables';
 
-.mailContainer {
+.app-container {
+
+    height: 100vh;
+    overflow: hidden;
+
+    body {
+      // font-family: 'Raleway', sans-serif;
+      // background-color: $darkGray;
+      color: $white;
+      font-family: "Open Sans", helvetica, arial, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      text-rendering: optimizeLegibility;
+    }
+    .app-bar, .footer-bar{
+      height: 60px;
+      width: 100%;
+      background: $darkGray;
+      // -webkit-box-shadow: 0px 0px 38px 0px $darkGray;
+      // -moz-box-shadow: 0px 0px 38px 0px $darkGray;
+      // box-shadow: 0px 0px 38px 0px $darkGray;
+    }
+
+    .nav-bar, .side-bar {
+      height: 100vh;
+      width: 60px;
+      background: $darkGray;
+    }
+
+    .footer-bar {
+      position: absolute;
+      bottom: 0;
+    }
 
     iframe {
         width: 100%;
@@ -9,16 +41,19 @@
         height: 75vh;
         display: flex;
     }
-    .container {
-        width: 768px; //pixel value
-        height: 60vh;
+    .mail-container {
+        // position: absolute;
+        // left: 0;
+        // top: 0;
+        width: 50vw; //pixel value
+        height: 90vh;
         // position: absolute;
         overflow: scroll;
-        margin-top: 60px;
+        // margin-top: 60px;
         // left: 0;
         // margin-left: 20px;
     }
-    .mailbox {
+    .mail-container--mailbox {
       height: 160px;
       //display: block; == default
       // width: 50vw;
@@ -32,19 +67,19 @@
       text-overflow: ellipsis;
     }
 
-    .mailbox:last-child {
+    .mail-container--mailbox:last-child {
       border-bottom: 0px;
     }
 
-    .mailbox .snippet {
+    .mail-container--mailbox .snippet {
       overflow: hidden;
     }
 
-    .mail {
+    .mailbox--mail {
       overflow: hidden;
     }
 
-    .mail .date, .snippet {
+    .mailbox--mail .date, .snippet {
       color: $medGray;
     }
 
@@ -64,20 +99,62 @@
       margin-right: 5px;
     }
 
+    .mail-content {
+        // position: absolute;
+        // left: 0;
+        // top: 0;
+        width: 40vw; //pixel value
+        height: 90vh;
+        background: $black;
+        // position: absolute;
+        overflow: scroll;
+        // margin-top: 60px;
+        // left: 0;
+        // margin-left: 20px;
+    }
+
     uib-pagination {
       margin: 0 auto;
     }
 
     .logo {
-        font-family: 'Pacifico', helvetica, sans-serif;
-        position: relative;
-        text-align: center;
+        // font-family: 'Pacifico', helvetica, sans-serif;
+        font-family: "Open Sans", helvetica, arial, sans-serif;
+        font-weight: 300;
+        margin-top: 0;
+        margin-left: 60px;
+        padding-top: 15px;
         z-index: 3;
         color: $white;
-        margin-top: 40px;
-        font-size: 50px;
-        padding: 0 10%;
-        /*background: $bleu;*/
+        font-size: 30px;
+        // padding-right: 20px;
+    }
+    .icon {
+      width: 30px;
+      height: 30px;
+      -webkit-box-shadow: inset 0px -5px 0px 0px rgba(0,0,0,0.5);
+      -moz-box-shadow: inset 0px -5px 0px 0px rgba(0,0,0,0.5);
+      box-shadow: inset 0px -5px 0px 0px rgba(0,0,0,0.5);
+    }
+    .icon-container {
+      width: 60px;
+      height: 80px;
+      // margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-bottom: 2px solid $black;
+    }
+    .icon-container:hover {
+      background: $darkPurple;
+    }
+    .active {
+      background: $darkPurple;
+      -webkit-box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.5);
+      -moz-box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.5);
+      box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.5);
     }
     .nav-pills > li > a {
         padding: 5px 10px;
@@ -91,6 +168,7 @@
         color: $white;
     }
     .modal-body {
+        // height: 70vh;
         // background: $darkGray;
     }
     .hummingbird-icon {
@@ -114,6 +192,36 @@
     }
     .nocursor {
         cursor: default;
+    }
+
+    // scroll-helper
+
+    svg {
+      fill: $white;
+    }
+
+    .scroll-helper {
+      position: absolute;
+      bottom: 100px;
+      left: 430px;
+    }
+
+    circle {
+      animation: scroll 1.5s ease infinite;
+    }
+
+    @keyframes scroll {
+      0% {
+        opacity: 0;
+        cy: 481;
+      }
+      33% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        cy: 231;
+      }
     }
     /*** Table Styles **/
     .table-fill {
@@ -281,57 +389,46 @@
     td.text-right {
         text-align: right;
     }
-    // NEW LOADER
-    .spinner {
-        animation: rotator $duration linear infinite;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
-    @keyframes rotator {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(270deg);
-        }
-    }
-    .path {
-        stroke-dasharray: $offset;
-        stroke-dashoffset: 0;
-        transform-origin: center;
-        animation: dash $duration ease-in-out infinite, colors ($duration*4) ease-in-out infinite;
-    }
-    @keyframes colors {
-        0% {
-            stroke: #4285F4;
-        }
-        25% {
-            stroke: #DE3E35;
-        }
-        50% {
-            stroke: #F7C223;
-        }
-        75% {
-            stroke: #1B9A59;
-        }
-        100% {
-            stroke: #4285F4;
-        }
-    }
-    @keyframes dash {
-        0% {
-            stroke-dashoffset: $offset;
-        }
-        50% {
-            stroke-dashoffset: $offset/4;
-            transform: rotate(135deg);
-        }
-        100% {
-            stroke-dashoffset: $offset;
-            transform: rotate(450deg);
-        }
-    }
+    .load {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.load > div {
+  float: left;
+  margin: 2px;
+  height: 35px;
+  width: 5px;
+  background: #003300;
+  animation: load 1.4s infinite ease-in-out;
+}
+
+.load .load1 {
+  animation-delay: -1.3s;
+}
+
+.load .load2 {
+  animation-delay: -1.2s;
+}
+
+.load .load3 {
+  animation-delay: -1.1s;
+}
+
+.load .load4 {
+  animation-delay: -1.0s;
+}
+
+@keyframes load {
+  0%,
+  50%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  25% {
+    transform: scaleY(1.0);
+  }
+}
 }

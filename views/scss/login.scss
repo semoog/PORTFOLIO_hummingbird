@@ -1,20 +1,20 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 @import url(https://fonts.googleapis.com/css?family=Pacifico);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import 'variables';
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
+.loginContainer {
 body {
   // font-family: 'Raleway', sans-serif;
   background-color: $darkGray;
   color: $white;
-  font-family: "Roboto", helvetica, arial, sans-serif;
+  font-family: "Open Sans", helvetica, arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
   text-rendering: optimizeLegibility;
 }
-
-.loginContainer {
 iframe {
   width: 100%;
   border: 0;
