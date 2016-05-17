@@ -1,15 +1,8 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 @import url(https://fonts.googleapis.com/css?family=Pacifico);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer; }
-
-body {
-  background-color: #1D1F20;
-  color: #fff;
-  font-family: "Roboto", helvetica, arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  text-rendering: optimizeLegibility; }
 
 .loginContainer {
   /*.background {
@@ -21,6 +14,13 @@ body {
   height: 100%;
   background-color: #3e94ec;
 }*/ }
+  .loginContainer body {
+    background-color: #1D1F20;
+    color: #fff;
+    font-family: "Open Sans", helvetica, arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-rendering: optimizeLegibility; }
   .loginContainer iframe {
     width: 100%;
     border: 0;
@@ -66,21 +66,39 @@ body {
     margin-top: 20px;
     text-align: center; }
 
-.mailContainer {
+.app-container {
+  height: 100vh;
+  overflow: hidden;
   /*** Table Styles **/
   /*FADE*/ }
-  .mailContainer iframe {
+  .app-container body {
+    color: #fff;
+    font-family: "Open Sans", helvetica, arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-rendering: optimizeLegibility; }
+  .app-container .app-bar, .app-container .footer-bar {
+    height: 60px;
+    width: 100%;
+    background: #1D1F20; }
+  .app-container .nav-bar, .app-container .side-bar {
+    height: 100vh;
+    width: 60px;
+    background: #1D1F20; }
+  .app-container .footer-bar {
+    position: absolute;
+    bottom: 0; }
+  .app-container iframe {
     width: 100%;
     border: 0;
     min-height: 80%;
     height: 75vh;
     display: flex; }
-  .mailContainer .container {
-    width: 768px;
-    height: 60vh;
-    overflow: scroll;
-    margin-top: 60px; }
-  .mailContainer .mailbox {
+  .app-container .mail-container {
+    width: 50vw;
+    height: 90vh;
+    overflow: scroll; }
+  .app-container .mail-container--mailbox {
     height: 160px;
     background: #EBEBEB;
     color: #000;
@@ -90,64 +108,108 @@ body {
     cursor: default;
     overflow: hidden;
     text-overflow: ellipsis; }
-  .mailContainer .mailbox:last-child {
+  .app-container .mail-container--mailbox:last-child {
     border-bottom: 0px; }
-  .mailContainer .mailbox .snippet {
+  .app-container .mail-container--mailbox .snippet {
     overflow: hidden; }
-  .mailContainer .mail {
+  .app-container .mailbox--mail {
     overflow: hidden; }
-  .mailContainer .mail .date, .mailContainer .snippet {
+  .app-container .mailbox--mail .date, .app-container .snippet {
     color: #555555; }
-  .mailContainer .unread-badge {
+  .app-container .unread-badge {
     width: 10px;
     height: 10px;
     background: #3E94EC;
     border-radius: 40%;
     margin-right: 5px; }
-  .mailContainer .important-badge {
+  .app-container .important-badge {
     width: 10px;
     height: 10px;
     background: #EA4335;
     border-radius: 40%;
     margin-right: 5px; }
-  .mailContainer uib-pagination {
+  .app-container .mail-content {
+    width: 40vw;
+    height: 90vh;
+    background: #000;
+    overflow: scroll; }
+  .app-container uib-pagination {
     margin: 0 auto; }
-  .mailContainer .logo {
-    font-family: 'Pacifico', helvetica, sans-serif;
-    position: relative;
-    text-align: center;
+  .app-container .logo {
+    font-family: "Open Sans", helvetica, arial, sans-serif;
+    font-weight: 300;
+    margin-top: 0;
+    margin-left: 60px;
+    padding-top: 15px;
     z-index: 3;
     color: #fff;
-    margin-top: 40px;
-    font-size: 50px;
-    padding: 0 10%;
-    /*background: $bleu;*/ }
-  .mailContainer .nav-pills > li > a {
+    font-size: 30px; }
+  .app-container .icon {
+    width: 30px;
+    height: 30px;
+    -webkit-box-shadow: inset 0px -5px 0px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 0px -5px 0px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0px -5px 0px 0px rgba(0, 0, 0, 0.5); }
+  .app-container .icon-container {
+    width: 60px;
+    height: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 2px solid #000; }
+  .app-container .icon-container:hover {
+    background: #22262e; }
+  .app-container .active {
+    background: #22262e;
+    -webkit-box-shadow: inset 0px -10px 0px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 0px -10px 0px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0px -10px 0px 0px rgba(0, 0, 0, 0.5); }
+  .app-container .nav-pills > li > a {
     padding: 5px 10px; }
-  .mailContainer .mailNav {
+  .app-container .mailNav {
     margin-top: 60px;
     margin-left: 30px; }
-  .mailContainer .modal-header {
+  .app-container .modal-header {
     background: #3D3D3E;
     color: #fff; }
-  .mailContainer .hummingbird-icon {
+  .app-container .hummingbird-icon {
     width: 128px;
     margin-left: auto;
     margin-right: auto; }
-  .mailContainer .hummingbird-icon img {
+  .app-container .hummingbird-icon img {
     width: 128px;
     height: 128px;
     margin-top: 20px; }
-  .mailContainer .footer {
+  .app-container .footer {
     height: 20px;
     background: #343436;
     border-top: 2px solid #555555; }
-  .mailContainer .nowrap {
+  .app-container .nowrap {
     white-space: nowrap;
     text-overflow: ellipsis; }
-  .mailContainer .nocursor {
+  .app-container .nocursor {
     cursor: default; }
-  .mailContainer .table-fill {
+  .app-container svg {
+    fill: #fff; }
+  .app-container .scroll-helper {
+    position: absolute;
+    bottom: 100px;
+    left: 430px; }
+  .app-container circle {
+    animation: scroll 1.5s ease infinite; }
+
+@keyframes scroll {
+  0% {
+    opacity: 0;
+    cy: 481; }
+  33% {
+    opacity: 1; }
+  100% {
+    opacity: 0;
+    cy: 231; } }
+  .app-container .table-fill {
     background: #1D1F20;
     border-collapse: collapse;
     height: 320px;
@@ -157,7 +219,7 @@ body {
     animation: float 5s infinite;
     table-layout: fixed;
     overflow: hidden; }
-  .mailContainer th {
+  .app-container th {
     color: #fff;
     background: #3D3D3E;
     /*background: #EA4335;*/
@@ -172,14 +234,14 @@ body {
     vertical-align: middle;
     /*max-width: 400px;*/
     /*width: 1000px;*/ }
-  .mailContainer th:first-child {
+  .app-container th:first-child {
     /*border-top-left-radius:3px;*/
     width: 300px; }
-  .mailContainer th:last-child {
+  .app-container th:last-child {
     /*border-top-right-radius:3px;*/
     border-right: none;
     width: 300px; }
-  .mailContainer tr {
+  .app-container tr {
     border-top: 1px solid #C1C3D1;
     border-bottom-: 1px solid #C1C3D1;
     color: #666B85;
@@ -190,24 +252,24 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis; }
-  .mailContainer tr:hover td {
+  .app-container tr:hover td {
     background: #4E5066;
     color: #FFFFFF; }
-  .mailContainer tr:hover a {
+  .app-container tr:hover a {
     color: #fff; }
-  .mailContainer tr:first-child {
+  .app-container tr:first-child {
     border-top: none; }
-  .mailContainer tr:last-child {
+  .app-container tr:last-child {
     border-bottom: none; }
-  .mailContainer tr:nth-child(odd) td {
+  .app-container tr:nth-child(odd) td {
     background: #EBEBEB; }
-  .mailContainer tr:nth-child(odd):hover td {
+  .app-container tr:nth-child(odd):hover td {
     background: #666B85; }
-  .mailContainer tr:last-child td:first-child {
+  .app-container tr:last-child td:first-child {
     border-bottom-left-radius: 3px; }
-  .mailContainer tr:last-child td:last-child {
+  .app-container tr:last-child td:last-child {
     border-bottom-right-radius: 3px; }
-  .mailContainer td {
+  .app-container td {
     position: relative;
     background: #fff;
     padding: 10px 10px 10px 20px;
@@ -219,11 +281,11 @@ body {
     border-right: 1px solid #C1C3D1;
     overflow: hidden;
     /*text-overflow: ellipsis;*/ }
-  .mailContainer .tbody {
+  .app-container .tbody {
     display: block;
     height: calc(50vh - 1px);
     min-height: calc(200px + 1 px); }
-  .mailContainer .content:after {
+  .app-container .content:after {
     content: "";
     pointer-events: none;
     position: absolute;
@@ -236,7 +298,7 @@ body {
     background-image: -ms-linear-gradient(right, white, rgba(255, 255, 255, 0));
     background-image: -o-linear-gradient(right, white, rgba(255, 255, 255, 0));
     background-image: linear-gradient(to left, white, rgba(255, 255, 255, 0)); }
-  .mailContainer tr:nth-child(odd) .content:after {
+  .app-container tr:nth-child(odd) .content:after {
     content: "";
     pointer-events: none;
     position: absolute;
@@ -249,7 +311,7 @@ body {
     background-image: -ms-linear-gradient(right, #ebebeb, rgba(255, 255, 255, 0));
     background-image: -o-linear-gradient(right, #ebebeb, rgba(255, 255, 255, 0));
     background-image: linear-gradient(to left, #ebebeb, rgba(255, 255, 255, 0)); }
-  .mailContainer tr:hover .content:after {
+  .app-container tr:hover .content:after {
     content: "";
     pointer-events: none;
     position: absolute;
@@ -262,57 +324,45 @@ body {
     background-image: -ms-linear-gradient(right, #4e5066, rgba(255, 255, 255, 0));
     background-image: -o-linear-gradient(right, #4e5066, rgba(255, 255, 255, 0));
     background-image: linear-gradient(to left, #4e5066, rgba(255, 255, 255, 0)); }
-  .mailContainer td:last-child {
+  .app-container td:last-child {
     border-right: 0; }
-  .mailContainer th.text-left {
+  .app-container th.text-left {
     text-align: left; }
-  .mailContainer th.text-center {
+  .app-container th.text-center {
     text-align: center; }
-  .mailContainer th.text-right {
+  .app-container th.text-right {
     text-align: right; }
-  .mailContainer td.text-left {
+  .app-container td.text-left {
     text-align: left; }
-  .mailContainer td.text-center {
+  .app-container td.text-center {
     text-align: center; }
-  .mailContainer td.text-right {
+  .app-container td.text-right {
     text-align: right; }
-  .mailContainer .spinner {
-    animation: rotator 1.4s linear infinite;
+  .app-container .load {
     position: absolute;
     top: 50%;
     left: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%); }
+    transform: translate(-50%, -50%); }
+  .app-container .load > div {
+    float: left;
+    margin: 2px;
+    height: 35px;
+    width: 5px;
+    background: #003300;
+    animation: load 1.4s infinite ease-in-out; }
+  .app-container .load .load1 {
+    animation-delay: -1.3s; }
+  .app-container .load .load2 {
+    animation-delay: -1.2s; }
+  .app-container .load .load3 {
+    animation-delay: -1.1s; }
+  .app-container .load .load4 {
+    animation-delay: -1.0s; }
 
-@keyframes rotator {
-  0% {
-    transform: rotate(0deg); }
+@keyframes load {
+  0%,
+  50%,
   100% {
-    transform: rotate(270deg); } }
-  .mailContainer .path {
-    stroke-dasharray: 187;
-    stroke-dashoffset: 0;
-    transform-origin: center;
-    animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite; }
-
-@keyframes colors {
-  0% {
-    stroke: #4285F4; }
+    transform: scaleY(0.3); }
   25% {
-    stroke: #DE3E35; }
-  50% {
-    stroke: #F7C223; }
-  75% {
-    stroke: #1B9A59; }
-  100% {
-    stroke: #4285F4; } }
-
-@keyframes dash {
-  0% {
-    stroke-dashoffset: 187; }
-  50% {
-    stroke-dashoffset: 46.75;
-    transform: rotate(135deg); }
-  100% {
-    stroke-dashoffset: 187;
-    transform: rotate(450deg); } }
+    transform: scaleY(1); } }
