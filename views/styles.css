@@ -114,6 +114,8 @@
     overflow: hidden; }
   .app-container .mailbox--mail {
     overflow: hidden; }
+  .app-container .mail-container--mailbox:hover {
+    background: #C1C3D1; }
   .app-container .mailbox--mail .date, .app-container .snippet {
     color: #555555; }
   .app-container .unread-badge {

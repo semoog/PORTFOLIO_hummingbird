@@ -3,6 +3,7 @@
 // dependencies
 
 import express from 'express';
+import bodyParser from 'body-parser';
 import session from 'express-session';
 import passport from 'passport';
 import Gmail from 'node-gmail-api';
@@ -10,7 +11,8 @@ import keys from './keys';
 import async from 'asyncawait/async';
 import await from 'asyncawait/await';
 import cors from 'cors';
-var mail = require('./mailController');
+// var mail = require('./mailController');
+import mail from './mailController';
 
 // express init
 
@@ -21,6 +23,8 @@ app.use(express.static(__dirname + '/views'));
 
 app.use(require('express-session')({ secret: keys.sessionSecret, resave: true, saveUninitialized: true }));
 
+app.use(bodyParser());
+
 app.engine('html', require('ejs').renderFile);
 
 app.set('view engine', 'html');
@@ -29,7 +33,7 @@ app.set('view engine', 'html');
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
+const SCOPES = 'https://mail.google.com/';
 
 // mongoose init
 
@@ -78,7 +82,7 @@ passport.use(new GoogleStrategy({
 
     // Store token locally for access later
 
-    console.log(profile);
+    console.log(refreshToken);
 
     accToken = accessToken;
     refToken = refreshToken;
@@ -125,28 +129,34 @@ function ensureAuthenticated(req, res, next) {
 app.get('/',
   (req, res) => {
     res.redirect('/mail');
-  });
+});
 
 
 app.get('/login',
   (req, res) => {
     res.redirect('/#/login');
-  });
+});
 
 app.get('/mail',
   ensureAuthenticated,
   (req, res) => {
     console.log("redirecting to mail");
     res.redirect('/#/mail', { user: req.user });
-  });
+});
 
-app.get('/getmail/:label',
+app.post('/sendMail',
+  (req, res, accToken) => {
+    mail.sendMail(req.body.headers_obj, req.body.message);
+    res.send(req.body);
+});
+
+app.get('/getMail/:label',
   ensureAuthenticated,
   async (function (req, res){
     console.log("getting mail");
       let emailParsed = await(mail.getMail(accToken, refToken, userProfile, req));
       res.send(emailParsed);
-  }));
+}));
 
 // Google Authentication Routes
 
@@ -159,7 +169,7 @@ app.get('/auth/google/callback',
     // Successful authentication, redirect home.
     console.log("Successfully Authenticated.");
     res.redirect('/#/mail');
-  });
+});
 
 // serialize / deserialize for passport
 

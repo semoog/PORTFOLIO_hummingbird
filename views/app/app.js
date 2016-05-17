@@ -15,6 +15,6 @@ angular.module('meanmail', ['ui.bootstrap', 'ui.router'])
          controller: 'mailCtrl'
       });
 
-      $urlRouterProvider.otherwise('/login');
+      // $urlRouterProvider.otherwise('/login');
    //end config
 });

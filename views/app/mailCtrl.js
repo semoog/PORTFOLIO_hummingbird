@@ -32,12 +32,60 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
     $scope.mails = {};
 
+    function composeTidy() {
+
+      $('#compose-modal').modal('hide');
+
+      $('#compose-to').val('');
+      $('#compose-subject').val('');
+      $('#compose-message').val('');
+
+      $('#send-button').removeClass('disabled');
+    }
+
+    window.sendEmail = function sendEmail() {
+
+      $('#send-button').addClass('disabled');
+
+      $scope.sendMail({
+        headers_obj: {
+          'To': $('#compose-to').val(),
+          'Subject': $('#compose-subject').val()
+        },
+        message: $('#compose-message').val()
+      }
+      );
+
+      return false;
+    };
+
+    function getBody(message) {
+        var encodedBody = '';
+
+        encodedBody = message.parts ? getHTMLPart(message.parts) : message.body.data;
+        encodedBody = encodedBody.replace(/-/g, '+').replace(/_/g, '/').replace(/\s/g, '');
+        return decodeURIComponent(escape(window.atob(encodedBody)));
+    }
+
+    function getHTMLPart(arr) {
+        for (var x = 0; x < arr.length; x++) {
+            if (typeof arr[x].parts === 'undefined') {
+                if (arr[x].mimeType === 'text/html') {
+                    return arr[x].body.data;
+                }
+            } else {
+                return getHTMLPart(arr[x].parts);
+            }
+        }
+        return '';
+    }
+
     // FETCH
 
     $scope.getMail = (label) => {
         return $http({
             method: 'GET',
-            url: 'http://localhost:3000/getmail/' + label
+            url: 'http://localhost:3000/getMail/' + label
         }).then((response) => {
 
             // $('.tbody').remove();
@@ -86,66 +134,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
                   console.log("found IMPORTANT on id ", i);
                 }
 
-                if (response.data.mails[i].payload.hasOwnProperty("parts")) {
-
-
-
-                    // PARTS WITHIN PARTS
-
-                    if (response.data.mails[i].payload.parts[0].hasOwnProperty("parts")) {
-
-                      console.log("parts/parts", i);
-
-                      // PARTS WITHIN PARTS WITHIN PARTS??
-
-                      if (response.data.mails[i].payload.parts[0].parts[0].hasOwnProperty("parts")) {
-
-                          if (_.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'multipart/related'])) {
-                              console.log("parts/parts/parts/multipart", i);
-                              mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[1].parts[1].parts, ['mimeType', 'text/html']);
-                          } else {
-                              mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts[0].parts, ['mimeType', 'text/html']);
-                          }
-                          // console.log(i, mimetypeObj[i]);
-
-                          parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/')).replace(/&#39;/, ' ');
-
-                      }
-
-                      else if (_.find(response.data.mails[i].payload.parts, ['mimeType', 'multipart/related'])) {
-                        console.log("parts/parts/multi", i);
-                          mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'text/html']);
-                      } else {
-                          console.log("parts/parts/else", i);
-                          mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[0].parts, ['mimeType', 'text/html']);
-                      }
-                      // console.log(i, mimetypeObj[i]);
-
-                      parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/')).replace(/&#39;/, ' ');
-
-                    }
-
-                    // PARTS
-                    else {
-
-                        if (_.find(response.data.mails[i].payload.parts, ['mimeType', 'multipart/related'])) {
-                            mimetypeObj[i] = _.find(response.data.mails[i].payload.parts[1].parts, ['mimeType', 'text/html']);
-                        } else {
-                            mimetypeObj[i] = _.find(response.data.mails[i].payload.parts, ['mimeType', 'text/html']);
-                        }
-                        // console.log(i, mimetypeObj[i]);
-
-                        parsedMail.emails[i].html = atob(mimetypeObj[i].body.data.replace(/-/g, '+').replace(/_/g, '/')).replace(/&#39;/, ' ');
-
-                    }
-                }
-
-                // NO PARTS JUST BODY
-                else {
-
-                    parsedMail.emails[i].html = atob(response.data.mails[i].payload.body.data.replace(/-/g, '+').replace(/_/g, '/')).replace(/&#39;/, ' ');
-
-                }
+                parsedMail.emails[i].html = getBody(response.data.mails[i].payload);
 
                 processMessage(parsedMail.emails[i]);
                 $scope.emails = parsedMail.emails;
@@ -212,6 +201,16 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
             }, 10000);
             return response;
         });
+    };
+
+    $scope.sendMail = (mailObj) => {
+      return $http({
+          method: 'POST',
+          url: 'http://localhost:3000/sendMail/',
+          data: mailObj
+      }).then((response) => {
+        composeTidy();
+      });
     };
 
     $scope.getMail('INBOX');
