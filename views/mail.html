@@ -19,7 +19,6 @@
 
           <div class="app-bar">
             <h1 class="logo">hummingbird</h1>
-            <h3 class="username"> <img src="{{user.profileimg}}" alt="" /> </h3>
           </div>
 
           <div class="side-bar pull-right">
@@ -27,10 +26,10 @@
           </div>
 
           <div class="nav-bar pull-left">
-            <div class="icon-container active" ng-click="getMail('INBOX')">
+            <div class="icon-container active">
               <img class="icon" src="src/inbox.svg" alt="" />
             </div>
-            <div class="icon-container" ng-click="getMail('SPAM')">
+            <div class="icon-container">
               <img class="icon" src="src/spam.svg" alt="" />
             </div>
           </div>
@@ -68,7 +67,7 @@
          Compose
       </a> -->
 
-
+      
 
         <!-- <div class="loading"></div> -->
 
@@ -79,19 +78,14 @@
           <div class='load4'></div>
         </div>
 
-        <div class="mail-container--mailbox" ng-repeat="mail in mails">
+        <div class="mail-container--mailbox" ng-repeat="mail in mails.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
 
             <div class="unread-badge pull-left" ng-show="{{mail.unread}}"></div>
             <div class="important-badge pull-left" ng-show="{{mail.important}}"></div>
 
-            <div class="message-link mailbox--mail" data-toggle="modal" id="{{mail.index}}" messageId="{{mail.id}}">
+            <div class="message-link mailbox--mail" data-toggle="modal" id="{{mail.index}}">
 
                 <div>
-
-                  <!-- <div class="mail--menu">
-                    dadada
-                  </div> -->
-
                   <div class="pull-right date">
                       {{mail.date}}
                   </div>
@@ -106,10 +100,25 @@
                   <div class="snippet">
                       {{mail.snippet}}
                   </div>
-
-                  <span class="glyphicon glyphicon-trash trash-icon pull-right" ng-click="trashMail(mail.id)"></span>
-
                 </div>
+
+                <!-- <div>
+                  <div class="pull-right date">
+                      {{mail.date}}asdasd
+                  </div>
+
+                  <strong>{{mail.sender}}asd</strong><br/>
+
+                  <div class="subject">
+                      <strong>{{mail.subject}}</strong>asd
+                  </div>
+                  <br/>
+
+                  <div class="snippet">
+                      {{mail.snippet}}asd
+                  </div>
+                </div> -->
+
 
             </div>
 

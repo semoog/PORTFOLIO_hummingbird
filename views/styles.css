@@ -92,10 +92,10 @@
     width: 100%;
     border: 0;
     min-height: 80%;
-    height: 60vh;
+    height: 75vh;
     display: flex; }
   .app-container .mail-container {
-    width: 46vw;
+    width: 50vw;
     height: 90vh;
     overflow: scroll; }
   .app-container .mail-container--mailbox {
@@ -131,36 +131,21 @@
     border-radius: 40%;
     margin-right: 5px; }
   .app-container .mail-content {
-    width: 46vw;
+    width: 40vw;
     height: 90vh;
     background: #000;
     overflow: scroll; }
-  .app-container .mail--menu {
-    margin-top: -20px;
-    left: 50vw;
-    height: 160px;
-    width: 60px;
-    border: 2px solid #000;
-    background: #555555; }
-  .app-container .trash-icon {
-    padding-bottom: 10px; }
-  .app-container .trash-icon:hover {
-    color: #fff; }
+  .app-container uib-pagination {
+    margin: 0 auto; }
   .app-container .logo {
-    font-weight: 300;
-    position: absolute;
-    left: 60px;
-    margin-top: 15px;
-    color: #fff;
-    font-size: 30px; }
-  .app-container .username {
     font-family: "Open Sans", helvetica, arial, sans-serif;
     font-weight: 300;
-    position: absolute;
-    bottom: 50px;
-    margin-left: 5px;
+    margin-top: 0;
+    margin-left: 60px;
+    padding-top: 15px;
+    z-index: 3;
     color: #fff;
-    font-size: 16px; }
+    font-size: 30px; }
   .app-container .icon {
     width: 30px;
     height: 30px;
@@ -191,8 +176,6 @@
   .app-container .modal-header {
     background: #3D3D3E;
     color: #fff; }
-  .app-container .modal {
-    margin-top: 6vh; }
   .app-container .hummingbird-icon {
     width: 128px;
     margin-left: auto;
@@ -215,7 +198,7 @@
   .app-container .scroll-helper {
     position: absolute;
     bottom: 100px;
-    left: 26vw; }
+    left: 430px; }
   .app-container circle {
     animation: scroll 1.5s ease infinite; }
 

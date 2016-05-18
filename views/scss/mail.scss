@@ -38,14 +38,14 @@
         width: 100%;
         border: 0;
         min-height: 80%;
-        height: 60vh;
+        height: 75vh;
         display: flex;
     }
     .mail-container {
         // position: absolute;
         // left: 0;
         // top: 0;
-        width: 46vw; //pixel value
+        width: 50vw; //pixel value
         height: 90vh;
         // position: absolute;
         overflow: scroll;
@@ -107,7 +107,7 @@
         // position: absolute;
         // left: 0;
         // top: 0;
-        width: 46vw; //pixel value
+        width: 40vw; //pixel value
         height: 90vh;
         background: $black;
         // position: absolute;
@@ -117,42 +117,21 @@
         // margin-left: 20px;
     }
 
-    .mail--menu {
-      // position: absolute;
-      margin-top: -20px;
-      left: 50vw;
-      height: 160px;
-      width: 60px;
-      border: 2px solid $black;
-      background: $medGray;
+    uib-pagination {
+      margin: 0 auto;
     }
-    .trash-icon {
-      padding-bottom: 10px;
-    }
-    .trash-icon:hover {
-      color: $white;
-    }
+
     .logo {
         // font-family: 'Pacifico', helvetica, sans-serif;
-        // font-family: "Open Sans", helvetica, arial, sans-serif;
+        font-family: "Open Sans", helvetica, arial, sans-serif;
         font-weight: 300;
-        position: absolute;
-        left: 60px;
-        margin-top: 15px;
+        margin-top: 0;
+        margin-left: 60px;
+        padding-top: 15px;
+        z-index: 3;
         color: $white;
         font-size: 30px;
-    }
-    .username {
-      font-family: "Open Sans", helvetica, arial, sans-serif;
-      font-weight: 300;
-      position: absolute;
-      // right: 30px;
-      bottom: 50px;
-      margin-left: 5px;
-      // padding-top: 15px;
-      color: $white;
-      font-size: 16px;
-      // padding-right: 30px;
+        // padding-right: 20px;
     }
     .icon {
       width: 30px;
@@ -196,9 +175,6 @@
         // height: 70vh;
         // background: $darkGray;
     }
-    .modal {
-      margin-top: 6vh;
-    }
     .hummingbird-icon {
         width: 128px;
         margin-left: auto;
@@ -231,7 +207,7 @@
     .scroll-helper {
       position: absolute;
       bottom: 100px;
-      left: 26vw;
+      left: 430px;
     }
 
     circle {
