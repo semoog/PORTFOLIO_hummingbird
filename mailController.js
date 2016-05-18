@@ -1,17 +1,22 @@
 /* jshint esversion: 6 */
 
 import Gmail from 'node-gmail-api';
-import send from 'gmailer';
-var xoauth2 = require('xoauth2');
-var nodemailer = require('nodemailer');
 
+var google = require('googleapis');
+var btoa = require('btoa');
 import keys from './keys';
+var OAuth2 = google.auth.OAuth2;
+var API_KEY = keys.GOOGLE_API_KEY;
+var oauth2Client = new OAuth2(keys.GOOGLE_CLIENT_ID, keys.GOOGLE_CLIENT_SECRET, '/auth/google/callback');
+google.options({ auth: oauth2Client }); // set auth as a global default
+
+var request = require('request');
 
 module.exports = {
 
-    getMail: (accessToken, refreshToken, profile, req) => {
+    getMail: (accessToken, label) => {
 
-      console.log(req.params.label);
+    console.log(label);
 
     const emailParsed = {
       mails: []
@@ -20,7 +25,7 @@ module.exports = {
     let emails;
 
     let gmail = new Gmail(accessToken);
-    emails = gmail.messages(('label:'+String(req.params.label)), {max: 200});
+    emails = gmail.messages(('label:'+String(label)), {max: 100});
 
     function getHeader(headers, index) {
         var header = '';
@@ -43,13 +48,11 @@ module.exports = {
       var count = 0; // REPLACE COUNT WITH ACTUAL DONE STATEMENT REGARDLESS OF MAILBOX SIZE
 
       emails.on('data',(d) => {
-      //   debugger;
         emailParsed.mails.push(d);
-        count++;
-        if (count === 200) { // fuck.
-          console.log("resolving.");
-          resolve(emailParsed);
-        }
+      });
+
+      emails.on('end', () => {
+        resolve(emailParsed);
       });
       // .then(res => {
       //   console.log("resolving.");
@@ -67,65 +70,93 @@ module.exports = {
 
   },
 
+  trashMail: (messageId, accToken) => {
+    console.log('messageId', messageId);
+    console.log('accessT', accToken);
 
-  sendMail: (headers_obj, message, accToken, refToken) => {
+    // request.post(
+    //     'https://www.googleapis.com/gmail/v1/users/me/messages/154c112d2e0d678d/trash', {
+    //       'headers': {
+    //         'Authorization': 'Bearer ' + accToken
+    //       }
+    //     },
+    //     function (error, response, body) {
+    //         if (!error && response.statusCode == 200) {
+    //             console.log("TRASHED! YAY", body);
+    //         }
+    //         else {
+    //           console.log("error: ", error);
+    //           console.log("body: ", body);
+    //           console.log("response: ", response);
+    //         }
+    //     }
+    // );
 
-    // generator.on('token', function(token){
-    //   console.log('New token for %s: %s', token.user, token.accessToken);
+    oauth2Client.setCredentials({
+      access_token: accToken
+    });
+
+    var gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+
+    gmail.users.messages.trash({
+      userId: 'me',
+      id: messageId
+    });
+
+    // var request2 = gmail.users.messages.list({
+    //   key: API_KEY,
+    //   userId: 'me',
+    //   maxResults: 25
     // });
-
-    // login
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        debug: true,
-        auth: {
-            xoauth2: xoauth2.createXOAuth2Generator({
-                user: 'sebmernst',
-                clientId: keys.GOOGLE_CLIENT_ID,
-                clientSecret: keys.GOOGLE_CLIENT_SECRET,
-                refreshToken: refToken,
-                accessToken: accToken
-            })
-        }
-    });
-
-    transporter.verify(function(error, success) {
-       if (error) {
-            console.log(error);
-       } else {
-            console.log('Server is ready to take our messages');
-       }
-    });
-
-    transporter.sendMail({
-        from: 'sebmernst@gmail.com',
-        to: 'sebmernst@gmail.com',
-        subject: 'hello world!',
-        text: 'Authenticated with OAuth2'
-    }, function(error, response) {
-       if (error) {
-            console.log(error);
-       } else {
-            console.log('Message sent');
-       }
-    });
-
-
-    // console.log(headers_obj, message);
     //
-    // var email = '';
-    //
-    // for(var header in headers_obj)
-    //   email += header += ": "+headers_obj[header]+"\r\n";
-    //
-    // email += "\r\n" + message;
+    // console.log(request2);
 
-    // var sendRequest = gapi.client.gmail.users.messages.send({
-    //   'userId': 'me',
-    //   'resource': {
-    //     'raw': btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
+    // function displayInbox() {
+    //     gmail.users.messages.list({
+    //         userId: 'me',
+    //         labelIds: 'INBOX',
+    //         maxResults: 25
+    //     });
     //   }
-    // });
+    //
+    // displayInbox();
+
+
+
+  },
+
+
+  sendMail: (headers_obj, message, accToken) => {
+
+    oauth2Client.setCredentials({
+      access_token: accToken
+    });
+
+    var gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+
+    console.log(headers_obj, message);
+
+    var email = '';
+
+    for(var header in headers_obj) {
+      console.log(header);
+      email += header += ": "+headers_obj[header]+"\r\n";
+    }
+
+    console.log("Before: ", email);
+
+    email += "\r\n" + message;
+
+    var convertedMail = btoa(email).replace(/\+/g, '-').replace(/\//g, '_');
+
+    console.log("After btoa: ", convertedMail);
+
+    gmail.users.messages.send({
+      'userId': 'me',
+      'resource': {
+        'raw': convertedMail
+      }
+    });
 
   }
 
