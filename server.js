@@ -7,7 +7,12 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import passport from 'passport';
 import Gmail from 'node-gmail-api';
+
 import keys from './keys';
+var google = require('googleapis');
+var OAuth2 = google.auth.OAuth2;
+var oauth2Client = new OAuth2(keys.GOOGLE_CLIENT_ID, keys.GOOGLE_CLIENT_SECRET, '/auth/google/callback');
+google.options({ auth: oauth2Client }); // set auth as a global default
 import async from 'asyncawait/async';
 import await from 'asyncawait/await';
 import cors from 'cors';
@@ -44,7 +49,9 @@ mongoose.connect("mongodb://localhost/meanmail");
 
 var userSchema = new Schema({
   googleId: String,
-  name: String
+  name: String,
+  accessToken: String,
+  profileimg: String
 });
 
 const User = mongoose.model("User", userSchema);
@@ -65,9 +72,6 @@ app.use(passport.session());
 
 // variable init
 
-let accToken;
-let refToken;
-let userProfile;
 let emails = {};
 let user = {};
 
@@ -82,35 +86,28 @@ passport.use(new GoogleStrategy({
 
     // Store token locally for access later
 
-    console.log(refreshToken);
+    oauth2Client.setCredentials({
+      access_token: accessToken,
+      refresh_token: refreshToken
+    });
 
-    accToken = accessToken;
-    refToken = refreshToken;
-    userProfile = profile;
+    console.log(profile);
 
-    // Check for or add user to database
+    var gmail = google.gmail({ version: 'v1', auth: oauth2Client });
 
-    User.findOne({'googleId': profile.id}, (err, user) => {
-            if (err) {
-                return cb(err);
-            }
-            // user not found. create
-            if (!user) {
-                user = new User({
+                var user = new User({
                     googleId: profile.id,
-                    name: profile.displayName
+                    name: profile.displayName,
+                    refreshToken: refreshToken,
+                    accessToken: accessToken,
+                    profileimg: profile._json.image.url
                 });
                 user.save((err) => {
                     if (err) console.log(err);
                     return cb(err, user);
                 });
-            } else {
-                return cb(err, user);
-            }
-        });
 
-  }
-));
+  }));
 
 function ensureAuthenticated(req, res, next) {
   console.log("checking auth...");
@@ -137,16 +134,32 @@ app.get('/login',
     res.redirect('/#/login');
 });
 
+app.get('/getUser',
+  (req, res) => {
+    res.json({
+      name: req.user.name,
+      profileimg: req.user.profileimg
+    });
+});
+
 app.get('/mail',
   ensureAuthenticated,
   (req, res) => {
     console.log("redirecting to mail");
-    res.redirect('/#/mail', { user: req.user });
+    res.redirect('/#/mail');
 });
 
 app.post('/sendMail',
-  (req, res, accToken) => {
-    mail.sendMail(req.body.headers_obj, req.body.message);
+  (req, res) => {
+    console.log(req.body);
+    mail.sendMail(req.body.headers_obj, req.body.message, req.user.accessToken);
+    res.send(req.body);
+});
+
+app.post('/trashMail',
+  (req, res) => {
+    console.log(req.body.messageId);
+    mail.trashMail(req.body.messageId, req.user.accessToken);
     res.send(req.body);
 });
 
@@ -154,7 +167,7 @@ app.get('/getMail/:label',
   ensureAuthenticated,
   async (function (req, res){
     console.log("getting mail");
-      let emailParsed = await(mail.getMail(accToken, refToken, userProfile, req));
+      let emailParsed = await(mail.getMail(req.user.accessToken, req.params.label));
       res.send(emailParsed);
 }));
 
@@ -164,6 +177,14 @@ app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', SCOPES] }));
 
 app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    console.log("Successfully Authenticated.");
+    res.redirect('/#/mail');
+});
+
+app.get('/oauthcallback?code={authorizationCode}',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
     // Successful authentication, redirect home.
