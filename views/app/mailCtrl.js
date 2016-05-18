@@ -17,6 +17,12 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
        $(this).addClass("active");
     });
 
+    // $(".mail-container--mailbox").hover(function() {
+    //   $(this).find(".trash-icon").removeClass("hidden");
+    // }, function() {
+    //   $(this).find(".trash-icon").addClass("hidden");
+    // });
+
     var scrolled = false;
 
     $(".mail-container").scroll(function() {
@@ -47,13 +53,12 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
       $('#send-button').addClass('disabled');
 
-      $scope.sendMail({
-        headers_obj: {
+      $scope.sendMail(
+        {
           'To': $('#compose-to').val(),
           'Subject': $('#compose-subject').val()
         },
-        message: $('#compose-message').val()
-      }
+        $('#compose-message').val()
       );
 
       return false;
@@ -81,6 +86,16 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
     }
 
     // FETCH
+
+    $scope.getUser = () => {
+      return $http({
+          method: 'GET',
+          url: 'http://localhost:3000/getUser'
+      }).then((response) => {
+        console.log(response);
+        $scope.user = response.data;
+      });
+    };
 
     $scope.getMail = (label) => {
         return $http({
@@ -113,10 +128,10 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
                 parsedMail.emails[i].from = extractField(response.data.mails[i], "From");
                 parsedMail.emails[i].sender = parsedMail.emails[i].from.replace(/<\S+@\S+\.\S{2,8}>/g, '').replace(/"+/g, '');
-                parsedMail.emails[i].subject = extractField(response.data.mails[i], "Subject");
+                parsedMail.emails[i].subject = extractField(response.data.mails[i], "Subject").replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
                 parsedMail.emails[i].date = extractField(response.data.mails[i], "Date");
                 parsedMail.emails[i].date = moment(parsedMail.emails[i].date).calendar();
-                parsedMail.emails[i].snippet = response.data.mails[i].snippet;
+                parsedMail.emails[i].snippet = response.data.mails[i].snippet.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
                 parsedMail.emails[i].id = response.data.mails[i].id;
                 parsedMail.emails[i].labels = response.data.mails[i].labelIds;
                 parsedMail.emails[i].index = i;
@@ -158,42 +173,13 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
                 from = from.trim() || sender;
 
-                const renderedRow = Mustache.render(row, {
-                    from: from,
-                    subject: subject,
-                    snippet: snippet,
-                    index: index,
-                    date: date
-                });
-
                 // REFRESH TABLE??
-                $('.main-table tbody').append(renderedRow);
                 $('.load').hide();
-                $('.main-table').removeClass('hidden');
+                $('.mail-container--mailbox').removeClass('hidden');
             }
 
             $scope.mails = parsedMail.emails;
 
-            console.log($scope.mails);
-            $scope.viewby = 50;
-            console.log("Mail length: ", $scope.mails.length);
-            $scope.totalItems = $scope.mails.length;
-            $scope.currentPage = 1;
-            $scope.itemsPerPage = $scope.viewby;
-            $scope.maxSize = 5; //Number of pager buttons to show
-
-            $scope.setPage = function (pageNo) {
-              $scope.currentPage = pageNo;
-            };
-
-            $scope.pageChanged = function() {
-              console.log('Page changed to: ' + $scope.currentPage);
-            };
-
-            $scope.setItemsPerPage = function(num) {
-              $scope.itemsPerPage = num;
-              $scope.currentPage = 1; //reset to first page
-            };
             setTimeout(function () {
               if (scrolled === false) {
                   $( ".scroll-helper" ).fadeIn('slow');
@@ -203,16 +189,34 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
         });
     };
 
-    $scope.sendMail = (mailObj) => {
+    $scope.sendMail = (headers_obj, message) => {
       return $http({
           method: 'POST',
           url: 'http://localhost:3000/sendMail/',
-          data: mailObj
+          data: headers_obj, message
       }).then((response) => {
         composeTidy();
       });
     };
 
+    $scope.trashMail = (messageId) => {
+
+      // find mail div and remove
+
+      // $(this).closest(".mail-container--mailbox").remove();
+
+      return $http({
+          method: 'POST',
+          url: 'http://localhost:3000/trashMail/',
+          data: {
+            messageId: messageId
+          }
+      }).then((response) => {
+          console.log("trashed");
+      });
+    };
+
+    $scope.getUser();
     $scope.getMail('INBOX');
 
     $('.mail-container').on('click', 'div.message-link', function(e) {
@@ -222,7 +226,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
         title = $scope.emails[index].subject;
         sender = $scope.emails[index].from;
-        date = moment($scope.emails[index].date).calendar();
+        date = $scope.emails[index].date;
 
         $scope.mails[index].unread = false;
 
