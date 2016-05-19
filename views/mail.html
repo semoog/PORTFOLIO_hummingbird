@@ -1,25 +1,31 @@
 <div class="app-container">
 
-    <!-- <button ng-click="getMail('SPAM')">Spam</button> -->
     <!-- <button ng-click="getMail('INBOX')">Inbox</button> -->
 
-    <!-- <div class="col-sm-3 col-md-1 mailNav">
-              <a href="#" class="btn btn-danger btn-sm btn-block" role="button"><i class="glyphicon glyphicon-edit"></i> Compose</a>
-              <hr>
-              <ul class="nav nav-pills nav-stacked">
-                  <li class="active" ng-click="getMail('INBOX')"><a href=""><span class="badge pull-right">32</span> Inbox </a>
-                  </li>
-                  <li><a href="">Starred</a></li>
-                  <li><a href="">Important</a></li>
-                  <li ng-click="getMail('SPAM')"><a href="">Spam</a></li>
-                  <li><a href="">Sent Mail</a></li>
-                  <li><a href=""><span class="badge pull-right">3</span>Drafts</a></li>
-              </ul>
-          </div> -->
-
           <div class="app-bar">
+
+            <svg xmlns="http://www.w3.org/2000/svg" class="topicon icon-adjustments">
+              <g stroke-width=".1em" stroke-linecap="round" stroke="#343436">
+                <g class="icon-adjustments_animation">
+                  <line x1=".86em" y1=".43em" x2=".86em" y2="1.0em"></line>
+                  <line x1=".86em" y1="2em" x2=".86em" y2="3.5em"></line>
+                </g>
+                <g class="icon-adjustments_animation">
+                  <line x1="2em" y1=".43em" x2="2em" y2="2em"></line>
+                  <line x1="2em" y1="3em" x2="2em" y2="3.5em"></line>
+                </g>
+                <g class="icon-adjustments_animation">
+                  <line x1="3.15em" y1=".43em" x2="3.15em" y2="1em"></line>
+                  <line x1="3.15em" y1="2em" x2="3.15em" y2="3.5em"></line>
+                </g>
+              </g>
+            </svg>
+
             <h1 class="logo">hummingbird</h1>
             <h3 class="username"> <img src="{{user.profileimg}}" alt="" /> </h3>
+            <div class="input-group search">
+              <input type="text" class="form-control" placeholder="search..." aria-describedby="basic-addon1">
+            </div>
           </div>
 
           <div class="side-bar pull-right">
@@ -27,10 +33,10 @@
           </div>
 
           <div class="nav-bar pull-left">
-            <div class="icon-container active" ng-click="getMail('INBOX')">
+            <div class="icon-container--nav active" ng-click="getMail('INBOX')">
               <img class="icon" src="src/inbox.svg" alt="" />
             </div>
-            <div class="icon-container" ng-click="getMail('SPAM')">
+            <div class="icon-container--nav" ng-click="getMail('SPAM')">
               <img class="icon" src="src/spam.svg" alt="" />
             </div>
           </div>
@@ -42,22 +48,7 @@
               <circle cx="306" cy="231" r="45"/>
           </svg>
 
-          <div class="footer-bar">
-
-            <!-- View
-            <select ng-model="viewby" ng-change="setItemsPerPage(viewby)">
-                <option>3</option>
-                <option>5</option>
-                <option>10</option>
-                <option>20</option>
-                <option>50</option>
-            </select>
-            records at a time.
-
-            <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></uib-pagination> -->
-
-
-          </div>
+          <div class="footer-bar"></div>
 
     <div class="mail-container">
 
@@ -68,10 +59,6 @@
          Compose
       </a> -->
 
-
-
-        <!-- <div class="loading"></div> -->
-
         <div class='load'>
           <div class='load1'></div>
           <div class='load2'></div>
@@ -81,16 +68,20 @@
 
         <div class="mail-container--mailbox" ng-repeat="mail in mails">
 
+            <div class="mail-menu">
+              <div class="icon-container--trash menu-trash" ng-click="trashMail(mail.id)">
+                <img class="icon" src="src/trash-can.svg" alt="" />
+              </div>
+            </div>
+
+            <button class="menu-button" ng-click="toggleMenu()">Open menu</button>
+
             <div class="unread-badge pull-left" ng-show="{{mail.unread}}"></div>
             <div class="important-badge pull-left" ng-show="{{mail.important}}"></div>
 
             <div class="message-link mailbox--mail" data-toggle="modal" id="{{mail.index}}" messageId="{{mail.id}}">
 
                 <div>
-
-                  <!-- <div class="mail--menu">
-                    dadada
-                  </div> -->
 
                   <div class="pull-right date">
                       {{mail.date}}
@@ -106,8 +97,6 @@
                   <div class="snippet">
                       {{mail.snippet}}
                   </div>
-
-                  <span class="glyphicon glyphicon-trash trash-icon pull-right" ng-click="trashMail(mail.id)"></span>
 
                 </div>
 

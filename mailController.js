@@ -25,7 +25,7 @@ module.exports = {
     let emails;
 
     let gmail = new Gmail(accessToken);
-    emails = gmail.messages(('label:'+String(label)), {max: 100});
+    emails = gmail.messages(('label:'+String(label)), {max: 10});
 
     function getHeader(headers, index) {
         var header = '';

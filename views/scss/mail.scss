@@ -1,5 +1,13 @@
 @import 'variables';
 
+.blur {
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+}
+
 .app-container {
 
     height: 100vh;
@@ -31,6 +39,7 @@
 
     .footer-bar {
       position: absolute;
+      z-index: 1;
       bottom: 0;
     }
 
@@ -127,10 +136,20 @@
       background: $medGray;
     }
     .trash-icon {
-      padding-bottom: 10px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 50px;
+      width: 50px;
     }
     .trash-icon:hover {
       color: $white;
+    }
+    .topicon {
+      height: 50px;
+      width: 50px;
+      position: absolute;
+      margin-left: 2px;
+      padding-top: 5px;
     }
     .logo {
         // font-family: 'Pacifico', helvetica, sans-serif;
@@ -157,29 +176,83 @@
     .icon {
       width: 30px;
       height: 30px;
-      -webkit-box-shadow: inset 0px -5px 0px 0px rgba(0,0,0,0.5);
-      -moz-box-shadow: inset 0px -5px 0px 0px rgba(0,0,0,0.5);
-      box-shadow: inset 0px -5px 0px 0px rgba(0,0,0,0.5);
+      // -webkit-box-shadow: inset 0px -5px 0px 0px rgba(0,0,0,0.5);
+      // -moz-box-shadow: inset 0px -5px 0px 0px rgba(0,0,0,0.5);
+      // box-shadow: inset 0px -5px 0px 0px rgba(0,0,0,0.5);
     }
-    .icon-container {
-      width: 60px;
-      height: 80px;
+    .icon-container--nav {
+      width: 50px;
+      height: 60px;
+      border-radius: 2px;
       // margin-top: 20px;
       margin-left: auto;
       margin-right: auto;
+      background: $ebony;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      border-bottom: 2px solid $black;
+      // border-bottom: 1px solid $mainGray;
+      // border-top: 2px solid $darkGray;
+      margin-bottom: 10px;
+      background: $ebony;
+      -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
+      -moz-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
+      box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
     }
-    .icon-container:hover {
+    .icon-container--nav:hover {
       background: $darkPurple;
+    }
+    .icon-container--trash {
+      width: 50px;
+      height: 60px;
+      border-radius: 2px;
+      // margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      background: $ebony;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-bottom: 0px solid $black;
+      border-top: 1px solid $darkPurple;
+      margin-bottom: 10px;
+      background: $ebony;
+      -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
+      -moz-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
+      box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
+    }
+    .icon-container--trash:hover {
+      background: $googleRed;
     }
     .active {
       background: $darkPurple;
-      -webkit-box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.5);
-      -moz-box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.5);
-      box-shadow: inset 0px -10px 0px 0px rgba(0,0,0,0.5);
+      border-bottom: 1px solid $ebony;
+      -webkit-box-shadow: inset 0px 5px 2px 0px rgba(0,0,0,0.5),
+      inset 0px -1px 0px 0px rgba(255,255,255,0.1);
+      -moz-box-shadow: inset 0px 5px 2px 0px rgba(0,0,0,0.1),
+      inset 0px -1px 0px 0px rgba(255,255,255,0.4);
+      box-shadow: inset 0px 5px 2px 0px rgba(0,0,0,0.3),
+      inset 0px -1px 0px 0px rgba(255,255,255,0.1);
+    }
+    .menu-trash {
+      margin-top: 15px;
+      width: 40px;
+      height: 45px;
+    }
+    .menu-trash:hover {
+      background: $googleRed;
+    }
+    .menu-trash:active {
+      background: $googleRed;
+      -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.1),
+      inset 0px 6px 10px 0px rgba(0,0,0,0.4);
+      -moz-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.1),
+      inset 0px 6px 10px 0px rgba(0,0,0,0.4);
+      box-shadow: inset 0px 0px -3px -10px rgba(0,0,0,0.1),
+      inset 0px 6px 10px 0px rgba(0,0,0,0.4);
+    }
+    .menu-trash > .icon {
+      width: 25px;
     }
     .nav-pills > li > a {
         padding: 5px 10px;
@@ -221,6 +294,32 @@
     .nocursor {
         cursor: default;
     }
+    .search {
+      position: absolute;
+      right: 60px;
+      padding-top: 15px;
+    }
+    .mail-menu {
+      left: -160px;  /* start off behind the scenes */
+      height: 160px;
+      position: fixed;
+      top: 0;
+      width: 80px;
+      background: $darkPurple;
+      border-bottom: 1px solid $darkGray;
+      // z-index: -1;
+    }
+    .menu-button {
+
+    }
+    .move-right {
+      transform: translateX(80px);
+      transition-duration: .4s;
+    }
+    .move-left {
+      transform: translateX(0px);
+      transition-duration: .4s;
+    }
 
     // scroll-helper
 
@@ -231,7 +330,7 @@
     .scroll-helper {
       position: absolute;
       bottom: 100px;
-      left: 26vw;
+      left: 24vw;
     }
 
     circle {
@@ -251,176 +350,10 @@
         cy: 231;
       }
     }
-    /*** Table Styles **/
-    .table-fill {
-        background: $darkGray;
-        // border-radius:3px;
-        border-collapse: collapse;
-        height: 320px;
-        margin: auto;
-        // max-width: 100vw;
-        // padding:5px;
-        width: 100%;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        animation: float 5s infinite;
-        table-layout: fixed;
-        overflow: hidden;
-    }
-    th {
-        // position: fixed;
-        color: $white;
-        background: $mainGray;
-        /*background: #EA4335;*/
-        // border-bottom:4px solid #9ea7af;
-        border-bottom: 4px solid $medGray;
-        // border-right: 1px solid #343a45;
-        border-right: 1px solid $darkGray;
-        font-size: 22px;
-        font-weight: 100;
-        padding: 10px;
-        padding-left: 24px;
-        // max-width: 100vw;
-        text-align: left;
-        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-        vertical-align: middle;
-        /*max-width: 400px;*/
-        /*width: 1000px;*/
-    }
-    th:first-child {
-        /*border-top-left-radius:3px;*/
-        width: 300px;
-    }
-    th:last-child {
-        /*border-top-right-radius:3px;*/
-        border-right: none;
-        width: 300px;
-    }
-    tr {
-        border-top: 1px solid $seperator;
-        border-bottom-: 1px solid $seperator;
-        color: $lightPurple;
-        font-size: 14px;
-        font-weight: normal;
-        text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
-        // max-width: 100vw;
-        /*width: 400px;*/
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-    tr:hover td {
-        background: #4E5066;
-        color: #FFFFFF;
-        // border-top: 1px solid $darkPurple;
-        // border-bottom: 1px solid $darkPurple;
-    }
-    tr:hover a {
-        color: $white;
-    }
-    tr:first-child {
-        border-top: none;
-    }
-    tr:last-child {
-        border-bottom: none;
-    }
-    tr:nth-child(odd) td {
-        background: $lightGray;
-    }
-    tr:nth-child(odd):hover td {
-        background: $lightPurple;
-    }
-    tr:last-child td:first-child {
-        border-bottom-left-radius: 3px;
-    }
-    tr:last-child td:last-child {
-        border-bottom-right-radius: 3px;
-    }
-    td {
-        position: relative;
-        background: $white;
-        padding: 10px 10px 10px 20px;
-        text-align: left;
-        vertical-align: middle;
-        font-weight: 300;
-        font-size: 18px;
-        text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-        border-right: 1px solid $seperator;
-        overflow: hidden;
-        /*text-overflow: ellipsis;*/
-    }
-    .tbody {
-      display: block;
-      height: calc(50vh - 1px);
-      min-height: calc(200px + 1 px);
-    }
-    /*FADE*/
-    .content:after {
-        content: "";
-        pointer-events: none;
-        position: absolute;
-        width: 100px;
-        height: 100%;
-        top: 0;
-        right: 0;
-        background-image: -webkit-linear-gradient(right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-        background-image: -moz-linear-gradient(right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-        background-image: -ms-linear-gradient(right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-        background-image: -o-linear-gradient(right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-        background-image: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-    }
-    tr:nth-child(odd) .content:after {
-        content: "";
-        pointer-events: none;
-        position: absolute;
-        width: 100px;
-        height: 100%;
-        top: 0;
-        right: 0;
-        background-image: -webkit-linear-gradient(right, rgba(235,235,235, 1), rgba(255, 255, 255, 0));
-        background-image: -moz-linear-gradient(right, rgba(235,235,235, 1), rgba(255, 255, 255, 0));
-        background-image: -ms-linear-gradient(right, rgba(235,235,235, 1), rgba(255, 255, 255, 0));
-        background-image: -o-linear-gradient(right, rgba(235,235,235, 1), rgba(255, 255, 255, 0));
-        background-image: linear-gradient(to left, rgba(235,235,235, 1), rgba(255, 255, 255, 0));
-    }
-    tr:hover .content:after {
-        content: "";
-        pointer-events: none;
-        position: absolute;
-        width: 100px;
-        height: 100%;
-        top: 0;
-        right: 0;
-        background-image: -webkit-linear-gradient(right, rgba(78,80,102, 1), rgba(255, 255, 255, 0));
-        background-image: -moz-linear-gradient(right, rgba(78,80,102, 1), rgba(255, 255, 255, 0));
-        background-image: -ms-linear-gradient(right, rgba(78,80,102, 1), rgba(255, 255, 255, 0));
-        background-image: -o-linear-gradient(right, rgba(78,80,102, 1), rgba(255, 255, 255, 0));
-        background-image: linear-gradient(to left, rgba(78,80,102, 1), rgba(255, 255, 255, 0));
-    }
-    td:last-child {
-        border-right: 0;
-    }
-    th.text-left {
-        text-align: left;
-    }
-    th.text-center {
-        text-align: center;
-    }
-    th.text-right {
-        text-align: right;
-    }
-    td.text-left {
-        text-align: left;
-    }
-    td.text-center {
-        text-align: center;
-    }
-    td.text-right {
-        text-align: right;
-    }
-    .load {
+  .load {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 26vw;
   transform: translate(-50%, -50%);
 }
 
