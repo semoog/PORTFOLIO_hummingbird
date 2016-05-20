@@ -16,14 +16,28 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
     // jquery init
 
+    // $('.mail-container').addClass('blur');
+
     $( ".scroll-helper" ).hide();
 
     $(document).on('click', '.icon-container--nav', function() {
        $(".icon-container--nav").removeClass("active");
        $(this).addClass("active");
     });
+    $(document).on('click', '.compose-container--nav', function() {
+       $(this).addClass("active");
+       setTimeout(function () {
+         $(this).removeClass("active");
+       }, 500);
+    });
+    $(document).on('click', '.label-container--nav', function() {
+       $(".label-container--nav").removeClass("active");
+       $(this).addClass("active");
+    });
 
     $scope.toggleMenu = (event) => {
+
+            // $(event.currentTarget.parentNode).addClass('move-left');
 
             $(event.currentTarget.parentNode).addClass('move-right');
 
@@ -131,6 +145,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
             for (let i = 0; i < response.data.mails.length; i++) {
 
+                console.log("mail id: ", i, "date response: ", extractField(response.data.mails[i], "Date"));
+
                 // filtering for properties
 
                 parsedMail.emails.push({});
@@ -138,7 +154,13 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
                 parsedMail.emails[i].from = extractField(response.data.mails[i], "From");
                 parsedMail.emails[i].sender = parsedMail.emails[i].from.replace(/<\S+@\S+\.\S{2,8}>/g, '').replace(/"+/g, '');
                 parsedMail.emails[i].subject = extractField(response.data.mails[i], "Subject").replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
-                parsedMail.emails[i].date = extractField(response.data.mails[i], "Date");
+                if (extractField(response.data.mails[i], "Date") !== (undefined || null)) {
+                  console.log("mail id: ", i, "date response: ", extractField(response.data.mails[i], "Date"));
+                  parsedMail.emails[i].date = extractField(response.data.mails[i], "Date");
+                }
+                else {
+                  parsedMail.emails[i].date = response.data.mails[i].internalDate;
+                }
                 parsedMail.emails[i].date = moment(parsedMail.emails[i].date).calendar();
                 parsedMail.emails[i].snippet = response.data.mails[i].snippet.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
                 parsedMail.emails[i].id = response.data.mails[i].id;
@@ -162,8 +184,12 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
                 $scope.emails = parsedMail.emails;
                 $scope.emails[i].index = i;
-                $('.load').hide();
+                $('.load').fadeOut('fast', function() {
+
+                });
             }
+
+            // $('.notouch').remove();
 
             $scope.mails = parsedMail.emails;
 
@@ -243,7 +269,6 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
         // Show the modal window
         $('#message-modal').modal('show');
-
     });
 
     // init mail getter

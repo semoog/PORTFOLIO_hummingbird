@@ -9,6 +9,7 @@
   background: -webkit-linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7));
   background: -o-linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7));
   background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7));
+  z-index: 1;
 }
 
 .blur {
@@ -17,6 +18,8 @@
   -o-filter: blur(3px);
   -ms-filter: blur(3px);
   filter: blur(3px);
+  z-index: 10;
+  // background: green;
 }
 
 .app-container {
@@ -37,10 +40,22 @@
       font-weight: 400;
       text-rendering: optimizeLegibility;
     }
-    .app-bar, .footer-bar{
+    .app-bar {
       height: 60px;
       width: 100%;
       background: $darkGreen;
+      z-index: 1;
+      // -webkit-box-shadow: 0px 0px 38px 0px $darkGray;
+      // -moz-box-shadow: 0px 0px 38px 0px $darkGray;
+      // box-shadow: 0px 0px 38px 0px $darkGray;
+    }
+    .footer-bar{
+      height: 30px;
+      width: 100%;
+      background: $darkGreen;
+      position: absolute;
+      z-index: 1;
+      bottom: 0;
       // -webkit-box-shadow: 0px 0px 38px 0px $darkGray;
       // -moz-box-shadow: 0px 0px 38px 0px $darkGray;
       // box-shadow: 0px 0px 38px 0px $darkGray;
@@ -49,13 +64,8 @@
     .nav-bar, .side-bar {
       height: 100vh;
       width: 60px;
-      background: $darkGreen;
-    }
-
-    .footer-bar {
-      position: absolute;
       z-index: 1;
-      bottom: 0;
+      background: $darkGreen;
     }
 
     iframe {
@@ -69,7 +79,8 @@
         // position: absolute;
         // left: 0;
         // top: 0;
-        width: 46vw; //pixel value
+        z-index: -1;
+        width: 35vw; //pixel value
         height: 90vh;
         // position: absolute;
         overflow: scroll;
@@ -90,6 +101,7 @@
       cursor: default;
       overflow: hidden;
       text-overflow: ellipsis;
+      transition: background-color 0.5s ease;
     }
 
     .mail-container--mailbox:last-child {
@@ -114,33 +126,33 @@
 
     .unread-badge {
       position: relative;
-      width: 10px;
-      height: 10px;
+      width: 15px;
+      height: 15px;
       background: $bleu;
-      border-radius: 100%;
+      border-radius: 20%;
       margin-right: 5px;
     }
 
     .important-badge {
       position: relative;
-      left: -15px;
+      left: -20px;
       margin-top: 20px;
-      width: 10px;
-      height: 10px;
+      width: 15px;
+      height: 15px;
       background: $googleRed;
-      border-radius: 100%;
+      border-radius: 20%;
       margin-right: 5px;
     }
 
     .mail-content {
-        // position: absolute;
-        // left: 0;
-        // top: 0;
-        width: 46vw; //pixel value
-        height: 90vh;
-        background: $black;
-        // position: absolute;
-        overflow: scroll;
+        position: absolute;
+        left: 40vw;
+        top: 10vh;
+        width: 56vw; //pixel value
+        height: 85vh;
+        background: $medGray;
+        z-index: -1;
+        // overflow: scroll;
         // margin-top: 60px;
         // left: 0;
         // margin-left: 20px;
@@ -174,23 +186,26 @@
     .logo {
         font-family: 'Pacifico', helvetica, sans-serif;
         // font-family: "Open Sans", helvetica, arial, sans-serif;
-        font-weight: 300;
+        font-weight: 400;
         position: absolute;
-        left: 60px;
+        left: 50%;
+        transform: translateX(-50%);
         margin-top: 15px;
         color: $white;
         font-size: 30px;
+        cursor: default;
     }
     .username {
       font-family: "Open Sans", helvetica, arial, sans-serif;
       font-weight: 300;
       position: absolute;
       // right: 30px;
-      bottom: 50px;
+      bottom: 20px;
       margin-left: 5px;
       // padding-top: 15px;
       color: $white;
       font-size: 16px;
+      border-radius: 100%;
       // padding-right: 30px;
     }
     .icon {
@@ -221,6 +236,50 @@
     }
     .icon-container--nav:hover {
       background: $darkPurple;
+    }
+    .compose-container--nav {
+      width: 50px;
+      height: 60px;
+      border-radius: 5px;
+      // margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      background: $ebony;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      // border-bottom: 1px solid $mainGray;
+      border: 1px solid $darkGreen;
+      margin-bottom: 10px;
+      background: $ebony;
+      -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
+      -moz-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
+      box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.8);
+    }
+    .compose-container--nav:hover {
+      background: $darkPurple;
+    }
+    .label-container--nav {
+      position: relative;
+      float: left;
+      left: 7.5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 20%;
+      margin-right: 5px;
+      box-shadow: 0px 3px 0px 0px rgba(0,0,0,0.3);
+    }
+    .important {
+      background: $googleRed;
+    }
+    .important:hover {
+      background: $googleRed_dim;
+    }
+    .unread {
+      background: $bleu;
+    }
+    .unread:hover {
+      background: $bleu_dim;
     }
     .icon-container--trash {
       width: 50px;
@@ -254,6 +313,12 @@
       box-shadow: inset 0px 5px 2px 0px rgba(0,0,0,0.5),
       inset 0px -1px 0px 0px rgba(255,255,255,0.1);
     }
+    .important.active {
+      background: $googleRed_dim;
+    }
+    .unread.active {
+      background: $bleu_dim;
+    }
     .menu-trash {
       margin-top: 15px;
       width: 40px;
@@ -282,15 +347,15 @@
         margin-left: 30px;
     }
     .modal-header {
-        background: $mainGray;
-        color: $white;
+        // background: white;
+        color: $black;
     }
     .modal-body {
         // height: 70vh;
         // background: $darkGray;
     }
     .modal {
-      margin-top: 6vh;
+      margin-top: 8.5vh;
     }
     .hummingbird-icon {
         width: 128px;
@@ -318,6 +383,7 @@
       position: absolute;
       right: 60px;
       padding-top: 15px;
+      z-index: 0;
     }
     .mail-menu {
       left: -60px;  /* start off behind the scenes */
@@ -343,6 +409,8 @@
       margin-right: 10px;
       float: left;
       border: none;
+      cursor: default;
+      outline: 0;
       background: $medGray;
       -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
       -moz-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
@@ -357,16 +425,17 @@
     }
     .move-right {
       transform: translateX(60px);
-      transition-duration: .4s;
+      transition-duration: .8s;
     }
     .move-left {
       transform: translateX(0px);
-      transition-duration: .4s;
+      transition-duration: .8s;
     }
     .compose {
       position: absolute;
-      bottom: 110px;
+      bottom: 78px;
       left: 5px;
+      outline: 0;
     }
 
     // scroll-helper
@@ -378,7 +447,7 @@
     .scroll-helper {
       position: absolute;
       bottom: 100px;
-      left: 23vw;
+      left: 18.5vw;
     }
 
     circle {
@@ -398,19 +467,21 @@
         cy: 231;
       }
     }
-  .load {
+.load {
   position: absolute;
   top: 50%;
-  left: 26vw;
+  left: 27vw;
   transform: translate(-50%, -50%);
+  z-index: 2;
 }
 
 .load > div {
   float: left;
-  margin: 2px;
-  height: 35px;
-  width: 5px;
-  background: #003300;
+  z-index: 2;
+  margin: 5px;
+  height: 85px;
+  width: 10px;
+  background: $darkGray;
   animation: load 1.4s infinite ease-in-out;
 }
 
