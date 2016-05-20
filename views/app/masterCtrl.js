@@ -4,6 +4,8 @@ angular.module("meanmail").controller("masterCtrl", function ($scope, $http, mas
 
     var openedWindow;
 
+    var auth;
+
     $('.login').on('submit', function(e) {
       e.preventDefault();
       openedWindow = window.open("http://localhost:3000/auth/google", "mywindow", "width=600px, height=600px");
@@ -28,8 +30,12 @@ angular.module("meanmail").controller("masterCtrl", function ($scope, $http, mas
           $this.addClass('ok');
           $btnstate.html('Welcome back!');
           setTimeout(function () {
-            $('.login').fadeOut("slow");
-            $state.go('mail');
+
+            $('.background').addClass('bg-white');
+            $('.login').fadeOut(400, function() {
+              $state.go('mail');
+            });
+
           }, 2000);
           setTimeout(function() {
             $btnstate.html('Log in');
