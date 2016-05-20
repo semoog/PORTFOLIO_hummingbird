@@ -21,7 +21,7 @@
               </g>
             </svg>
 
-            <h1 class="logo">hummingbird</h1>
+            <h1 class="logo">hermes</h1>
             <h3 class="username"> <img src="{{user.profileimg}}" alt="" /> </h3>
             <div class="input-group search">
               <input type="text" class="form-control" placeholder="search..." aria-describedby="basic-addon1">
@@ -83,7 +83,7 @@
             <div class="unread-badge pull-left" ng-show="{{mail.unread}}"></div>
             <div class="important-badge pull-left" ng-show="{{mail.important}}"></div>
 
-            <div class="message-link mailbox--mail" data-toggle="modal" id="{{mail.index}}" messageId="{{mail.id}}">
+            <div class="message-link mailbox--mail" data-toggle="modal" id="{{mail.index}}" messageId="{{mail.id}}" ng-click="removeLabel(mail.id, 'UNREAD')">
 
                 <div>
 

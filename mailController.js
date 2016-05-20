@@ -74,24 +74,6 @@ module.exports = {
     console.log('messageId', messageId);
     console.log('accessT', accToken);
 
-    // request.post(
-    //     'https://www.googleapis.com/gmail/v1/users/me/messages/154c112d2e0d678d/trash', {
-    //       'headers': {
-    //         'Authorization': 'Bearer ' + accToken
-    //       }
-    //     },
-    //     function (error, response, body) {
-    //         if (!error && response.statusCode == 200) {
-    //             console.log("TRASHED! YAY", body);
-    //         }
-    //         else {
-    //           console.log("error: ", error);
-    //           console.log("body: ", body);
-    //           console.log("response: ", response);
-    //         }
-    //     }
-    // );
-
     oauth2Client.setCredentials({
       access_token: accToken
     });
@@ -102,27 +84,25 @@ module.exports = {
       userId: 'me',
       id: messageId
     });
+  },
 
-    // var request2 = gmail.users.messages.list({
-    //   key: API_KEY,
-    //   userId: 'me',
-    //   maxResults: 25
-    // });
-    //
-    // console.log(request2);
+  removeLabel: (messageId, label, accToken) => {
+    console.log("removing label ", label, " from ", messageId);
 
-    // function displayInbox() {
-    //     gmail.users.messages.list({
-    //         userId: 'me',
-    //         labelIds: 'INBOX',
-    //         maxResults: 25
-    //     });
-    //   }
-    //
-    // displayInbox();
+    oauth2Client.setCredentials({
+      access_token: accToken
+    });
 
+    var gmail = google.gmail({ version: 'v1', auth: oauth2Client });
 
-
+    gmail.users.messages.modify({
+      userId: 'me',
+      id: messageId,
+      resource: {
+        addLabelIds: [label],
+        removeLabelIds: []
+      }
+    });
   },
 
 
