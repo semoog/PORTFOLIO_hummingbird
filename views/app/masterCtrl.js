@@ -2,10 +2,39 @@
 
 angular.module("meanmail").controller("masterCtrl", function ($scope, $http) {
 
+    var working = false;
+
+    $('.login').on('submit', function(e) {
+      e.preventDefault();
+      window.open("http://localhost:3000/auth/google", "mywindow", "width=600px, height=600px");
+      if (working) return;
+      working = true;
+      var $this = $(this),
+        $state = $this.find('button > .state');
+      $this.addClass('loading');
+      $state.html('Authenticating');
+      setTimeout(function() {
+        $this.addClass('ok');
+        setTimeout(function () {
+          $('.login').fadeOut("slow", function() {
+          $('.cover').removeClass('notouch');
+          $('.app-container').removeClass('blur');
+        });
+        }, 1000);
+        $state.html('Welcome back!');
+        setTimeout(function() {
+          $state.html('Log in');
+          $this.removeClass('ok loading');
+          working = false;
+        }, 4000);
+      }, 3000);
+    });
+
     $scope.login = () => {
 
           // $(location).attr('href', 'http://localhost:3000/auth/google');
-          window.top.location.href = '/auth/google';
+          // window.top.location.href = '/auth/google';
+          return window.open("http://localhost:3000/auth/google", "mywindow");
 
       };
 

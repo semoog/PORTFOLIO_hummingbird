@@ -2,13 +2,19 @@
 
 // import bootstrap from 'bootstrap';
 
-angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
+angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user, $state) {
+
+    $scope.user = user;
+    console.log($scope.user);
 
     // INIT
 
-    // $(document).ready(function() {
-    //   $('.message-link').slick();
-    // });
+    $scope.hover = false;
+
+      $('.login').hide();
+      $('.cover').removeClass('notouch');
+      $('.app-container').removeClass('blur');
+
 
     $( ".scroll-helper" ).hide();
 
@@ -17,23 +23,18 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
        $(this).addClass("active");
     });
 
-    var used = false;
+    $scope.toggleMenu = (event) => {
 
-    $scope.toggleMenu = () => {
+            $(event.currentTarget.parentNode).addClass('move-right');
 
-          if (!used) {
-            $('.mail-menu').addClass('move-right');
-            $('.mail-container--mailbox').addClass('move-right');
-            used = true;
-          }
-          else {
-            $('.mail-menu').toggleClass('move-right');
-            $('.mail-menu').toggleClass('move-left');
+            // $(event.currentTarget.parentNode).toggleClass('move-right');
+            $(event.currentTarget.parentNode).toggleClass('move-left');
 
-            $('.mail-container--mailbox').toggleClass('move-right');
-            $('.mail-container--mailbox').toggleClass('move-left');
-          }
+            // $(event.target.parent()).toggleClass('move-right');
+            // $(event.target.parent()).toggleClass('move-left');
     };
+
+
 
     $('.mail-menu').click(function(){
         $('.mail-menu').removeClass('move-right');
@@ -113,21 +114,14 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
     // FETCH
 
-    $scope.getUser = () => {
-      return $http({
-          method: 'GET',
-          url: 'http://localhost:3000/getUser'
-      }).then((response) => {
-        console.log(response);
-        $scope.user = response.data;
-      });
-    };
-
     $scope.getMail = (label) => {
+        $('.load').show();
         return $http({
             method: 'GET',
             url: 'http://localhost:3000/getMail/' + label
         }).then((response) => {
+
+            // $scope.checkAuth();
 
             // $('.tbody').remove();
             // $('.table inbox').append("<tbody class='tbody'></tbody>");
@@ -177,31 +171,9 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
 
                 parsedMail.emails[i].html = getBody(response.data.mails[i].payload);
 
-                processMessage(parsedMail.emails[i]);
                 $scope.emails = parsedMail.emails;
                 $scope.emails[i].index = i;
-            }
-
-
-
-            function processMessage(message) {
-
-                let row = $('#row-template').html();
-                let sender = message.from;
-                let subject = message.subject;
-                let dateRaw = new Date(message.date);
-                let date = moment(dateRaw).calendar();
-                let snippet = message.snippet;
-                let index = message.index;
-                $scope.curIndex = message.index;
-                // Remove the email address, leave only sender's name
-                let from = message.from.replace(/<\S+@\S+\.\S{2,8}>/g, '').replace(/"+/g, '');
-
-                from = from.trim() || sender;
-
-                // REFRESH TABLE??
                 $('.load').hide();
-                $('.mail-container--mailbox').removeClass('hidden');
             }
 
             $scope.mails = parsedMail.emails;
@@ -226,11 +198,6 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
     };
 
     $scope.trashMail = (messageId) => {
-
-      // find mail div and remove
-
-      // $(this).closest(".mail-container--mailbox").remove();
-
       return $http({
           method: 'POST',
           url: 'http://localhost:3000/trashMail/',
@@ -239,11 +206,9 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
           }
       }).then((response) => {
           console.log("trashed");
+          $state.go($state.current, {}, {reload: true});
       });
     };
-
-    $scope.getUser();
-    $scope.getMail('INBOX');
 
     $('.mail-container').on('click', 'div.message-link', function(e) {
         let index, title, sender, date, iframe, messageBody;
@@ -269,5 +234,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http) {
         $('#message-modal').modal('show');
 
     });
+
+    $scope.getMail('INBOX');
 
 });
