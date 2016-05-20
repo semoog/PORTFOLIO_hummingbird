@@ -138,9 +138,9 @@ app.get('/checkAuth',
   (req, res) => {
     if (req.isAuthenticated()) {
       console.log("authentication good. STATUS 200");
-      return res.status(200).send();
+      return res.sendStatus(200);
     }
-    return res.status(500).send();
+    return res.sendStatus(500);
 });
 
 app.get('/getUser',
@@ -173,6 +173,13 @@ app.post('/trashMail',
     res.send(req.body);
 });
 
+app.post('/removeLabel',
+  (req, res) => {
+    console.log(req.body.messageId);
+    mail.removeLabel(req.body.messageId, req.body.label, req.user.accessToken);
+    res.send(req.body);
+});
+
 app.get('/getMail/:label',
   ensureAuthenticated,
   async (function (req, res){
@@ -191,7 +198,7 @@ app.get('/auth/google/callback',
   (req, res) => {
     // Successful authentication, redirect home.
     console.log("Successfully Authenticated.");
-    res.redirect('/#/mail');
+    return res.status(200).send();
 });
 
 app.get('/oauthcallback?code={authorizationCode}',

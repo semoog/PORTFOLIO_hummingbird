@@ -11,6 +11,8 @@ angular.module('meanmail').service('masterService', function($http) {
   this.checkAuth = function () {
     return $http.get('/checkAuth').then(function (response) {
       return response;
+    }).catch(function () {
+      return false;
     });
   };
 

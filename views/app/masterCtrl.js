@@ -1,33 +1,44 @@
 /* jshint esversion: 6 */
 
-angular.module("meanmail").controller("masterCtrl", function ($scope, $http) {
+angular.module("meanmail").controller("masterCtrl", function ($scope, $http, masterService, $state) {
 
-    var working = false;
+    var openedWindow;
 
     $('.login').on('submit', function(e) {
       e.preventDefault();
-      window.open("http://localhost:3000/auth/google", "mywindow", "width=600px, height=600px");
-      if (working) return;
-      working = true;
+      openedWindow = window.open("http://localhost:3000/auth/google", "mywindow", "width=600px, height=600px");
       var $this = $(this),
-        $state = $this.find('button > .state');
+        $btnstate = $this.find('button > .state');
       $this.addClass('loading');
-      $state.html('Authenticating');
-      setTimeout(function() {
-        $this.addClass('ok');
-        setTimeout(function () {
-          $('.login').fadeOut("slow", function() {
-          $('.cover').removeClass('notouch');
-          $('.app-container').removeClass('blur');
+      $btnstate.html('Authenticating');
+
+      var refreshAuth = setInterval(function () {
+        masterService.checkAuth().then(function(data) {
+          console.log("data", data);
+          if (data.status) {
+            auth = data.status;
+          }
+          else {
+            auth = data;
+          }
         });
-        }, 1000);
-        $state.html('Welcome back!');
-        setTimeout(function() {
-          $state.html('Log in');
-          $this.removeClass('ok loading');
-          working = false;
-        }, 4000);
-      }, 3000);
+        if (auth === 200) { // IF AUTH WHAT?
+          openedWindow.close();
+          console.log("good status! yay");
+          $this.addClass('ok');
+          $btnstate.html('Welcome back!');
+          setTimeout(function () {
+            $('.login').fadeOut("slow");
+            $state.go('mail');
+          }, 2000);
+          setTimeout(function() {
+            $btnstate.html('Log in');
+            $this.removeClass('ok loading');
+          }, 4000);
+          clearInterval(refreshAuth);
+        }
+      }, 1000);
+
     });
 
     $scope.login = () => {

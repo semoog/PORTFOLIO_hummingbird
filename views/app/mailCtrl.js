@@ -210,6 +210,20 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
       });
     };
 
+    $scope.removeLabel = (messageId, label) => {
+      return $http({
+          method: 'POST',
+          url: 'http://localhost:3000/removeLabel/',
+          data: {
+            messageId: messageId,
+            label: label
+          }
+      }).then((response) => {
+          console.log("removed label", label);
+          $state.go($state.current, {}, {reload: true});
+      });
+    };
+
     $('.mail-container').on('click', 'div.message-link', function(e) {
         let index, title, sender, date, iframe, messageBody;
 
