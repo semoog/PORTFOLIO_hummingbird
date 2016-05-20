@@ -30,7 +30,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #343436; }
+  background-color: #191919; }
 
 .loginContainer .logo {
   font-family: 'Pacifico', helvetica, sans-serif;
@@ -216,11 +216,11 @@
   .app-container .app-bar, .app-container .footer-bar {
     height: 60px;
     width: 100%;
-    background: #343436; }
+    background: #191919; }
   .app-container .nav-bar, .app-container .side-bar {
     height: 100vh;
     width: 60px;
-    background: #343436; }
+    background: #191919; }
   .app-container .footer-bar {
     position: absolute;
     z-index: 1;
@@ -238,7 +238,7 @@
   .app-container .mail-container--mailbox {
     height: 160px;
     background: #EBEBEB;
-    color: #000;
+    color: #191919;
     border-bottom: 1px solid #C1C3D1;
     padding: 20px;
     padding-left: 20px;
@@ -256,16 +256,20 @@
   .app-container .mailbox--mail .date, .app-container .snippet {
     color: #555555; }
   .app-container .unread-badge {
+    position: relative;
     width: 10px;
     height: 10px;
     background: #3E94EC;
-    border-radius: 40%;
+    border-radius: 100%;
     margin-right: 5px; }
   .app-container .important-badge {
+    position: relative;
+    left: -15px;
+    margin-top: 20px;
     width: 10px;
     height: 10px;
     background: #EA4335;
-    border-radius: 40%;
+    border-radius: 100%;
     margin-right: 5px; }
   .app-container .mail-content {
     width: 46vw;
@@ -321,12 +325,12 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border: 1px solid #1D1F20;
+    border: 1px solid #191919;
     margin-bottom: 10px;
     background: #343436;
     -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5); }
+    box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.8); }
   .app-container .icon-container--nav:hover {
     background: #22262e; }
   .app-container .icon-container--trash {
@@ -350,10 +354,10 @@
     background: #EA4335; }
   .app-container .active {
     background: #22262e;
-    border: 1px solid #343436;
+    border: 1px solid #191919;
     -webkit-box-shadow: inset 0px 5px 2px 0px rgba(0, 0, 0, 0.5), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
-    -moz-box-shadow: inset 0px 5px 2px 0px rgba(0, 0, 0, 0.1), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.4);
-    box-shadow: inset 0px 5px 2px 0px rgba(0, 0, 0, 0.3), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.1); }
+    -moz-box-shadow: inset 0px 5px 2px 0px rgba(0, 0, 0, 0.5), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0px 5px 2px 0px rgba(0, 0, 0, 0.5), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.1); }
   .app-container .menu-trash {
     margin-top: 15px;
     width: 40px;
@@ -406,7 +410,10 @@
     top: 0;
     width: 60px;
     background: #22262e;
-    border-bottom: 1px solid #1D1F20; }
+    border-bottom: 1px solid #1D1F20;
+    -webkit-box-shadow: inset 5px 0px 10px 0px rgba(0, 0, 0, 0.4), inset 0px 0px 0px 0px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: inset 5px 10px 0px 0px rgba(0, 0, 0, 0.4), inset 0px 0px 0px 0px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 5px 0px 10px 0px rgba(0, 0, 0, 0.4), inset 0px 0px 0px 0px rgba(0, 0, 0, 0.4); }
   .app-container .menu-button {
     width: 10px;
     height: 40px;
@@ -439,7 +446,7 @@
   .app-container .scroll-helper {
     position: absolute;
     bottom: 100px;
-    left: 24vw; }
+    left: 23vw; }
   .app-container circle {
     animation: scroll 1.5s ease infinite; }
 

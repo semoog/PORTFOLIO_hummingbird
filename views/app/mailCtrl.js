@@ -4,17 +4,17 @@
 
 angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user, $state) {
 
+    // vars
+
     $scope.user = user;
-    console.log($scope.user);
 
-    // INIT
+    $scope.emails = {};
 
-    $scope.hover = false;
+    $scope.mails = {};
 
-      $('.login').hide();
-      $('.cover').removeClass('notouch');
-      $('.app-container').removeClass('blur');
+    var scrolled = false;
 
+    // jquery init
 
     $( ".scroll-helper" ).hide();
 
@@ -27,14 +27,9 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
             $(event.currentTarget.parentNode).addClass('move-right');
 
-            // $(event.currentTarget.parentNode).toggleClass('move-right');
             $(event.currentTarget.parentNode).toggleClass('move-left');
 
-            // $(event.target.parent()).toggleClass('move-right');
-            // $(event.target.parent()).toggleClass('move-left');
     };
-
-
 
     $('.mail-menu').click(function(){
         $('.mail-menu').removeClass('move-right');
@@ -44,13 +39,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
         $('.mail-container--mailbox').addClass('move-left');
     });
 
-    // $(".mail-container--mailbox").hover(function() {
-    //   $(this).find(".trash-icon").removeClass("hidden");
-    // }, function() {
-    //   $(this).find(".trash-icon").addClass("hidden");
-    // });
-
-    var scrolled = false;
+    // scroll-tip
 
     $(".mail-container").scroll(function() {
       console.log("scrolled");
@@ -61,9 +50,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
       $( ".scroll-helper" ).fadeOut('slow');
     });
 
-    $scope.emails = {};
-
-    $scope.mails = {};
+    // tidy compose modal after send
 
     function composeTidy() {
 
@@ -91,6 +78,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
       return false;
     };
 
+    // getMail parsing
+
     function getBody(message) {
         var encodedBody = '';
 
@@ -112,7 +101,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
         return '';
     }
 
-    // FETCH
+    // get
 
     $scope.getMail = (label) => {
         $('.load').show();
@@ -187,6 +176,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
         });
     };
 
+    // send
+
     $scope.sendMail = (headers_obj, message) => {
       return $http({
           method: 'POST',
@@ -196,6 +187,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
         composeTidy();
       });
     };
+
+    // trash mail
 
     $scope.trashMail = (messageId) => {
       return $http({
@@ -210,6 +203,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
       });
     };
 
+    // remove label
+
     $scope.removeLabel = (messageId, label) => {
       return $http({
           method: 'POST',
@@ -223,6 +218,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
           $state.go($state.current, {}, {reload: true});
       });
     };
+
+    // modal popup
 
     $('.mail-container').on('click', 'div.message-link', function(e) {
         let index, title, sender, date, iframe, messageBody;
@@ -248,6 +245,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
         $('#message-modal').modal('show');
 
     });
+
+    // init mail getter
 
     $scope.getMail('INBOX');
 

@@ -40,7 +40,7 @@
     .app-bar, .footer-bar{
       height: 60px;
       width: 100%;
-      background: $secondaryGray;
+      background: $darkGreen;
       // -webkit-box-shadow: 0px 0px 38px 0px $darkGray;
       // -moz-box-shadow: 0px 0px 38px 0px $darkGray;
       // box-shadow: 0px 0px 38px 0px $darkGray;
@@ -49,7 +49,7 @@
     .nav-bar, .side-bar {
       height: 100vh;
       width: 60px;
-      background: $secondaryGray;
+      background: $darkGreen;
     }
 
     .footer-bar {
@@ -79,10 +79,11 @@
     }
     .mail-container--mailbox {
       height: 160px;
+      // position: relative;
       //display: block; == default
       // width: 50vw;
       background: $lightGray;
-      color: $black;
+      color: $darkGreen;
       border-bottom: 1px solid $seperator;
       padding: 20px;
       padding-left: 20px;
@@ -112,18 +113,22 @@
     }
 
     .unread-badge {
+      position: relative;
       width: 10px;
       height: 10px;
       background: $bleu;
-      border-radius: 40%;
+      border-radius: 100%;
       margin-right: 5px;
     }
 
     .important-badge {
+      position: relative;
+      left: -15px;
+      margin-top: 20px;
       width: 10px;
       height: 10px;
       background: $googleRed;
-      border-radius: 40%;
+      border-radius: 100%;
       margin-right: 5px;
     }
 
@@ -207,12 +212,12 @@
       justify-content: space-around;
       align-items: center;
       // border-bottom: 1px solid $mainGray;
-      border: 1px solid $darkGray;
+      border: 1px solid $darkGreen;
       margin-bottom: 10px;
       background: $ebony;
       -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
       -moz-box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
-      box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.5);
+      box-shadow: inset 0px -3px 0px 0px rgba(0,0,0,0.8);
     }
     .icon-container--nav:hover {
       background: $darkPurple;
@@ -241,12 +246,12 @@
     }
     .active {
       background: $darkPurple;
-      border: 1px solid $ebony;
+      border: 1px solid $darkGreen;
       -webkit-box-shadow: inset 0px 5px 2px 0px rgba(0,0,0,0.5),
       inset 0px -1px 0px 0px rgba(255,255,255,0.1);
-      -moz-box-shadow: inset 0px 5px 2px 0px rgba(0,0,0,0.1),
-      inset 0px -1px 0px 0px rgba(255,255,255,0.4);
-      box-shadow: inset 0px 5px 2px 0px rgba(0,0,0,0.3),
+      -moz-box-shadow: inset 0px 5px 2px 0px rgba(0,0,0,0.5),
+      inset 0px -1px 0px 0px rgba(255,255,255,0.1);
+      box-shadow: inset 0px 5px 2px 0px rgba(0,0,0,0.5),
       inset 0px -1px 0px 0px rgba(255,255,255,0.1);
     }
     .menu-trash {
@@ -322,6 +327,12 @@
       width: 60px;
       background: $darkPurple;
       border-bottom: 1px solid $darkGray;
+      -webkit-box-shadow: inset 5px 0px 10px 0px rgba(0,0,0,0.4),
+      inset 0px 0px 0px 0px rgba(0,0,0,0.4);
+      -moz-box-shadow: inset 5px 10px 0px 0px rgba(0,0,0,0.4),
+      inset 0px 0px 0px 0px rgba(0,0,0,0.4);
+      box-shadow: inset 5px 0px 10px 0px rgba(0,0,0,0.4),
+      inset 0px 0px 0px 0px rgba(0,0,0,0.4);
       // z-index: -1;
     }
     .menu-button {
@@ -367,7 +378,7 @@
     .scroll-helper {
       position: absolute;
       bottom: 100px;
-      left: 24vw;
+      left: 23vw;
     }
 
     circle {
