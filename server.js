@@ -134,7 +134,17 @@ app.get('/login',
     res.redirect('/#/login');
 });
 
+app.get('/checkAuth',
+  (req, res) => {
+    if (req.isAuthenticated()) {
+      console.log("authentication good. STATUS 200");
+      return res.status(200).send();
+    }
+    return res.status(500).send();
+});
+
 app.get('/getUser',
+ensureAuthenticated,
   (req, res) => {
     res.json({
       name: req.user.name,
@@ -174,7 +184,7 @@ app.get('/getMail/:label',
 // Google Authentication Routes
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', SCOPES] }));
+  passport.authenticate('google', {display: 'page', scope: ['profile', SCOPES]}));
 
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),

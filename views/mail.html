@@ -1,11 +1,11 @@
-<div class="app-container">
+<div class="app-container blur">
 
     <!-- <button ng-click="getMail('INBOX')">Inbox</button> -->
 
           <div class="app-bar">
 
             <svg xmlns="http://www.w3.org/2000/svg" class="topicon icon-adjustments">
-              <g stroke-width=".1em" stroke-linecap="round" stroke="#343436">
+              <g stroke-width=".1em" stroke-linecap="round" stroke="#1A1A1B">
                 <g class="icon-adjustments_animation">
                   <line x1=".86em" y1=".43em" x2=".86em" y2="1.0em"></line>
                   <line x1=".86em" y1="2em" x2=".86em" y2="3.5em"></line>
@@ -38,6 +38,10 @@
             </div>
             <div class="icon-container--nav" ng-click="getMail('SPAM')">
               <img class="icon" src="src/spam.svg" alt="" />
+            </div>
+            <div class="icon-container--nav compose" ng-click="">
+              <a href="#compose-modal"
+                 data-toggle="modal"><img class="icon" src="src/add.svg" alt="" /></a>
             </div>
           </div>
 
@@ -74,7 +78,7 @@
               </div>
             </div>
 
-            <button class="menu-button" ng-click="toggleMenu()">Open menu</button>
+            <button class="menu-button" ng-click="toggleMenu($event)"></button>
 
             <div class="unread-badge pull-left" ng-show="{{mail.unread}}"></div>
             <div class="important-badge pull-left" ng-show="{{mail.important}}"></div>
@@ -169,4 +173,8 @@
             <td class="text-left">{{date}}</td>
         </tr>
     </script>
+</div>
+
+<div class="cover notouch">
+
 </div>

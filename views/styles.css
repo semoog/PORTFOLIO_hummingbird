@@ -4,67 +4,193 @@
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer; }
 
-.loginContainer {
-  /*.background {
+.loginContainer body {
+  background-color: #1D1F20;
+  color: #fff;
+  font-family: "Open Sans", helvetica, arial, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  font-weight: 400;
+  text-rendering: optimizeLegibility; }
+
+.loginContainer iframe {
+  width: 100%;
+  border: 0;
+  min-height: 80%;
+  height: 600px;
+  display: flex; }
+
+.loginContainer .nowrap {
+  white-space: nowrap; }
+
+.loginContainer .background {
   z-index: 0;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #3e94ec;
-}*/ }
-  .loginContainer body {
-    background-color: #1D1F20;
-    color: #fff;
-    font-family: "Open Sans", helvetica, arial, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    text-rendering: optimizeLegibility; }
-  .loginContainer iframe {
+  background-color: #343436; }
+
+.loginContainer .logo {
+  position: relative;
+  text-align: center;
+  z-index: 3;
+  color: #fff;
+  margin-top: 120px;
+  font-size: 50px;
+  font-weight: 300;
+  padding: 0 10%;
+  /*background: #6EAFF1;*/ }
+
+.loginContainer .hummingbird-icon {
+  width: 128px;
+  margin-left: auto;
+  margin-right: auto; }
+
+.loginContainer .hummingbird-icon img {
+  width: 128px;
+  height: 128px;
+  margin-top: 20px; }
+
+.loginContainer .btncolor {
+  background: #EA4335; }
+
+.loginContainer h2 {
+  position: relative;
+  text-align: center;
+  z-index: 3;
+  color: #fff;
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: 300;
+  padding: 0 10%; }
+
+.loginContainer strong {
+  font-weight: 900; }
+
+@keyframes spinner {
+  0% {
+    transform: rotateZ(0deg); }
+  100% {
+    transform: rotateZ(359deg); } }
+
+.loginContainer .login {
+  position: absolute;
+  top: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px 2px 5px 5px;
+  padding: 10px 20px 20px 20px;
+  width: 90%;
+  height: 60px;
+  max-width: 320px;
+  background: #ffffff;
+  position: relative;
+  padding-bottom: 100px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+  z-index: 9; }
+  .loginContainer .login.loading button {
+    max-height: 100%;
+    padding-top: 50px; }
+    .loginContainer .login.loading button .spinner {
+      opacity: 1;
+      top: 40%; }
+  .loginContainer .login.ok button {
+    background-color: #8bc34a; }
+    .loginContainer .login.ok button .spinner {
+      border-radius: 0;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      height: 20px;
+      animation: none;
+      transform: rotateZ(-45deg); }
+  .loginContainer .login input {
+    display: block;
+    padding: 15px 10px;
+    margin-bottom: 10px;
     width: 100%;
-    border: 0;
-    min-height: 80%;
-    height: 600px;
-    display: flex; }
-  .loginContainer .nowrap {
-    white-space: nowrap; }
-  .loginContainer .logo {
-    font-family: 'Pacifico', helvetica, sans-serif;
-    position: relative;
-    text-align: center;
-    z-index: 3;
+    border: 1px solid #ddd;
+    transition: border-width 0.2s ease;
+    border-radius: 2px;
+    color: #ccc; }
+    .loginContainer .login input + i.fa {
+      color: #fff;
+      font-size: 1em;
+      position: absolute;
+      margin-top: -47px;
+      opacity: 0;
+      left: 0;
+      transition: all 0.1s ease-in; }
+    .loginContainer .login input:focus {
+      outline: none;
+      color: #444;
+      border-color: #EA4335;
+      border-left-width: 35px; }
+      .loginContainer .login input:focus + i.fa {
+        opacity: 1;
+        left: 30px;
+        transition: all 0.25s ease-out; }
+  .loginContainer .login a {
+    font-size: 0.8em;
+    color: #2196F3;
+    text-decoration: none; }
+  .loginContainer .login .title {
+    color: #444;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 10px 0 30px 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px; }
+  .loginContainer .login button {
+    width: 100%;
+    height: 100%;
+    padding: 10px 10px;
+    background: #EA4335;
     color: #fff;
-    margin-top: 120px;
-    font-size: 50px;
-    padding: 0 10%;
-    /*background: #6EAFF1;*/ }
-  .loginContainer .hummingbird-icon {
-    width: 128px;
-    margin-left: auto;
-    margin-right: auto; }
-  .loginContainer .hummingbird-icon img {
-    width: 128px;
-    height: 128px;
-    margin-top: 20px; }
-  .loginContainer .btncolor {
-    background: #EA4335; }
-  .loginContainer h2 {
-    position: relative;
-    text-align: center;
-    z-index: 3;
-    color: #fff;
+    display: block;
+    border: none;
     margin-top: 20px;
-    font-size: 32px;
-    padding: 0 10%; }
-  .loginContainer strong {
-    font-weight: 900; }
-  .loginContainer .button {
     position: absolute;
-    width: 100%;
-    margin: auto;
-    margin-top: 20px;
-    text-align: center; }
+    left: 0;
+    bottom: 0;
+    max-height: 1000px;
+    border: 0px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 2px 2px;
+    outline: 0;
+    transform: rotateZ(0deg);
+    transition: all 0.1s ease-out;
+    border-bottom-width: 7px; }
+    .loginContainer .login button .spinner {
+      display: block;
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      border: 4px solid #ffffff;
+      border-top-color: rgba(255, 255, 255, 0.3);
+      border-radius: 100%;
+      left: 50%;
+      top: 0;
+      opacity: 0;
+      margin-left: -20px;
+      margin-top: -20px;
+      animation: spinner 0.6s infinite linear;
+      transition: top 0.3s 0.3s ease, opacity 0.3s 0.3s ease, border-radius 0.3s ease;
+      box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2); }
+  .loginContainer .login:not(.loading) button:hover {
+    box-shadow: 0px 1px 3px #2196F3; }
+  .loginContainer .login:not(.loading) button:focus {
+    border-bottom-width: 4px; }
+
+.notouch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)); }
 
 .blur {
   -webkit-filter: blur(3px);
@@ -74,6 +200,10 @@
   filter: blur(3px); }
 
 .app-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
   height: 100vh;
   overflow: hidden; }
   .app-container body {
@@ -85,11 +215,11 @@
   .app-container .app-bar, .app-container .footer-bar {
     height: 60px;
     width: 100%;
-    background: #1D1F20; }
+    background: #343436; }
   .app-container .nav-bar, .app-container .side-bar {
     height: 100vh;
     width: 60px;
-    background: #1D1F20; }
+    background: #343436; }
   .app-container .footer-bar {
     position: absolute;
     z-index: 1;
@@ -182,13 +312,14 @@
   .app-container .icon-container--nav {
     width: 50px;
     height: 60px;
-    border-radius: 2px;
+    border-radius: 5px;
     margin-left: auto;
     margin-right: auto;
     background: #343436;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    border: 1px solid #1D1F20;
     margin-bottom: 10px;
     background: #343436;
     -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5);
@@ -199,7 +330,7 @@
   .app-container .icon-container--trash {
     width: 50px;
     height: 60px;
-    border-radius: 2px;
+    border-radius: 5px;
     margin-left: auto;
     margin-right: auto;
     background: #343436;
@@ -217,7 +348,7 @@
     background: #EA4335; }
   .app-container .active {
     background: #22262e;
-    border-bottom: 1px solid #343436;
+    border: 1px solid #343436;
     -webkit-box-shadow: inset 0px 5px 2px 0px rgba(0, 0, 0, 0.5), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.1);
     -moz-box-shadow: inset 0px 5px 2px 0px rgba(0, 0, 0, 0.1), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.4);
     box-shadow: inset 0px 5px 2px 0px rgba(0, 0, 0, 0.3), inset 0px -1px 0px 0px rgba(255, 255, 255, 0.1); }
@@ -266,20 +397,41 @@
     right: 60px;
     padding-top: 15px; }
   .app-container .mail-menu {
-    left: -160px;
+    left: -60px;
     /* start off behind the scenes */
     height: 160px;
-    position: fixed;
+    position: absolute;
     top: 0;
-    width: 80px;
+    width: 60px;
     background: #22262e;
     border-bottom: 1px solid #1D1F20; }
+  .app-container .menu-button {
+    width: 10px;
+    height: 40px;
+    margin-top: -20px;
+    margin-left: -10px;
+    margin-right: 10px;
+    float: left;
+    border: none;
+    background: #555555;
+    -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5); }
+  .app-container .menu-button:hover {
+    background: #EA4335;
+    height: 45px; }
+  .app-container .menu-button:active {
+    outline: none; }
   .app-container .move-right {
-    transform: translateX(80px);
+    transform: translateX(60px);
     transition-duration: .4s; }
   .app-container .move-left {
     transform: translateX(0px);
     transition-duration: .4s; }
+  .app-container .compose {
+    position: absolute;
+    bottom: 110px;
+    left: 5px; }
   .app-container svg {
     fill: #fff; }
   .app-container .scroll-helper {
