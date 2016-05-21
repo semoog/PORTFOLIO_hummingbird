@@ -319,11 +319,22 @@
     font-family: 'Pacifico', helvetica, sans-serif;
     font-weight: 400;
     position: absolute;
-    left: 50%;
+    left: 90%;
     transform: translateX(-50%);
-    margin-top: 18px;
+    bottom: -2px;
     color: #fff;
-    font-size: 40px;
+    font-size: 18px;
+    cursor: default;
+    z-index: 2; }
+  .app-container .title {
+    font-family: "Open Sans", helvetica, arial, sans-serif;
+    font-weight: 300;
+    position: absolute;
+    left: 95px;
+    transform: translateX(-50%);
+    margin-top: 30px;
+    color: #fff;
+    font-size: 20px;
     cursor: default; }
   .app-container .username {
     font-family: "Open Sans", helvetica, arial, sans-serif;

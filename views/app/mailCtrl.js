@@ -2,7 +2,7 @@
 
 // import bootstrap from 'bootstrap';
 
-angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user, $state) {
+angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user, $state, hotkeys) {
 
     // vars
 
@@ -11,6 +11,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     $scope.emails = {};
 
     $scope.mails = {};
+    $scope.mailbox_title = 'INBOX';
 
     var scrolled = false;
 
@@ -184,6 +185,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
                 $scope.emails = parsedMail.emails;
                 $scope.emails[i].index = i;
+                $scope.mailbox_title = label.toLowerCase();
                 $('.load').fadeOut('fast', function() {
 
                 });
@@ -289,6 +291,16 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     	y: 0
     }).to(s, 0.3, {
     	opacity: 1
+    });
+
+    // hotkeys
+
+    hotkeys.add({
+      combo: 'r',
+      description: 'Refresh Inbox',
+      callback: function() {
+        $scope.getMail('INBOX');
+      }
     });
 
     // init mail getter
