@@ -10,8 +10,10 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
     $scope.emails = {};
 
+    $scope.currentMailbox;
+
     $scope.mails = {};
-    $scope.mailbox_title = 'INBOX';
+    $scope.mailbox_title = 'inbox';
 
     var scrolled = false;
 
@@ -119,6 +121,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     // get
 
     $scope.getMail = (label) => {
+        $scope.currentMailbox = label;
+        console.log($scope.currentMailbox);
         $('.load').show();
         return $http({
             method: 'GET',
@@ -306,5 +310,12 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     // init mail getter
 
     $scope.getMail('INBOX');
+
+    // refresh mail getter
+
+    setInterval(function () {
+      console.log("Refreshing ", $scope.currentMailbox);
+      $scope.getMail($scope.getMail($scope.currentMailbox));
+    }, 60000);
 
 });

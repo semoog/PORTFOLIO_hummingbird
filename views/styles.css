@@ -330,11 +330,11 @@
     font-family: "Open Sans", helvetica, arial, sans-serif;
     font-weight: 300;
     position: absolute;
-    left: 95px;
+    left: 100px;
     transform: translateX(-50%);
-    margin-top: 30px;
+    margin-top: 25px;
     color: #fff;
-    font-size: 20px;
+    font-size: 30px;
     cursor: default; }
   .app-container .username {
     font-family: "Open Sans", helvetica, arial, sans-serif;
@@ -346,11 +346,11 @@
     font-size: 16px;
     border-radius: 100%; }
   .app-container .icon {
-    width: 30px;
-    height: 30px; }
+    width: 25px;
+    height: 25px; }
   .app-container .icon-container--nav {
     width: 50px;
-    height: 60px;
+    height: 55px;
     border-radius: 5px;
     margin-left: auto;
     margin-right: auto;
@@ -368,7 +368,7 @@
     background: #22262e; }
   .app-container .compose-container--nav {
     width: 50px;
-    height: 60px;
+    height: 55px;
     border-radius: 5px;
     margin-left: auto;
     margin-right: auto;
@@ -485,7 +485,8 @@
     border-bottom: 1px solid #1D1F20;
     -webkit-box-shadow: inset 5px 0px 10px 0px rgba(0, 0, 0, 0.4), inset 0px 0px 0px 0px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: inset 5px 10px 0px 0px rgba(0, 0, 0, 0.4), inset 0px 0px 0px 0px rgba(0, 0, 0, 0.4);
-    box-shadow: inset 5px 0px 10px 0px rgba(0, 0, 0, 0.4), inset 0px 0px 0px 0px rgba(0, 0, 0, 0.4); }
+    box-shadow: inset 5px 0px 10px 0px rgba(0, 0, 0, 0.4), inset 0px 0px 0px 0px rgba(0, 0, 0, 0.4);
+    z-index: 4; }
   .app-container .menu-button {
     width: 10px;
     height: 40px;
@@ -534,9 +535,9 @@
   .app-container .load > div {
     float: left;
     z-index: 2;
-    margin: 5px;
-    height: 85px;
-    width: 10px;
+    margin: 2px;
+    height: 35px;
+    width: 5px;
     background: #1D1F20;
     animation: load 1.4s infinite ease-in-out; }
   .app-container .load .load1 {
