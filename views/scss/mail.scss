@@ -1,5 +1,9 @@
 @import 'variables';
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 .notouch {
   position: absolute;
   top: 0;
@@ -190,9 +194,9 @@
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        margin-top: 15px;
+        margin-top: 18px;
         color: $white;
-        font-size: 30px;
+        font-size: 40px;
         cursor: default;
     }
     .username {
@@ -443,34 +447,22 @@
     svg {
       fill: $white;
     }
-
-    .scroll-helper {
-      position: absolute;
-      bottom: 100px;
-      left: 18.5vw;
+    .st0{
+    	fill:#ffffff;
+    }
+    .scroll_container{
+    	position:absolute;
+    	/*bottom:15rem;*/
+    	top:70vh;
+    	left:18.5vw;
     }
 
-    circle {
-      animation: scroll 1.5s ease infinite;
-    }
 
-    @keyframes scroll {
-      0% {
-        opacity: 0;
-        cy: 481;
-      }
-      33% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-        cy: 231;
-      }
-    }
+
 .load {
   position: absolute;
   top: 50%;
-  left: 27vw;
+  left: 22vw;
   transform: translate(-50%, -50%);
   z-index: 2;
 }

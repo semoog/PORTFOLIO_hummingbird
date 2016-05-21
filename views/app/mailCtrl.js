@@ -18,7 +18,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
     // $('.mail-container').addClass('blur');
 
-    $( ".scroll-helper" ).hide();
+    $( ".scroll_container" ).hide();
 
     $(document).on('click', '.icon-container--nav', function() {
        $(".icon-container--nav").removeClass("active");
@@ -61,7 +61,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     });
 
     $(".mail-container").scroll(function() {
-      $( ".scroll-helper" ).fadeOut('slow');
+      $( ".scroll_container" ).fadeOut('slow');
     });
 
     // tidy compose modal after send
@@ -195,7 +195,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
             setTimeout(function () {
               if (scrolled === false) {
-                  $( ".scroll-helper" ).fadeIn('slow');
+                  $( ".scroll_container" ).fadeIn('slow');
               }
             }, 10000);
             return response;
@@ -269,6 +269,26 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
         // Show the modal window
         $('#message-modal').modal('show');
+    });
+
+    // scroll-helper
+
+    var s = $("#scroll");
+    var r = console.log("DONE");
+    var t = new TimelineMax({
+    	repeat: -1,
+    	repeatDelay: 0.9,
+    	onComplete: r,
+    	ease: Expo.easeIn
+    });
+    t.to(s, 0.3, {
+    	y: 10
+    }).to(s, 0.2, {
+    	opacity: 0
+    }, 0.2).to(s, 0.5, {
+    	y: 0
+    }).to(s, 0.3, {
+    	opacity: 1
     });
 
     // init mail getter

@@ -187,6 +187,9 @@
   .loginContainer .login:not(.loading) button:focus {
     border-bottom-width: 4px; }
 
+::-webkit-scrollbar {
+  display: none; }
+
 .notouch {
   position: absolute;
   top: 0;
@@ -318,9 +321,9 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 15px;
+    margin-top: 18px;
     color: #fff;
-    font-size: 30px;
+    font-size: 40px;
     cursor: default; }
   .app-container .username {
     font-family: "Open Sans", helvetica, arial, sans-serif;
@@ -504,26 +507,17 @@
     outline: 0; }
   .app-container svg {
     fill: #fff; }
-  .app-container .scroll-helper {
+  .app-container .st0 {
+    fill: #ffffff; }
+  .app-container .scroll_container {
     position: absolute;
-    bottom: 100px;
+    /*bottom:15rem;*/
+    top: 70vh;
     left: 18.5vw; }
-  .app-container circle {
-    animation: scroll 1.5s ease infinite; }
-
-@keyframes scroll {
-  0% {
-    opacity: 0;
-    cy: 481; }
-  33% {
-    opacity: 1; }
-  100% {
-    opacity: 0;
-    cy: 231; } }
   .app-container .load {
     position: absolute;
     top: 50%;
-    left: 27vw;
+    left: 22vw;
     transform: translate(-50%, -50%);
     z-index: 2; }
   .app-container .load > div {

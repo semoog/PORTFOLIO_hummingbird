@@ -3,6 +3,8 @@
 require('babel-core/register');
 require('./server.js');
 
+// ELECTRON INIT
+
 // const electron = require('electron');
 // // Module to control application life.
 // const app = electron.app;
@@ -15,10 +17,10 @@ require('./server.js');
 //
 // function createWindow() {
 //   // Create the browser window.
-//   										mainWindow = new BrowserWindow({width: 800, height: 600});
+//   										mainWindow = new BrowserWindow({width: 1300, height: 600});
 //
 //   // and load the index.html of the app.
-//   										mainWindow.loadURL('http://localhost:3000/');
+//   										mainWindow.loadURL('http://localhost:3000/login');
 //
 //   // Open the DevTools.
 //   										mainWindow.webContents.openDevTools();

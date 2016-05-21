@@ -8,7 +8,7 @@ angular.module("meanmail").controller("masterCtrl", function ($scope, $http, mas
 
     $('.login').on('submit', function(e) {
       e.preventDefault();
-      openedWindow = window.open("http://localhost:3000/auth/google", "mywindow", "width=600px, height=600px");
+      openedWindow = window.open("http://localhost:3000/auth/google", "Hummingbird Auth", "width=400px, height=400px, top=400, left=600");
       var $this = $(this),
         $btnstate = $this.find('button > .state');
       $this.addClass('loading');
