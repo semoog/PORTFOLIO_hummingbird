@@ -38,7 +38,7 @@ app.set('view engine', 'html');
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-const SCOPES = 'https://mail.google.com/';
+const SCOPES = 'https://mail.google.com/' + 'https://www.googleapis.com/auth/cloud-platform';
 
 // mongoose init
 
