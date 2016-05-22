@@ -136,24 +136,6 @@
 
         </div>
 
-        <div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" style="color: black">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="modalTitle"></h4>
-                        <h6 class="modal-title" id="modalSender"></h6>
-                        <h6 class="modal-title" id="modalDate"></h6>
-                    </div>
-                    <div class="modal-body">
-                        <iframe id="message-iframe" srcdoc="<p>Loading...</p>"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -189,7 +171,16 @@
     </div>
 
     <div class="mail-content pull-right">
-
+      <div class="email">
+        <div class="mail-header">
+            <h4 class="mail-title" id="emailTitle"></h4>
+            <h6 class="mail-title" id="emailSender"></h6>
+            <h6 class="mail-title" id="emailDate"></h6>
+        </div>
+        <div class="mail-body">
+            <iframe id="message-iframe" srcdoc="<p>Loading...</p>"></iframe>
+        </div>
+      </div>
     </div>
 
     <!-- <script id="row-template" type="x-tmpl-mustache">

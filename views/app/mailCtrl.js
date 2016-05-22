@@ -10,7 +10,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
     $scope.emails = {};
 
-    $scope.currentMailbox;
+    $scope.currentMailbox = '';
 
     $scope.mails = {};
     $scope.mailbox_title = 'inbox';
@@ -18,8 +18,6 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     var scrolled = false;
 
     // jquery init
-
-    // $('.mail-container').addClass('blur');
 
     $( ".scroll_container" ).hide();
 
@@ -277,9 +275,9 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
         $scope.mails[index].unread = false;
 
-        $('#modalTitle').text(title);
-        $('#modalSender').text(sender);
-        $('#modalDate').text(date);
+        $('#emailTitle').text(title);
+        $('#emailSender').text(sender);
+        $('#emailDate').text(date);
 
         iframe = $('#message-iframe')[0].contentWindow.document;
         // The message body goes to the iframe's content
@@ -287,7 +285,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
         $('body', iframe).html(messageBody);
 
         // Show the modal window
-        $('#message-modal').modal('show');
+        $('.email').show();
     });
 
     // scroll-helper
