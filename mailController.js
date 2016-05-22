@@ -138,6 +138,26 @@ module.exports = {
       }
     });
 
+  },
+
+  watchMail: (accToken) => {
+
+    oauth2Client.setCredentials({
+      access_token: accToken
+    });
+
+    var gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+
+    gmail.users.watch({
+      'userId': 'me',
+      'resource': {
+        topicName: "projects/intricate-karma-130320/topics/pull-topic",
+        labelIds: ["INBOX"]
+      }
+    }, function (err, response) {
+        console.log("WATCH RESPONSE SERVER: ", response);
+        return response;
+    });
   }
 
 };

@@ -19,6 +19,64 @@ import cors from 'cors';
 // var mail = require('./mailController');
 import mail from './mailController';
 
+// You must set the GOOGLE_APPLICATION_CREDENTIALS and GCLOUD_PROJECT
+
+// Initialize gcloud
+var gcloud = require('gcloud')({
+  projectId: keys.GOOGLE_CLOUD_ID,
+  keyFilename: 'keyfile.json'
+});
+
+// Get a reference to the pubsub component
+var pubsub = gcloud.pubsub();
+
+// Create init topic for gcloud notifications
+function createTopic(topicName, callback) {
+  var topic = pubsub.topic(topicName);
+
+  // Get the topic if it exists. Create it if it does not exist.
+  topic.get({
+    autoCreate: true
+  }, function (err, topic, apiResponse) {
+    if (err) {
+      return callback(err);
+    }
+
+    // Created the topic
+    console.log('Created topic ' + topicName);
+    callback(null, topic, apiResponse);
+  });
+}
+
+createTopic('pull-topic', function (e) {
+  console.log("topic: ", e);
+});
+
+// Create subscription
+function subscribe(topicName, subscriptionName, callback) {
+  var options = {
+    reuseExisting: true
+  };
+  pubsub.subscribe(
+    topicName,
+    subscriptionName,
+    options,
+    function (err, subscription, apiResponse) {
+      if (err) {
+      return callback(err);
+    }
+
+      // Got the subscription
+      console.log('Subscribed to ' + topicName);
+      callback(null, subscription, apiResponse);
+    }
+  );
+}
+
+subscribe('pull-topic', 'pull-subscription', function (e) {
+  console.log("subscription: ",e);
+});
+
 // express init
 
 const app = express();
@@ -84,6 +142,8 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
 
+    console.log("refresh Token: ", refreshToken);
+
     // Store token locally for access later
 
     oauth2Client.setCredentials({
@@ -128,6 +188,10 @@ app.get('/',
     res.redirect('/mail');
 });
 
+app.get('/watchMail',
+  (req, res) => {
+    mail.watchMail(req.user.accessToken);
+});
 
 app.get('/login',
   (req, res) => {
@@ -191,7 +255,8 @@ app.get('/getMail/:label',
 // Google Authentication Routes
 
 app.get('/auth/google',
-  passport.authenticate('google', {display: 'page', scope: ['profile', SCOPES]}));
+  passport.authenticate('google', {display: 'page', scope: ['profile', SCOPES],
+                                  accessType: 'offline'}));
 
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
