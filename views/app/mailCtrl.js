@@ -132,7 +132,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
             // $('.tbody').remove();
             // $('.table inbox').append("<tbody class='tbody'></tbody>");
 
-            console.log(response);
+            // console.log(response);
 
             const parsedMail = {
                 emails: []
@@ -148,7 +148,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
             for (let i = 0; i < response.data.mails.length; i++) {
 
-                console.log("mail id: ", i, "date response: ", extractField(response.data.mails[i], "Date"));
+                // console.log("mail id: ", i, "date response: ", extractField(response.data.mails[i], "Date"));
 
                 // filtering for properties
 
@@ -166,7 +166,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
                 }
                 parsedMail.emails[i].date = moment(parsedMail.emails[i].date).calendar();
                 parsedMail.emails[i].snippet = response.data.mails[i].snippet.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
-                parsedMail.emails[i].id = response.data.mails[i].id;
+                parsedMail.emails[i].messageId = response.data.mails[i].id;
                 parsedMail.emails[i].labels = response.data.mails[i].labelIds;
                 parsedMail.emails[i].index = i;
 
@@ -196,6 +196,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
             // $('.notouch').remove();
 
             $scope.mails = parsedMail.emails;
+
+            console.log($scope.mails);
 
             setTimeout(function () {
               if (scrolled === false) {
@@ -329,4 +331,23 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     //   $scope.getMail($scope.getMail($scope.currentMailbox));
     // }, 60000);
 
+
+
+    const animationDelay = 400;
+
+    function removeEmail(messageId) {
+      setTimeout(function() {
+        $scope.mails = $scope.mails.filter(function(email) {
+          return email.messageId !== messageId;
+        });
+        $scope.$apply();
+      }, animationDelay);
+    }
+
+    $scope.$on('mail-item-remove', function(e, messageId) {
+      removeEmail(messageId);
+    });
+    $scope.$on('mail-item-archive', function(e, messageId) {
+      removeEmail(messageId);
+    });
 });

@@ -122,6 +122,7 @@ const SCOPES = 'https://mail.google.com/' + 'https://www.googleapis.com/auth/clo
 var userSchema = new Schema({
   googleId: String,
   name: String,
+  refreshToken: String,
   accessToken: String,
   profileimg: String
 });
@@ -158,28 +159,17 @@ const strategy = new GoogleStrategy({
 
     console.log("refresh Token: ", refreshToken);
 
-    // Store token locally for access later
-
-    oauth2Client.setCredentials({
-      access_token: accessToken,
-      refresh_token: refreshToken
+    var user = new User({
+        googleId: profile.id,
+        name: profile.displayName,
+        refreshToken: refreshToken,
+        accessToken: accessToken,
+        profileimg: profile._json.image.url
     });
-
-    console.log(profile);
-
-    var gmail = google.gmail({ version: 'v1', auth: oauth2Client });
-
-                var user = new User({
-                    googleId: profile.id,
-                    name: profile.displayName,
-                    refreshToken: refreshToken,
-                    accessToken: accessToken,
-                    profileimg: profile._json.image.url
-                });
-                user.save((err) => {
-                    if (err) console.log(err);
-                    return cb(err, user);
-                });
+    user.save((err) => {
+        if (err) console.log(err);
+        return cb(err, user);
+    });
 
   });
 
@@ -283,7 +273,7 @@ app.get('/getMail/:label',
   ensureAuthenticated,
   async (function (req, res){
     console.log("getting mail");
-      let emailParsed = await(mail.getMail(req.user.accessToken, req.params.label));
+      let emailParsed = await(mail.getMail(req.user, req.params.label));
       res.send(emailParsed);
 }));
 
