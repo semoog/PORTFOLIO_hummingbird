@@ -6,6 +6,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import passport from 'passport';
+import refresh from 'passport-oauth2-refresh';
 import Gmail from 'node-gmail-api';
 import async from 'asyncawait/async';
 import await from 'asyncawait/await';
@@ -148,7 +149,7 @@ let user = {};
 
 // Google Login Strategy
 
-passport.use(new GoogleStrategy({
+const strategy = new GoogleStrategy({
     clientID: keys.GOOGLE_CLIENT_ID,
     clientSecret: keys.GOOGLE_CLIENT_SECRET,
     callbackURL: "/auth/google/callback"
@@ -180,7 +181,28 @@ passport.use(new GoogleStrategy({
                     return cb(err, user);
                 });
 
-  }));
+  });
+
+passport.use(strategy);
+refresh.use(strategy);
+
+// setInterval(function () {
+//   refresh.requestNewAccessToken('google', user.accessToken, function(err, accessToken, refreshToken) {
+//
+//     var user = new User({
+//         googleId: profile.id,
+//         name: profile.displayName,
+//         refreshToken: refreshToken,
+//         accessToken: accessToken,
+//         profileimg: profile._json.image.url
+//     });
+//     user.save((err) => {
+//         if (err) console.log(err);
+//         return cb(err, user);
+//     });
+//
+//   });
+// }, 350000);
 
 function ensureAuthenticated(req, res, next) {
   console.log("checking auth...");
