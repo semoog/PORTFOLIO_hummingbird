@@ -82,7 +82,7 @@
             </svg>
           </div>
 
-          <div class="footer-bar"></div>
+          <!-- <div class="footer-bar"></div> -->
 
     <div class="mail-container">
 
@@ -97,15 +97,8 @@
          Compose
       </a> -->
 
-        <div class="mail-container--mailbox" ng-repeat="mail in mails">
-
-            <div class="mail-menu">
-              <div class="icon-container--trash menu-trash" ng-click="trashMail(mail.id)">
-                <img class="icon" src="src/trash-can.svg" alt="" />
-              </div>
-            </div>
-
-            <button class="menu-button" ng-click="toggleMenu($event)"></button>
+        <div class="mail-container--mailbox" ng-repeat="mail in mails track by mail.messageId" message-id="mail.messageId">
+          <mail-list-item class="email" message-id="mail.messageId">
 
             <div class="unread-badge pull-left" ng-show="{{mail.unread}}"></div>
             <div class="important-badge pull-left" ng-show="{{mail.important}}"></div>
@@ -133,6 +126,8 @@
                 </div>
 
             </div>
+          </mail-list-item>
+
 
         </div>
 

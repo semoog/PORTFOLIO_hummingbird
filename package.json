@@ -45,7 +45,8 @@
     "nodemailer": "^2.4.1",
     "passport": "^0.3.2",
     "passport-google-oauth20": "^1.0.0",
-    "passport-oauth2-refresh": "^1.0.0"
+    "passport-oauth2-refresh": "^1.0.0",
+    "request": "^2.72.0"
   },
   "devDependencies": {}
 }
