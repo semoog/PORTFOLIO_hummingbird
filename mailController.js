@@ -39,13 +39,9 @@ module.exports = {
     }
 
 
-    // PROMISES (and they still feel oh so wasted on myself)
+    // PROMISES (and they still feel oh so wasted on myself?)
 
     return new Promise(function(resolve, reject) {
-
-      // console.log(emails);
-
-      var count = 0; // REPLACE COUNT WITH ACTUAL DONE STATEMENT REGARDLESS OF MAILBOX SIZE
 
       emails.on('data',(d) => {
         emailParsed.mails.push(d);
@@ -54,10 +50,6 @@ module.exports = {
       emails.on('end', () => {
         resolve(emailParsed);
       });
-      // .then(res => {
-      //   console.log("resolving.");
-      //   resolve(emailParsed);
-      // });
 
       // Sort messages by date in descending order
       emailParsed.mails.sort(function(a, b) {
