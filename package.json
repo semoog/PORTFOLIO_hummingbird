@@ -30,6 +30,7 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "gapi": "0.0.3",
+    "gcloud": "^0.34.0",
     "google-auth-library": "^0.9.7",
     "googleapis": "^5.2.1",
     "gulp": "^3.9.1",

@@ -220,6 +220,19 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
       });
     };
 
+    // watch mail
+
+    $scope.watchMail = () => {
+      return $http({
+          method: 'GET',
+          url: 'http://localhost:3000/watchMail/'
+      }).then((response) => {
+        console.log("WATCH RESPONSE: ", response);
+      });
+    };
+
+    $scope.watchMail();
+
     // trash mail
 
     $scope.trashMail = (messageId) => {
@@ -313,9 +326,9 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
     // refresh mail getter
 
-    setInterval(function () {
-      console.log("Refreshing ", $scope.currentMailbox);
-      $scope.getMail($scope.getMail($scope.currentMailbox));
-    }, 60000);
+    // setInterval(function () {
+    //   console.log("Refreshing ", $scope.currentMailbox);
+    //   $scope.getMail($scope.getMail($scope.currentMailbox));
+    // }, 60000);
 
 });
