@@ -25,6 +25,7 @@
     "bootstrap": "^3.3.6",
     "btoa": "^1.1.2",
     "connect-ensure-login": "^0.1.1",
+    "connect-mongo": "^1.2.0",
     "cors": "^2.7.1",
     "ejs": "^2.4.1",
     "express": "^4.13.4",

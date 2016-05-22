@@ -7,17 +7,27 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import passport from 'passport';
 import Gmail from 'node-gmail-api';
-
+import async from 'asyncawait/async';
+import await from 'asyncawait/await';
+import cors from 'cors';
 import keys from './keys';
+import mail from './mailController';
+
+// mongoose init
+
+import mongoose from 'mongoose';
+import connectMongo from 'connect-mongo';
+
+const MongoStore = connectMongo(session);
+const Schema = mongoose.Schema;
+
+mongoose.connect("mongodb://localhost/meanmail");
+
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 var oauth2Client = new OAuth2(keys.GOOGLE_CLIENT_ID, keys.GOOGLE_CLIENT_SECRET, '/auth/google/callback');
 google.options({ auth: oauth2Client }); // set auth as a global default
-import async from 'asyncawait/async';
-import await from 'asyncawait/await';
-import cors from 'cors';
 // var mail = require('./mailController');
-import mail from './mailController';
 
 // You must set the GOOGLE_APPLICATION_CREDENTIALS and GCLOUD_PROJECT
 
@@ -84,7 +94,17 @@ const port = 3000;
 
 app.use(express.static(__dirname + '/views'));
 
-app.use(require('express-session')({ secret: keys.sessionSecret, resave: true, saveUninitialized: true }));
+app.use(require('express-session')({
+  secret: keys.sessionSecret,
+  resave: true,
+  maxAge: new Date(Date.now() + 3600000),
+  store: new MongoStore({ mongooseConnection: mongoose.connection },
+    function(err){
+        console.log(err || 'connect-mongodb setup ok');
+    }
+  ),
+  saveUninitialized: true
+}));
 
 app.use(bodyParser());
 
@@ -97,13 +117,6 @@ app.set('view engine', 'html');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const SCOPES = 'https://mail.google.com/' + 'https://www.googleapis.com/auth/cloud-platform';
-
-// mongoose init
-
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
-
-mongoose.connect("mongodb://localhost/meanmail");
 
 var userSchema = new Schema({
   googleId: String,
