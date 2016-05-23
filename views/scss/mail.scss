@@ -149,7 +149,8 @@ input[type=text]{
 
     .mailbox--mail .date, .snippet {
       color: #8E9598;
-
+      white-space: nowrap;
+      text-overflow: ellipsis;;
       font-size: 12px;
     }
     .subject {
@@ -571,50 +572,89 @@ input[type=text]{
 
 
 
-.load {
-  position: absolute;
-  top: 50%;
-  left: 30vw;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-}
-
-.load > div {
-  float: left;
-  z-index: 2;
-  margin: 2px;
-  height: 35px;
-  width: 5px;
-  background: $darkGray;
-  animation: load 1.4s infinite ease-in-out;
-}
-
-.load .load1 {
-  animation-delay: -1.3s;
-}
-
-.load .load2 {
-  animation-delay: -1.2s;
-}
-
-.load .load3 {
-  animation-delay: -1.1s;
-}
-
-.load .load4 {
-  animation-delay: -1.0s;
-}
-
-@keyframes load {
-  0%,
-  50%,
-  100% {
-    transform: scaleY(0.3);
-  }
-  25% {
-    transform: scaleY(1.0);
-  }
-}
+    .load{
+      width: 20px;
+      height: 20px;
+      transform:rotate(45deg);
+      animation:load-ani1 3s ease-in-out infinite;
+      position: absolute;
+      left: 28.5vw;
+      top: 50vh;
+      z-index: 2;
+    }
+    .load i{
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      border-radius: 100%;
+      position:absolute;
+    }
+    .load i:nth-child(1){
+      background: #F64545;
+      transform:translate(0,35px);
+      animation:load-ani2 3s ease-in-out infinite;
+    }
+    .load i:nth-child(2){
+      background: $okGreen;
+      transform:rotate(90deg) translate(0,35px);
+      animation:load-ani3 3s ease-in-out infinite;
+    }
+    .load i:nth-child(3){
+      background: #4FA6CF;
+      transform:rotate(180deg) translate(0,35px);
+      animation:load-ani4 3s ease-in-out infinite;
+    }
+    .load i:nth-child(4){
+      background: #FCC14A;
+      transform:rotate(270deg) translate(0,35px);
+      animation:load-ani5 3s ease-in-out infinite;
+    }
+    @keyframes load-ani1{
+      25%{
+        transform:rotate(135deg);
+      }
+      50%{
+        transform:rotate(225deg);
+      }
+      75%{
+        transform:rotate(315deg);
+      }
+      100%{
+        transform:rotate(405deg);
+      }
+    }
+    @keyframes load-ani2{
+      17.5%,25%,42.5%,50%,67.5%,75%,92.5%,100%{
+        transform:translate(0,35px);
+      }
+      12.5%,37.5%,62.5%,87.5%{
+        transform:translate(0,15px);
+      }
+    }
+    @keyframes load-ani3{
+      17.5%,25%,42.5%,50%,67.5%,75%,92.5%,100%{
+        transform:rotate(90deg) translate(0,35px);
+      }
+      12.5%,37.5%,62.5%,87.5%{
+        transform:rotate(90deg) translate(0,15px);
+      }
+    }
+    @keyframes load-ani4{
+      17.5%,25%,42.5%,50%,67.5%,75%,92.5%,100%{
+        transform:rotate(180deg) translate(0,35px);
+      }
+      12.5%,37.5%,62.5%,87.5%{
+        transform:rotate(180deg) translate(0,15px);
+      }
+    }
+    @keyframes load-ani5{
+      17.5%,25%,42.5%,50%,67.5%,75%,92.5%,100%{
+        transform:rotate(270deg) translate(0,35px);
+      }
+      12.5%,37.5%,62.5%,87.5%{
+        transform:rotate(270deg) translate(0,15px);
+      }
+    }
 }
 
 .email {

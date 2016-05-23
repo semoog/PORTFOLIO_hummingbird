@@ -115,7 +115,9 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     $scope.getMail = (label) => {
         $scope.currentMailbox = label;
         console.log($scope.currentMailbox);
-        $('.load').show();
+        $('.load').fadeIn("fast", function() {
+
+        });
         return $http({
             method: 'GET',
             url: 'http://localhost:3000/getMail/' + label
@@ -182,7 +184,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
                 $scope.emails = parsedMail.emails;
                 $scope.emails[i].index = i;
                 $scope.mailbox_title = label.toLowerCase();
-                $('.load').fadeOut('fast', function() {
+                $('.load').fadeOut('slow', function() {
 
                 });
             }

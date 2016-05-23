@@ -6,6 +6,7 @@ import btoa from 'btoa';
 import request from 'request';
 import refresh from 'passport-oauth2-refresh';
 import keys from './keys';
+import bluebird from 'bluebird';
 
 var OAuth2 = google.auth.OAuth2;
 var API_KEY = keys.GOOGLE_API_KEY;

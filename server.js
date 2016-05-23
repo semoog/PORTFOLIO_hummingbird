@@ -159,18 +159,31 @@ const strategy = new GoogleStrategy({
 
     console.log("refresh Token: ", refreshToken);
 
-    var user = new User({
-        googleId: profile.id,
-        name: profile.displayName,
-        refreshToken: refreshToken,
-        accessToken: accessToken,
-        profileimg: profile._json.image.url
-    });
-    user.save((err) => {
-        if (err) console.log(err);
-        return cb(err, user);
-    });
-
+    User.findOne({'googleId': profile.id}, (err, user) => {
+            if (err) {
+                return cb(err);
+            }
+            // user not found. create
+            if (!user) {
+                user = new User({
+                    googleId: profile.id,
+                    name: profile.displayName,
+                    refreshToken: refreshToken,
+                    accessToken: accessToken,
+                    profileimg: profile._json.image.url
+                });
+                user.save((err) => {
+                    if (err) console.log(err);
+                    return cb(err, user);
+                });
+            } else {
+                user.accessToken = accessToken;
+                user.save((err) => {
+                    if (err) console.log(err);
+                    return cb(err, user);
+                });
+            }
+      });
   });
 
 passport.use(strategy);
