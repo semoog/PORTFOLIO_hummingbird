@@ -91,7 +91,7 @@ subscribe('pull-topic', 'pull-subscription', function (e) {
 // express init
 
 const app = express();
-const port = 3000;
+const port = keys.PORT;
 
 app.use(express.static(__dirname + '/views'));
 
