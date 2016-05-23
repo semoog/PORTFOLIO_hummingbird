@@ -58,19 +58,39 @@ function getMail(accessToken, label) {
   });
 }
 
+function trashMail (messageId, accToken){
+  console.log('messageId', messageId);
+  console.log('accessT', accToken);
+
+  oauth2Client.setCredentials({
+    access_token: accToken
+  });
+
+  var gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+
+  gmail.users.messages.trash({
+    userId: 'me',
+    id: messageId
+  });
+}
+
 function refreshTokenOnError(user, gmailCall) {
   return gmailCall(user.accessToken).catch(err => {
-    if(/Invalid Credentials/.test(err.message)) {
+    if(/Invalid Credentials/.test(err.message) || err.statusCode === 400) {
       console.log('invalid credentials');
       return new Promise((resolve, reject) => {
         console.log('refreshing access token');
           refresh.requestNewAccessToken('google', user.refreshToken, function(err, accessToken) {
-          if(err) {
-            reject(err);
-          }
-          console.log('got new access token ', accessToken, ' trying again...');
-          // to-do: save new access token here.
-          resolve(gmailCall(accessToken));
+            if (!user.refreshToken) {
+                reject("No refresh token given.");
+            }
+            if(err) {
+              console.log(err);
+              reject(err);
+            }
+            console.log('got new access token ', accessToken, ' trying again...');
+            // to-do: save new access token here.
+            resolve(gmailCall(accessToken));
         });
       });
     }
@@ -83,20 +103,8 @@ module.exports = {
     return refreshTokenOnError(user, (accessToken) => getMail(accessToken, label));
   },
 
-  trashMail: (messageId, accToken) => {
-    console.log('messageId', messageId);
-    console.log('accessT', accToken);
-
-    oauth2Client.setCredentials({
-      access_token: accToken
-    });
-
-    var gmail = google.gmail({ version: 'v1', auth: oauth2Client });
-
-    gmail.users.messages.trash({
-      userId: 'me',
-      id: messageId
-    });
+  trashMail: (user, messageId, accToken) => {
+    return refreshTokenOnError(user, (accessToken) => trashMail(messageId, accessToken));
   },
 
   removeLabel: (messageId, label, accToken) => {

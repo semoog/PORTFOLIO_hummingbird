@@ -5,7 +5,7 @@
   cursor: pointer; }
 
 .loginContainer body {
-  background-color: #1D1F20;
+  background-color: #fff;
   color: #fff;
   font-family: "Open Sans", helvetica, arial, sans-serif;
   font-weight: 300;
@@ -33,7 +33,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #191919;
+  background-color: #fff;
   transition: background .4s; }
 
 .loginContainer .logo {
@@ -41,7 +41,7 @@
   position: relative;
   text-align: center;
   z-index: 3;
-  color: #fff;
+  color: #2C2F30;
   margin-top: 120px;
   font-size: 102px;
   font-weight: 300;
@@ -59,13 +59,13 @@
   margin-top: 20px; }
 
 .loginContainer .btncolor {
-  background: #EA4335; }
+  background: #E64C17; }
 
 .loginContainer h2 {
   position: relative;
   text-align: center;
   z-index: 3;
-  color: #fff;
+  color: #2C2F30;
   margin-top: 60px;
   font-size: 22px;
   font-weight: 300;
@@ -130,7 +130,7 @@
     .loginContainer .login input:focus {
       outline: none;
       color: #444;
-      border-color: #EA4335;
+      border-color: #F64545;
       border-left-width: 35px; }
       .loginContainer .login input:focus + i.fa {
         opacity: 1;
@@ -151,7 +151,7 @@
     width: 100%;
     height: 100%;
     padding: 10px 10px;
-    background: #EA4335;
+    background: #F64545;
     color: #fff;
     display: block;
     border: none;
@@ -187,6 +187,17 @@
   .loginContainer .login:not(.loading) button:focus {
     border-bottom-width: 4px; }
 
+::-webkit-scrollbar {
+  background: transparent;
+  width: 6px; }
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5) !important;
+  border-radius: 10px; }
+
+input[type=text] {
+  border-radius: 5px; }
+
 .notouch {
   position: absolute;
   top: 0;
@@ -214,16 +225,17 @@
   height: 100vh;
   overflow: hidden; }
   .app-container body {
-    color: #fff;
+    color: #393E3F;
     font-family: "Open Sans", helvetica, arial, sans-serif;
     font-size: 16px;
     font-weight: 400;
     text-rendering: optimizeLegibility; }
   .app-container .app-bar {
-    height: 40px;
+    height: 60px;
     width: 100%;
     background: #fff;
-    z-index: 1; }
+    z-index: 2;
+    border-bottom: 1px solid #DFDFDF; }
   .app-container .footer-bar {
     height: 30px;
     width: 100%;
@@ -232,8 +244,8 @@
     z-index: 1;
     bottom: 0; }
   .app-container .nav-bar {
-    height: 100vh;
-    width: 10vw;
+    height: 90vh;
+    width: 15vw;
     z-index: 1;
     background: #fff; }
   .app-container .side-bar {
@@ -245,55 +257,110 @@
     width: 100%;
     border: 0;
     min-height: 80%;
-    height: 60vh;
+    height: 100vh;
     display: flex; }
   .app-container .mail-container {
     z-index: -1;
-    width: 35vw;
-    height: 90vh;
-    overflow: scroll; }
+    width: 30vw;
+    height: 100vh;
+    overflow: scroll;
+    margin-top: 15px; }
   .app-container .mail-container--mailbox {
-    height: 160px;
+    height: 110px;
+    border-radius: 5px;
     background: #fff;
     color: #191919;
-    border-bottom: 1px solid #C1C3D1;
     cursor: default;
     overflow: hidden;
     text-overflow: ellipsis; }
+  .app-container .mail-container--mailbox.ng-leave {
+    transition: all linear 0.5s; }
+  .app-container .mail-container--mailbox.ng-leave.ng-leave-active {
+    opacity: 0;
+    max-height: 0; }
   .app-container .mail-container--mailbox:last-child {
     border-bottom: 0px; }
   .app-container .mail-container--mailbox .snippet {
-    overflow: hidden; }
+    overflow: hidden;
+    margin-top: -10px; }
   .app-container .mailbox--mail {
     overflow: hidden; }
   .app-container .mail-container--mailbox:hover {
     background: #C1C3D1; }
   .app-container .mailbox--mail .date, .app-container .snippet {
-    color: #555555; }
+    color: #8E9598;
+    font-size: 12px; }
+  .app-container .subject {
+    font-size: 14px; }
+  .app-container .sender {
+    font-size: 13px; }
+  .app-container .badge {
+    margin-right: 5px;
+    margin-top: 2px;
+    color: #DFDFDF;
+    background: none; }
+  .app-container .trash-slide-left {
+    position: absolute;
+    right: 0;
+    vertical-align: middle;
+    margin-top: 1vh; }
+  .app-container .trash-slide-right {
+    position: absolute;
+    left: 0;
+    vertical-align: middle;
+    margin-left: 10px;
+    margin-top: 1vh; }
   .app-container .unread-badge {
     position: relative;
-    width: 15px;
-    height: 15px;
-    background: #3E94EC;
-    border-radius: 20%;
+    width: 10px;
+    height: 10px;
+    background: #58B4D7;
+    border-radius: 100%;
     margin-right: 5px; }
   .app-container .important-badge {
     position: relative;
-    left: -20px;
+    left: -15px;
     margin-top: 20px;
-    width: 15px;
-    height: 15px;
-    background: #EA4335;
-    border-radius: 20%;
+    width: 10px;
+    height: 10px;
+    background: #F64545;
+    border-radius: 100%;
     margin-right: 5px; }
+  .app-container .glyphicon {
+    margin-right: 10px;
+    margin-left: 10px; }
+  .app-container .nav-container {
+    width: 85%;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    padding-left: 15px;
+    padding: 4px;
+    color: #8E95A0;
+    cursor: default;
+    transition: background .1s; }
+    .app-container .nav-container svg {
+      width: 15px;
+      height: 15px;
+      fill: #C2C2C2; }
+  .app-container .title-only {
+    margin-left: 37px; }
+  .app-container .nav-container:first-child {
+    margin-top: 15px; }
+  .app-container .nav-container:hover {
+    background: #4AACD4;
+    color: white; }
+  .app-container .nav-container.selected {
+    background: #4AACD4;
+    color: white; }
+    .app-container .nav-container.selected .badge {
+      color: white; }
   .app-container .mail-content {
     position: absolute;
-    left: 40vw;
-    top: 10vh;
-    width: 56vw;
-    height: 85vh;
-    background: #555555;
-    z-index: -1; }
+    right: 0;
+    top: 10.8vh;
+    width: 55vw; }
   .app-container .mail--menu {
     margin-top: -20px;
     left: 50vw;
@@ -321,11 +388,11 @@
     font-family: 'Pacifico', helvetica, sans-serif;
     font-weight: 400;
     position: absolute;
-    left: 90%;
+    left: 80px;
     transform: translateX(-50%);
-    bottom: -2px;
-    color: #fff;
-    font-size: 18px;
+    top: 18px;
+    color: #2C2F30;
+    font-size: 24px;
     cursor: default;
     z-index: 2; }
   .app-container .title {
@@ -342,11 +409,13 @@
     font-family: "Open Sans", helvetica, arial, sans-serif;
     font-weight: 300;
     position: absolute;
-    bottom: 20px;
-    margin-left: 5px;
-    color: #fff;
+    bottom: 40px;
+    margin-left: 30px;
+    color: #DFDFDF;
     font-size: 16px;
     border-radius: 100%; }
+    .app-container .username .name {
+      margin-left: 5px; }
   .app-container .icon {
     width: 25px;
     height: 25px; }
@@ -369,23 +438,24 @@
   .app-container .icon-container--nav:hover {
     background: #22262e; }
   .app-container .compose-container--nav {
-    width: 50px;
-    height: 55px;
+    width: 40px;
+    height: 40px;
     border-radius: 5px;
     margin-left: auto;
     margin-right: auto;
-    background: #343436;
+    background: #fff;
+    color: #DFDFDF;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border: 1px solid #191919;
+    border: 2px solid #DFDFDF;
     margin-bottom: 10px;
-    background: #343436;
-    -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.8); }
+    transition: background .2s; }
+    .app-container .compose-container--nav .glyphicon {
+      font-size: 20px; }
   .app-container .compose-container--nav:hover {
-    background: #22262e; }
+    background: #4AACD4;
+    color: white; }
   .app-container .label-container--nav {
     position: relative;
     float: left;
@@ -396,7 +466,7 @@
     margin-right: 5px;
     box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.3); }
   .app-container .important {
-    background: #EA4335; }
+    background: #F64545; }
   .app-container .important:hover {
     background: #d12f21; }
   .app-container .unread {
@@ -421,7 +491,7 @@
     -moz-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5);
     box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5); }
   .app-container .icon-container--trash:hover {
-    background: #EA4335; }
+    background: #F64545; }
   .app-container .active {
     background: #22262e;
     border: 1px solid #191919;
@@ -437,9 +507,9 @@
     width: 40px;
     height: 45px; }
   .app-container .menu-trash:hover {
-    background: #EA4335; }
+    background: #F64545; }
   .app-container .menu-trash:active {
-    background: #EA4335;
+    background: #F64545;
     -webkit-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.1), inset 0px 6px 10px 0px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.1), inset 0px 6px 10px 0px rgba(0, 0, 0, 0.4);
     box-shadow: inset 0px 0px -3px -10px rgba(0, 0, 0, 0.1), inset 0px 6px 10px 0px rgba(0, 0, 0, 0.4); }
@@ -451,7 +521,9 @@
     margin-top: 60px;
     margin-left: 30px; }
   .app-container .modal-header {
-    color: #000; }
+    color: #393E3F; }
+  .app-container .modal-body {
+    height: 60vh; }
   .app-container .modal {
     margin-top: 8.5vh; }
   .app-container .hummingbird-icon {
@@ -473,9 +545,9 @@
     cursor: default; }
   .app-container .search {
     position: absolute;
-    left: 10vw;
-    padding-top: 5px;
-    width: 35vw;
+    left: 15vw;
+    padding-top: 13px;
+    width: 30vw;
     z-index: 0; }
   .app-container .mail-menu {
     left: -60px;
@@ -505,7 +577,7 @@
     -moz-box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5);
     box-shadow: inset 0px -3px 0px 0px rgba(0, 0, 0, 0.5); }
   .app-container .menu-button:hover {
-    background: #EA4335;
+    background: #F64545;
     height: 45px; }
   .app-container .menu-button:active {
     outline: none; }
@@ -517,8 +589,8 @@
     transition-duration: .8s; }
   .app-container .compose {
     position: absolute;
-    bottom: 78px;
-    left: 5px;
+    top: 9px;
+    right: 40px;
     outline: 0; }
   .app-container svg {
     fill: #fff; }
@@ -532,7 +604,7 @@
   .app-container .load {
     position: absolute;
     top: 50%;
-    left: 22vw;
+    left: 30vw;
     transform: translate(-50%, -50%);
     z-index: 2; }
   .app-container .load > div {
@@ -561,11 +633,12 @@
     transform: scaleY(1); } }
 
 .email {
-  height: 100%;
-  background: #fff; }
+  height: 100vh;
+  background: #fff;
+  color: #393E3F; }
   .email .mail-header {
     padding: 15px;
-    border-bottom: 1px solid #e5e5e5; }
+    border-bottom: 1px solid #DFDFDF; }
   .email .mail-title {
     margin: 0;
     line-height: 1.42857143; }
@@ -575,13 +648,15 @@
   .email .green {
     background: #8bc34a; }
   .email .red {
-    background: #EA4335; }
+    background: #F64545; }
+  .email .red-icon {
+    color: #F64545; }
   .email .grey {
-    background: #ddd; }
+    background: #454545; }
   .email .clear {
     clear: both; }
   .email .panes.wrapper {
-    background: #666; }
+    background: #fff; }
   .email .panes {
     width: 100%;
     height: 100%;
@@ -596,9 +671,14 @@
     transition: background-color 0.4s ease; }
   .email .pane-email {
     background: #fff;
-    padding: 20px; }
+    padding: 15px;
+    border-radius: 5px;
+    border-bottom: 1px solid #DFDFDF; }
   .email .pane-email:hover {
-    background: #EBEBEB; }
+    background: #EFEFEF; }
+  .email .pane-email.selected {
+    background: #EFEFEF;
+    border: 1px solid #D0D0D0; }
   .email .pane-action {
     text-align: center;
     font: bold 60px/250px 'Open Sans', Helvetica, Arial, sans-serif;

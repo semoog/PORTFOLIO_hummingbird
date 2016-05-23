@@ -8,6 +8,10 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
     $scope.user = user;
 
+    $scope.firstName = $scope.user.name.split(' ');
+
+    $scope.firstName = $scope.firstName[0];
+
     $scope.emails = {};
 
     $scope.currentMailbox = '';
@@ -22,36 +26,26 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     $( ".scroll_container" ).hide();
 
     $(document).on('click', '.icon-container--nav', function() {
-       $(".icon-container--nav").removeClass("active");
-       $(this).addClass("active");
+       $(".icon-container--nav").removeClass("selected");
+       $(this).addClass("selected");
     });
     $(document).on('click', '.compose-container--nav', function() {
-       $(this).addClass("active");
+       $(this).addClass("selected");
        setTimeout(function () {
-         $(this).removeClass("active");
+         $(this).removeClass("selected");
        }, 500);
     });
     $(document).on('click', '.label-container--nav', function() {
-       $(".label-container--nav").removeClass("active");
-       $(this).addClass("active");
+       $(".label-container--nav").removeClass("selected");
+       $(this).addClass("selected");
     });
-
-    $scope.toggleMenu = (event) => {
-
-            // $(event.currentTarget.parentNode).addClass('move-left');
-
-            $(event.currentTarget.parentNode).addClass('move-right');
-
-            $(event.currentTarget.parentNode).toggleClass('move-left');
-
-    };
-
-    $('.mail-menu').click(function(){
-        $('.mail-menu').removeClass('move-right');
-        $('.mail-menu').addClass('move-left');
-
-        $('.mail-container--mailbox').removeClass('move-right');
-        $('.mail-container--mailbox').addClass('move-left');
+    $(document).on('click', '.pane-email', function() {
+       $(".pane-email").removeClass("selected");
+       $(this).addClass("selected");
+    });
+    $(document).on('click', '.nav-container', function() {
+       $(".nav-container").removeClass("selected");
+       $(this).addClass("selected");
     });
 
     // scroll-tip
@@ -199,11 +193,11 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
             console.log($scope.mails);
 
-            setTimeout(function () {
-              if (scrolled === false) {
-                  $( ".scroll_container" ).fadeIn('slow');
-              }
-            }, 10000);
+            // setTimeout(function () {
+            //   if (scrolled === false) {
+            //       $( ".scroll_container" ).fadeIn('slow');
+            //   }
+            // }, 10000);
             return response;
         });
     };
@@ -269,6 +263,10 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     $('.mail-container').on('click', 'div.message-link', function(e) {
         let index, title, sender, date, iframe, messageBody;
 
+        let kids = $(this).children('unread-badge');
+
+        kids.remove();
+
         index = $(this).attr('id');
 
         title = $scope.emails[index].subject;
@@ -333,7 +331,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
 
 
-    const animationDelay = 400;
+    const animationDelay = 600;
 
     function removeEmail(messageId) {
       setTimeout(function() {
@@ -345,7 +343,9 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     }
 
     $scope.$on('mail-item-remove', function(e, messageId) {
+      console.log(messageId);
       removeEmail(messageId);
+      $scope.trashMail(messageId);
     });
     $scope.$on('mail-item-archive', function(e, messageId) {
       removeEmail(messageId);

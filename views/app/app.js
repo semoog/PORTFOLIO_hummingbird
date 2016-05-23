@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
 
-angular.module('meanmail', ['ui.bootstrap', 'ui.router', 'cfp.hotkeys'])
+angular.module('meanmail', ['ui.bootstrap', 'ui.router', 'cfp.hotkeys', 'ngAnimate'])
 .config(function($stateProvider, $urlRouterProvider) {
 
    $stateProvider

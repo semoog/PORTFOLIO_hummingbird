@@ -98,7 +98,7 @@ app.use(express.static(__dirname + '/views'));
 app.use(require('express-session')({
   secret: keys.sessionSecret,
   resave: true,
-  maxAge: new Date(Date.now() + 3600000),
+  maxAge: new Date(Date.now() + 9600000),
   store: new MongoStore({ mongooseConnection: mongoose.connection },
     function(err){
         console.log(err || 'connect-mongodb setup ok');
@@ -258,7 +258,7 @@ app.post('/sendMail',
 app.post('/trashMail',
   (req, res) => {
     console.log(req.body.messageId);
-    mail.trashMail(req.body.messageId, req.user.accessToken);
+    mail.trashMail(req.user, req.body.messageId, req.user.accessToken);
     res.send(req.body);
 });
 
