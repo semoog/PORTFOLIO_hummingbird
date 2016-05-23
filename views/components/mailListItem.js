@@ -9,6 +9,10 @@ angular.module('meanmail').directive('mailListItem', function() {
       this.panes = Array.prototype.slice.call(this.container.children, 0);
       this.containerSize = this.container.offsetWidth;
 
+      $(window).resize(function(event) {
+        this.containerSize = this.container.offsetWidth;
+      });
+
       this.currentIndex = 1;
 
       this.hammer = new Hammer.Manager(this.container);
