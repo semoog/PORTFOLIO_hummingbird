@@ -22,7 +22,7 @@ import connectMongo from 'connect-mongo';
 const MongoStore = connectMongo(session);
 const Schema = mongoose.Schema;
 
-mongoose.connect("mongodb://localhost/hummingbird");
+mongoose.connect("mongodb://localhost:27017/hummingbird");
 
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
