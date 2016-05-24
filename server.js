@@ -234,7 +234,7 @@ app.get('/watchMail',
 
 app.get('/login',
   (req, res) => {
-    res.redirect('/');
+    res.redirect('/#/login');
 });
 
 app.get('/checkAuth',
