@@ -122,7 +122,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
         });
         return $http({
             method: 'GET',
-            url: 'http://159.203.255.205:80/getMail/' + label
+            url: 'http://localhost:80/getMail/' + label
         }).then((response) => {
 
             // $scope.checkAuth();
@@ -214,7 +214,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     $scope.sendMail = (headers_obj, message) => {
       return $http({
           method: 'POST',
-          url: 'http://159.203.255.205:80/sendMail/',
+          url: 'http://localhost:80/sendMail/',
           data: {headers_obj, message}
       }).then((response) => {
         composeTidy();
@@ -226,7 +226,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     $scope.watchMail = () => {
       return $http({
           method: 'GET',
-          url: 'http://159.203.255.205:80/watchMail/'
+          url: 'http://localhost:80/watchMail/'
       }).then((response) => {
         console.log("WATCH RESPONSE: ", response);
       });
@@ -239,7 +239,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     $scope.trashMail = (messageId) => {
       return $http({
           method: 'POST',
-          url: 'http://159.203.255.205:80/trashMail/',
+          url: 'http://localhost:80/trashMail/',
           data: {
             messageId: messageId
           }
@@ -254,7 +254,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     $scope.removeLabel = (messageId, label) => {
       return $http({
           method: 'POST',
-          url: 'http://159.203.255.205:80/removeLabel/',
+          url: 'http://localhost:80/removeLabel/',
           data: {
             messageId: messageId,
             label: label
@@ -268,7 +268,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     $scope.addLabel = (messageId, label) => {
       return $http({
           method: 'POST',
-          url: 'http://159.203.255.205:80/addLabel/',
+          url: 'http://localhost:80/addLabel/',
           data: {
             messageId: messageId,
             label: label
