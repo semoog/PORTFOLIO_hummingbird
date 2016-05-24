@@ -8,6 +8,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
     $scope.user = user;
 
+    // $scope.searchText = 'thomas';
+
     $scope.firstName = $scope.user.name.split(' ');
 
     $scope.firstName = $scope.firstName[0];
@@ -134,6 +136,8 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
                 emails: []
             };
 
+            $scope.unreadCounter = 0;
+
             const mimetypeObj = [];
 
             const extractField = (json, fieldName) => {
@@ -171,6 +175,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
                 if (_.indexOf(parsedMail.emails[i].labels, 'UNREAD') > 0) {
                   parsedMail.emails[i].unread = true;
+                  $scope.unreadCounter++;
                   console.log("found UNREAD on id ", i);
                 }
 
@@ -210,7 +215,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
       return $http({
           method: 'POST',
           url: 'http://localhost:3000/sendMail/',
-          data: headers_obj, message
+          data: {headers_obj, message}
       }).then((response) => {
         composeTidy();
       });
@@ -240,7 +245,7 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
           }
       }).then((response) => {
           console.log("trashed");
-          $state.go($state.current, {}, {reload: true});
+          // $state.go($state.current, {}, {reload: true});
       });
     };
 
@@ -255,8 +260,23 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
             label: label
           }
       }).then((response) => {
+          console.log("removeLabel response: ", response);
           console.log("removed label", label);
-          $state.go($state.current, {}, {reload: true});
+          // $state.go($state.current, {}, {reload: true});
+      });
+    };
+    $scope.addLabel = (messageId, label) => {
+      return $http({
+          method: 'POST',
+          url: 'http://localhost:3000/addLabel/',
+          data: {
+            messageId: messageId,
+            label: label
+          }
+      }).then((response) => {
+          console.log("addLabel response: ", response);
+          console.log("added label", label);
+          // $state.go($state.current, {}, {reload: true});
       });
     };
 
@@ -274,8 +294,10 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
         title = $scope.emails[index].subject;
         sender = $scope.emails[index].from;
         date = $scope.emails[index].date;
+        messageId = $scope.emails[index].messageId;
 
         $scope.mails[index].unread = false;
+        $scope.removeLabel(messageId, 'UNREAD');
 
         $('#emailTitle').text(title);
         $('#emailSender').text(sender);
@@ -351,5 +373,6 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     });
     $scope.$on('mail-item-archive', function(e, messageId) {
       removeEmail(messageId);
+      $scope.addLabel(messageId, 'STARRED');
     });
 });

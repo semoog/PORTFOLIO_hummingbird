@@ -7,6 +7,7 @@ import request from 'request';
 import refresh from 'passport-oauth2-refresh';
 import keys from './keys';
 import bluebird from 'bluebird';
+import mongoose from 'mongoose';
 
 var OAuth2 = google.auth.OAuth2;
 var API_KEY = keys.GOOGLE_API_KEY;
@@ -75,7 +76,7 @@ function trashMail (messageId, accToken){
   });
 }
 
-function refreshTokenOnError(user, gmailCall) {
+function refreshTokenOnError(user, gmailCall, User) {
   return gmailCall(user.accessToken).catch(err => {
     if(/Invalid Credentials/.test(err.message) || err.statusCode === 400) {
       console.log('invalid credentials');
@@ -90,7 +91,11 @@ function refreshTokenOnError(user, gmailCall) {
               reject(err);
             }
             console.log('got new access token ', accessToken, ' trying again...');
-            // to-do: save new access token here.
+
+            User.findByIdAndUpdate(user._id, {accessToken: accessToken}, (err, resp) => {
+              console.log("User updated with accessToken ", accessToken);
+            });
+
             resolve(gmailCall(accessToken));
         });
       });
@@ -100,16 +105,35 @@ function refreshTokenOnError(user, gmailCall) {
 
 module.exports = {
 
-  getMail: (user, label) => {
-    return refreshTokenOnError(user, (accessToken) => getMail(accessToken, label));
+  getMail: (user, label, User) => {
+    return refreshTokenOnError(user, (accessToken) => getMail(accessToken, label), User);
   },
 
   trashMail: (user, messageId, accToken) => {
-    return refreshTokenOnError(user, (accessToken) => trashMail(messageId, accessToken));
+    trashMail(messageId, accToken);
   },
 
   removeLabel: (messageId, label, accToken) => {
     console.log("removing label ", label, " from ", messageId);
+
+    oauth2Client.setCredentials({
+      access_token: accToken
+    });
+
+    var gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+
+    gmail.users.messages.modify({
+      userId: 'me',
+      id: messageId,
+      resource: {
+        addLabelIds: [],
+        removeLabelIds: [label]
+      }
+    });
+  },
+
+  addLabel: (messageId, label, accToken) => {
+    console.log("adding label ", label, " to ", messageId);
 
     oauth2Client.setCredentials({
       access_token: accToken
@@ -145,9 +169,9 @@ module.exports = {
       email += header += ": "+headers_obj[header]+"\r\n";
     }
 
-    console.log("Before: ", email);
-
     email += "\r\n" + message;
+
+    console.log("Before: ", email);
 
     var convertedMail = btoa(email).replace(/\+/g, '-').replace(/\//g, '_');
 
