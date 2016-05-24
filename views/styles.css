@@ -390,9 +390,9 @@ input[type=text] {
     font-family: 'Pacifico', helvetica, sans-serif;
     font-weight: 400;
     position: absolute;
-    left: 80px;
+    left: 95px;
     transform: translateX(-50%);
-    top: 18px;
+    top: 0px;
     color: #2C2F30;
     font-size: 24px;
     cursor: default;
@@ -407,6 +407,11 @@ input[type=text] {
     color: #fff;
     font-size: 30px;
     cursor: default; }
+  .app-container .user {
+    height: 150px;
+    width: 15vw;
+    position: absolute;
+    bottom: 0; }
   .app-container .username {
     font-family: "Open Sans", helvetica, arial, sans-serif;
     font-weight: 300;
@@ -609,7 +614,7 @@ input[type=text] {
     transform: rotate(45deg);
     animation: load-ani1 3s ease-in-out infinite;
     position: absolute;
-    left: 28.5vw;
+    left: 29vw;
     top: 50vh;
     z-index: 2; }
   .app-container .load i {

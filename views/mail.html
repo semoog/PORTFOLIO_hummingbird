@@ -8,7 +8,9 @@
 
             <h1 class="logo">hummingbird</h1>
             <!-- <h1 class="title">{{mailbox_title}}</h1> -->
-            <h3 class="username"> <img src="{{user.profileimg}}" alt="" /> {{firstName}} </h3>
+            <div class="user">
+              <h3 class="username"> <img src="{{user.profileimg}}" alt="" /> {{firstName}} </h3>
+            </div>
             <!-- <div class="input-group search">
               <input type="text" class="form-control" placeholder="search..." aria-describedby="basic-addon1">
             </div> -->
@@ -32,7 +34,7 @@
 
           <div class="nav-bar pull-left">
             <div class="nav-container selected" ng-click="getMail('INBOX')">
-              <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Inbox <span class="badge pull-right">{{mails.length}}</span>
+              <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Inbox <span class="badge pull-right">{{unreadCounter}}</span>
             </div>
             <div class="nav-container" ng-click="getMail('IMPORTANT')">
               <div class="title-only">
@@ -44,26 +46,19 @@
                 Work
               </div>
             </div>
-            <div class="nav-container" ng-click="getMail('CATEGORY_SOCIAL')">
+            <div class="nav-container" ng-click="getMail('NOTES')">
               <div class="title-only">
-                Personal
+                Notes
               </div>
             </div>
             <div class="nav-container" ng-click="getMail('SPAM')">
               <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Spam <span class="badge pull-right">99</span>
             </div>
-            <div class="nav-container" ng-click="getMail('TRASH')">
-              <span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Trash
+            <div class="nav-container" ng-click="getMail('STARRED')">
+              <span class="glyphicon glyphicon-star red" aria-hidden="true"></span> Starred
             </div>
-            <div class="nav-container" ng-click="getMail('SENT')">
+            <!-- <div class="nav-container" ng-click="getMail('SENT')">
               <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Sent
-            </div>
-
-            <!-- <div class="label-container--nav important" ng-click="getMail('IMPORTANT')">
-              <img class="icon" src="src/spam.svg" alt="" />
-            </div>
-            <div class="label-container--nav unread" ng-click="">
-              <img class="icon" src="src/spam.svg" alt="" />
             </div> -->
 
           </div>

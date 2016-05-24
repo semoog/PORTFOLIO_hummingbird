@@ -270,7 +270,7 @@ app.post('/sendMail',
 
 app.post('/trashMail',
   (req, res) => {
-    console.log(req.body.messageId);
+    console.log("access token before call: ", req.user.accessToken);
     mail.trashMail(req.user, req.body.messageId, req.user.accessToken);
     res.send(req.body);
 });
@@ -282,11 +282,18 @@ app.post('/removeLabel',
     res.send(req.body);
 });
 
+app.post('/addLabel',
+  (req, res) => {
+    console.log(req.body.messageId);
+    mail.addLabel(req.body.messageId, req.body.label, req.user.accessToken);
+    res.send(req.body);
+});
+
 app.get('/getMail/:label',
   ensureAuthenticated,
   async (function (req, res){
     console.log("getting mail");
-      let emailParsed = await(mail.getMail(req.user, req.params.label));
+      let emailParsed = await(mail.getMail(req.user, req.params.label, User));
       res.send(emailParsed);
 }));
 
