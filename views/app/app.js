@@ -12,7 +12,7 @@ angular.module('meanmail', ['ui.bootstrap', 'ui.router', 'cfp.hotkeys', 'ngAnima
 
    $stateProvider
       .state('mail', {
-         url: '/mail',
+         url: '/',
          templateUrl: '../mail.html',
          controller: 'mailCtrl',
          resolve: {
@@ -31,6 +31,6 @@ angular.module('meanmail', ['ui.bootstrap', 'ui.router', 'cfp.hotkeys', 'ngAnima
          }
       });
 
-      $urlRouterProvider.otherwise('/mail');
+      $urlRouterProvider.otherwise('/');
    //end config
 });

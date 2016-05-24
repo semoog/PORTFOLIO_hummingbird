@@ -222,8 +222,9 @@ function ensureAuthenticated(req, res, next) {
 // Define routes.
 
 app.get('/',
+ensureAuthenticated,
   (req, res) => {
-    res.redirect('/mail');
+    res.redirect('/');
 });
 
 app.get('/watchMail',
@@ -233,7 +234,7 @@ app.get('/watchMail',
 
 app.get('/login',
   (req, res) => {
-    res.redirect('/#/login');
+    res.redirect('/');
 });
 
 app.get('/checkAuth',
@@ -258,7 +259,7 @@ app.get('/mail',
   ensureAuthenticated,
   (req, res) => {
     console.log("redirecting to mail");
-    res.redirect('/#/mail');
+    res.redirect('/');
 });
 
 app.post('/sendMail',
@@ -316,7 +317,7 @@ app.get('/oauthcallback?code={authorizationCode}',
   (req, res) => {
     // Successful authentication, redirect home.
     console.log("Successfully Authenticated.");
-    res.redirect('/#/mail');
+    res.redirect('/');
 });
 
 // serialize / deserialize for passport
