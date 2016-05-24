@@ -1,14 +1,10 @@
 /* jshint esversion: 6 */
 
-// import bootstrap from 'bootstrap';
-
-angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user, $state, hotkeys) {
+angular.module("meanmail").controller("mailCtrl", function($scope, $http, user, $state, hotkeys) {
 
     // vars
 
     $scope.user = user;
-
-    // $scope.searchText = 'thomas';
 
     $scope.firstName = $scope.user.name.split(' ');
 
@@ -25,68 +21,67 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
     // jquery init
 
-    $( ".scroll_container" ).hide();
+    $(".scroll_container").hide();
 
     $(document).on('click', '.icon-container--nav', function() {
-       $(".icon-container--nav").removeClass("selected");
-       $(this).addClass("selected");
+        $(".icon-container--nav").removeClass("selected");
+        $(this).addClass("selected");
     });
     $(document).on('click', '.compose-container--nav', function() {
-       $(this).addClass("selected");
-       setTimeout(function () {
-         $(this).removeClass("selected");
-       }, 500);
+        $(this).addClass("selected");
+        setTimeout(function() {
+            $(this).removeClass("selected");
+        }, 500);
     });
     $(document).on('click', '.label-container--nav', function() {
-       $(".label-container--nav").removeClass("selected");
-       $(this).addClass("selected");
+        $(".label-container--nav").removeClass("selected");
+        $(this).addClass("selected");
     });
     $(document).on('click', '.pane-email', function() {
-       $(".pane-email").removeClass("selected");
-       $(this).addClass("selected");
+        $(".pane-email").removeClass("selected");
+        $(this).addClass("selected");
     });
     $(document).on('click', '.nav-container', function() {
-       $(".nav-container").removeClass("selected");
-       $(this).addClass("selected");
+        $(".nav-container").removeClass("selected");
+        $(this).addClass("selected");
     });
 
     // scroll-tip
 
     $(".mail-container").scroll(function() {
-      console.log("scrolled");
-      scrolled = true;
+        console.log("scrolled");
+        scrolled = true;
     });
 
     $(".mail-container").scroll(function() {
-      $( ".scroll_container" ).fadeOut('slow');
+        $(".scroll_container").fadeOut('slow');
     });
 
     // tidy compose modal after send
 
     function composeTidy() {
 
-      $('#compose-modal').modal('hide');
+        $('#compose-modal').modal('hide');
 
-      $('#compose-to').val('');
-      $('#compose-subject').val('');
-      $('#compose-message').val('');
+        $('#compose-to').val('');
+        $('#compose-subject').val('');
+        $('#compose-message').val('');
 
-      $('#send-button').removeClass('disabled');
+        $('#send-button').removeClass('disabled');
     }
 
     window.sendEmail = function sendEmail() {
 
-      $('#send-button').addClass('disabled');
+        $('#send-button').addClass('disabled');
 
-      $scope.sendMail(
-        {
-          'To': $('#compose-to').val(),
-          'Subject': $('#compose-subject').val()
-        },
-        $('#compose-message').val()
-      );
+        $scope.sendMail({
+                'To': $('#compose-to').val(),
+                'Subject': $('#compose-subject').val()
+            },
+            $('#compose-message').val()
+        );
 
-      return false;
+        return false;
     };
 
     // getMail parsing
@@ -125,12 +120,6 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
             url: '/getMail/' + label
         }).then((response) => {
 
-            // $scope.checkAuth();
-
-            // $('.tbody').remove();
-            // $('.table inbox').append("<tbody class='tbody'></tbody>");
-
-            // console.log(response);
 
             const parsedMail = {
                 emails: []
@@ -148,8 +137,6 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
             for (let i = 0; i < response.data.mails.length; i++) {
 
-                // console.log("mail id: ", i, "date response: ", extractField(response.data.mails[i], "Date"));
-
                 // filtering for properties
 
                 parsedMail.emails.push({});
@@ -158,11 +145,10 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
                 parsedMail.emails[i].sender = parsedMail.emails[i].from.replace(/<\S+@\S+\.\S{2,8}>/g, '').replace(/"+/g, '');
                 parsedMail.emails[i].subject = extractField(response.data.mails[i], "Subject").replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
                 if (extractField(response.data.mails[i], "Date") !== (undefined || null)) {
-                  console.log("mail id: ", i, "date response: ", extractField(response.data.mails[i], "Date"));
-                  parsedMail.emails[i].date = extractField(response.data.mails[i], "Date");
-                }
-                else {
-                  parsedMail.emails[i].date = response.data.mails[i].internalDate;
+                    console.log("mail id: ", i, "date response: ", extractField(response.data.mails[i], "Date"));
+                    parsedMail.emails[i].date = extractField(response.data.mails[i], "Date");
+                } else {
+                    parsedMail.emails[i].date = response.data.mails[i].internalDate;
                 }
                 parsedMail.emails[i].date = moment(parsedMail.emails[i].date).calendar();
                 parsedMail.emails[i].snippet = response.data.mails[i].snippet.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
@@ -174,14 +160,14 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
                 parsedMail.emails[i].important = false;
 
                 if (_.indexOf(parsedMail.emails[i].labels, 'UNREAD') > 0) {
-                  parsedMail.emails[i].unread = true;
-                  $scope.unreadCounter++;
-                  console.log("found UNREAD on id ", i);
+                    parsedMail.emails[i].unread = true;
+                    $scope.unreadCounter++;
+                    console.log("found UNREAD on id ", i);
                 }
 
                 if (_.indexOf(parsedMail.emails[i].labels, 'IMPORTANT') > 0) {
-                  parsedMail.emails[i].important = true;
-                  console.log("found IMPORTANT on id ", i);
+                    parsedMail.emails[i].important = true;
+                    console.log("found IMPORTANT on id ", i);
                 }
 
                 parsedMail.emails[i].html = getBody(response.data.mails[i].payload);
@@ -193,8 +179,6 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
 
                 });
             }
-
-            // $('.notouch').remove();
 
             $scope.mails = parsedMail.emails;
 
@@ -212,24 +196,27 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     // send
 
     $scope.sendMail = (headers_obj, message) => {
-      return $http({
-          method: 'POST',
-          url: '/sendMail/',
-          data: {headers_obj, message}
-      }).then((response) => {
-        composeTidy();
-      });
+        return $http({
+            method: 'POST',
+            url: '/sendMail/',
+            data: {
+                headers_obj,
+                message
+            }
+        }).then((response) => {
+            composeTidy();
+        });
     };
 
     // watch mail
 
     $scope.watchMail = () => {
-      return $http({
-          method: 'GET',
-          url: '/watchMail/'
-      }).then((response) => {
-        console.log("WATCH RESPONSE: ", response);
-      });
+        return $http({
+            method: 'GET',
+            url: '/watchMail/'
+        }).then((response) => {
+            console.log("WATCH RESPONSE: ", response);
+        });
     };
 
     $scope.watchMail();
@@ -237,47 +224,44 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     // trash mail
 
     $scope.trashMail = (messageId) => {
-      return $http({
-          method: 'POST',
-          url: '/trashMail/',
-          data: {
-            messageId: messageId
-          }
-      }).then((response) => {
-          console.log("trashed");
-          // $state.go($state.current, {}, {reload: true});
-      });
+        return $http({
+            method: 'POST',
+            url: '/trashMail/',
+            data: {
+                messageId: messageId
+            }
+        }).then((response) => {
+            console.log("trashed");
+        });
     };
 
     // remove label
 
     $scope.removeLabel = (messageId, label) => {
-      return $http({
-          method: 'POST',
-          url: '/removeLabel/',
-          data: {
-            messageId: messageId,
-            label: label
-          }
-      }).then((response) => {
-          console.log("removeLabel response: ", response);
-          console.log("removed label", label);
-          // $state.go($state.current, {}, {reload: true});
-      });
+        return $http({
+            method: 'POST',
+            url: '/removeLabel/',
+            data: {
+                messageId: messageId,
+                label: label
+            }
+        }).then((response) => {
+            console.log("removeLabel response: ", response);
+            console.log("removed label", label);
+        });
     };
     $scope.addLabel = (messageId, label) => {
-      return $http({
-          method: 'POST',
-          url: '/addLabel/',
-          data: {
-            messageId: messageId,
-            label: label
-          }
-      }).then((response) => {
-          console.log("addLabel response: ", response);
-          console.log("added label", label);
-          // $state.go($state.current, {}, {reload: true});
-      });
+        return $http({
+            method: 'POST',
+            url: '/addLabel/',
+            data: {
+                messageId: messageId,
+                label: label
+            }
+        }).then((response) => {
+            console.log("addLabel response: ", response);
+            console.log("added label", label);
+        });
     };
 
     // modal popup
@@ -317,62 +301,54 @@ angular.module("meanmail").controller("mailCtrl", function ($scope, $http, user,
     var s = $("#scroll");
     var r = console.log("DONE");
     var t = new TimelineMax({
-    	repeat: -1,
-    	repeatDelay: 0.9,
-    	onComplete: r,
-    	ease: Expo.easeIn
+        repeat: -1,
+        repeatDelay: 0.9,
+        onComplete: r,
+        ease: Expo.easeIn
     });
     t.to(s, 0.3, {
-    	y: 10
+        y: 10
     }).to(s, 0.2, {
-    	opacity: 0
+        opacity: 0
     }, 0.2).to(s, 0.5, {
-    	y: 0
+        y: 0
     }).to(s, 0.3, {
-    	opacity: 1
+        opacity: 1
     });
 
     // hotkeys
 
     hotkeys.add({
-      combo: 'r',
-      description: 'Refresh Inbox',
-      callback: function() {
-        $scope.getMail('INBOX');
-      }
+        combo: 'r',
+        description: 'Refresh Inbox',
+        callback: function() {
+            $scope.getMail('INBOX');
+        }
     });
 
     // init mail getter
 
     $scope.getMail('INBOX');
 
-    // refresh mail getter
-
-    // setInterval(function () {
-    //   console.log("Refreshing ", $scope.currentMailbox);
-    //   $scope.getMail($scope.getMail($scope.currentMailbox));
-    // }, 60000);
-
-
 
     const animationDelay = 600;
 
     function removeEmail(messageId) {
-      setTimeout(function() {
-        $scope.mails = $scope.mails.filter(function(email) {
-          return email.messageId !== messageId;
-        });
-        $scope.$apply();
-      }, animationDelay);
+        setTimeout(function() {
+            $scope.mails = $scope.mails.filter(function(email) {
+                return email.messageId !== messageId;
+            });
+            $scope.$apply();
+        }, animationDelay);
     }
 
     $scope.$on('mail-item-remove', function(e, messageId) {
-      console.log(messageId);
-      removeEmail(messageId);
-      $scope.trashMail(messageId);
+        console.log(messageId);
+        removeEmail(messageId);
+        $scope.trashMail(messageId);
     });
     $scope.$on('mail-item-archive', function(e, messageId) {
-      removeEmail(messageId);
-      $scope.addLabel(messageId, 'STARRED');
+        removeEmail(messageId);
+        $scope.addLabel(messageId, 'STARRED');
     });
 });
