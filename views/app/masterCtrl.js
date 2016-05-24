@@ -49,9 +49,9 @@ angular.module("meanmail").controller("masterCtrl", function ($scope, $http, mas
 
     $scope.login = () => {
 
-          // $(location).attr('href', 'http://localhost:3000/auth/google');
+          // $(location).attr('href', 'http://159.203.255.205:80/auth/google');
           // window.top.location.href = '/auth/google';
-          return window.open("http://hummingbird.email:80/auth/google", "Hummingbird Auth");
+          return window.open("http://159.203.255.205:80/auth/google", "Hummingbird Auth");
 
       };
 
