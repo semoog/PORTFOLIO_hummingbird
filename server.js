@@ -22,7 +22,7 @@ import connectMongo from 'connect-mongo';
 const MongoStore = connectMongo(session);
 const Schema = mongoose.Schema;
 
-mongoose.connect("mongodb://localhost/meanmail");
+mongoose.connect("mongodb://hummingbird.email:80/meanmail");
 
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
