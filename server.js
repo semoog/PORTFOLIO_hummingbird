@@ -22,7 +22,7 @@ import connectMongo from 'connect-mongo';
 const MongoStore = connectMongo(session);
 const Schema = mongoose.Schema;
 
-mongoose.connect("mongodb://localhost/hummingbird");
+mongoose.connect("mongodb://localhost:80/hummingbird");
 
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
@@ -132,7 +132,7 @@ const User = mongoose.model("User", userSchema);
 // cors init
 
 const corsOptions = {
-  origin: 'http://localhost:3000'
+  origin: 'http://localhost:80'
 };
 
 app.use(cors(corsOptions));
