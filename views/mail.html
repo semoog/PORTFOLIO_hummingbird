@@ -1,135 +1,122 @@
 <div class="app-container">
 
-    <!-- <button ng-click="getMail('INBOX')">Inbox</button> -->
+    <div class="load">
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+    </div>
 
-          <div class="load"><i></i><i></i><i></i><i></i></div>
+    <div class="app-bar">
 
-          <div class="app-bar">
+        <h1 class="logo">hummingbird</h1>
+        <div class="user">
+            <h3 class="username">
+                <img src="{{user.profileimg}}" alt=""/>
+                {{firstName}}
+            </h3>
+        </div>
 
-            <h1 class="logo">hummingbird</h1>
-            <!-- <h1 class="title">{{mailbox_title}}</h1> -->
-            <div class="user">
-              <h3 class="username"> <img src="{{user.profileimg}}" alt="" /> {{firstName}} </h3>
-            </div>
-            <!-- <div class="input-group search">
-              <input type="text" class="form-control" placeholder="search..." aria-describedby="basic-addon1">
-            </div> -->
+        <div class="input-group search">
+            <span class="input-group-addon" id="basic-addon1">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </span>
+            <input type="text" ng-model="searchText" class="form-control" placeholder="Search" aria-describedby="basic-addon1">
+        </div>
+    </div>
 
-            <div class="input-group search">
-              <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
-              <input type="text" ng-model="searchText" class="form-control" placeholder="Search" aria-describedby="basic-addon1">
-            </div>
-          </div>
+    <a href="#compose-modal" data-toggle="modal">
+        <div class="compose-container--nav compose" ng-click="">
+            <span class="glyphicon glyphicon-edit red" aria-hidden="true"></span>
+        </div>
+    </a>
 
-          <a href="#compose-modal"
-             data-toggle="modal">
-            <div class="compose-container--nav compose" ng-click="">
-              <span class="glyphicon glyphicon-edit red" aria-hidden="true"></span>
-            </div>
-          </a>
-
-          <!-- <div class="side-bar pull-right">
-
-          </div> -->
-
-          <div class="nav-bar pull-left">
-            <div class="nav-container selected" ng-click="getMail('INBOX')">
-              <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> Inbox <span class="badge pull-right">{{unreadCounter}}</span>
-            </div>
-            <div class="nav-container" ng-click="getMail('IMPORTANT')">
-              <div class="title-only">
+    <div class="nav-bar pull-left">
+        <div class="nav-container selected" ng-click="getMail('INBOX')">
+            <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+            Inbox
+            <span class="badge pull-right">{{unreadCounter}}</span>
+        </div>
+        <div class="nav-container" ng-click="getMail('IMPORTANT')">
+            <div class="title-only">
                 Important
-              </div>
             </div>
-            <div class="nav-container" ng-click="getMail('WORK')">
-              <div class="title-only">
+        </div>
+        <div class="nav-container" ng-click="getMail('WORK')">
+            <div class="title-only">
                 Work
-              </div>
             </div>
-            <div class="nav-container" ng-click="getMail('NOTES')">
-              <div class="title-only">
+        </div>
+        <div class="nav-container" ng-click="getMail('NOTES')">
+            <div class="title-only">
                 Notes
-              </div>
             </div>
-            <div class="nav-container" ng-click="getMail('SPAM')">
-              <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Spam <span class="badge pull-right">99</span>
-            </div>
-            <div class="nav-container" ng-click="getMail('STARRED')">
-              <span class="glyphicon glyphicon-star red" aria-hidden="true"></span> Starred
-            </div>
-            <!-- <div class="nav-container" ng-click="getMail('SENT')">
-              <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Sent
-            </div> -->
+        </div>
+        <div class="nav-container" ng-click="getMail('SPAM')">
+            <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+            Spam
+            <span class="badge pull-right">99</span>
+        </div>
+        <div class="nav-container" ng-click="getMail('STARRED')">
+            <span class="glyphicon glyphicon-heart red" aria-hidden="true"></span>
+            Favorites
+        </div>
 
-          </div>
+    </div>
 
-          <div class='scroll_container'>
-            <svg class="scroll-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="80px" height="80px" viewBox="-285 377 40 40"
-            xml:space="preserve">
-            	<g id="scroll">
-            		<g>
-            			<path class="st0" d="M-265,388.1c-0.9,0-1.6,0.7-1.6,1.6v4.1c0,0.9,0.7,1.6,1.6,1.6s1.6-0.7,1.6-1.6v-4.1
-                            C-263.4,388.8-264.1,388.1-265,388.1" />
-            		</g>
-            	</g>
-            	<g id="wheel">
-            		<g>
-            			<path class="st0" d="M-264,378.2h-1.9c-6.2,0.5-10.9,5.5-10.9,11.6v14.3c0,6.5,5.3,11.7,11.8,11.7
+    <div class='scroll_container'>
+        <svg class="scroll-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="80px" height="80px" viewBox="-285 377 40 40" xml:space="preserve">
+            <g id="scroll">
+                <g>
+                    <path class="st0" d="M-265,388.1c-0.9,0-1.6,0.7-1.6,1.6v4.1c0,0.9,0.7,1.6,1.6,1.6s1.6-0.7,1.6-1.6v-4.1
+                            C-263.4,388.8-264.1,388.1-265,388.1"/>
+                </g>
+            </g>
+            <g id="wheel">
+                <g>
+                    <path
+                        class="st0"
+                        d="M-264,378.2h-1.9c-6.2,0.5-10.9,5.5-10.9,11.6v14.3c0,6.5,5.3,11.7,11.8,11.7
                             s11.8-5.3,11.8-11.7v-14.3C-253.1,383.7-257.9,378.7-264,378.2z M-255.1,404.2c0,5.4-4.4,9.8-9.9,9.8c-5.4,0-9.9-4.4-9.9-9.8
-                            v-14.4c0-5.4,4.5-9.8,9.9-9.8s9.9,4.4,9.9,9.8V404.2z" />
-            		</g>
-            	</g>
-            </svg>
-          </div>
-
-          <!-- <div class="footer-bar"></div> -->
+                            v-14.4c0-5.4,4.5-9.8,9.9-9.8s9.9,4.4,9.9,9.8V404.2z"/>
+                </g>
+            </g>
+        </svg>
+    </div>
 
     <div class="mail-container">
 
-      <!-- <div class="notouch">
-
-      </div> -->
-
-      <!-- <a href="#compose-modal"
-         data-toggle="modal"
-         id="compose-button"
-         class="btn btn-primary">
-         Compose
-      </a> -->
-
         <div class="mail-container--mailbox" ng-repeat="mail in mails track by mail.messageId | filter:searchText" message-id="mail.messageId">
-          <mail-list-item class="email" message-id="mail.messageId">
+            <mail-list-item class="email" message-id="mail.messageId">
 
-            <div class="message-link mailbox--mail" data-toggle="modal" id="{{mail.index}}" messageId="{{mail.id}}">
-              <!-- ng-click="removeLabel(mail.id, 'UNREAD') -->
+                <div class="message-link mailbox--mail" data-toggle="modal" id="{{mail.index}}" messageId="{{mail.id}}">
 
-              <div class="unread-badge pull-left" ng-show="{{mail.unread}}"></div>
-              <div class="important-badge pull-left" ng-show="{{mail.important}}"></div>
+                    <div class="unread-badge pull-left" ng-show="{{mail.unread}}"></div>
+                    <div class="important-badge pull-left" ng-show="{{mail.important}}"></div>
 
-                <div>
+                    <div>
 
-                  <div class="pull-right date">
-                      {{mail.date}}
-                  </div>
+                        <div class="pull-right date">
+                            {{mail.date}}
+                        </div>
 
-                  <div class="sender">
-                    {{mail.sender}}<br/>
-                  </div>
+                        <div class="sender">
+                            {{mail.sender}}<br/>
+                        </div>
 
-                  <div class="subject">
-                      <strong>{{mail.subject}}</strong>
-                  </div>
-                  <br/>
+                        <div class="subject">
+                            <strong>{{mail.subject}}</strong>
+                        </div>
+                        <br/>
 
-                  <div class="snippet">
-                      {{mail.snippet}}
-                  </div>
+                        <div class="snippet">
+                            {{mail.snippet}}
+                        </div>
+
+                    </div>
 
                 </div>
-
-            </div>
-          </mail-list-item>
-
+            </mail-list-item>
 
         </div>
 
@@ -166,27 +153,18 @@
         </div>
 
         <div class="mail-content">
-          <div class="email">
-            <div class="mail-header">
-                <h4 class="mail-title" id="emailTitle"></h4>
-                <h6 class="mail-title" id="emailSender"></h6>
-                <h6 class="mail-title" id="emailDate"></h6>
+            <div class="email">
+                <div class="mail-header">
+                    <h4 class="mail-title" id="emailTitle"></h4>
+                    <h6 class="mail-title" id="emailSender"></h6>
+                    <h6 class="mail-title" id="emailDate"></h6>
+                </div>
+                <div class="mail-body">
+                    <iframe id="message-iframe"></iframe>
+                </div>
             </div>
-            <div class="mail-body">
-                <iframe id="message-iframe"></iframe>
-            </div>
-          </div>
         </div>
 
     </div>
 
-    <!-- <script id="row-template" type="x-tmpl-mustache">
-        <tr class="message-link" data-toggle="modal" id="{{index}}">
-            <td class="text-left">{{from}}</td>
-            <td class="content text-left">
-                <a>{{subject}}</a>
-                {{snippet}}</td>
-            <td class="text-left">{{date}}</td>
-        </tr>
-    </script> -->
 </div>
