@@ -26,7 +26,7 @@ function getMail(accessToken, label) {
 
         gmail = new Gmail(accessToken);
         emails = gmail.messages(('label:' + String(label)), {
-            max: 100
+            max: 60
         });
         // { fields: ['id', 'internalDate', 'labelIds', 'payload']}
 

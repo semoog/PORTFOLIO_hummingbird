@@ -2,10 +2,11 @@
 ::-webkit-scrollbar {
     background: transparent;
     width: 6px;
+    z-index: 99;
 }
 ::-webkit-scrollbar-thumb {
     background: rgba(0,0,0,0.5) !important; // manage scrollbar thumb background color here
-    border-radius: 10px;
+    border-radius: 0px;
 }
 input[type=text] {
     border-radius: 5px;
@@ -37,7 +38,7 @@ input[type=text] {
     height: 100vh;
     overflow: hidden;
     body {
-        color: $textGray;
+        color: $white;
         font-family: "Open Sans", helvetica, arial, sans-serif;
         font-size: 16px;
         font-weight: 400;
@@ -60,7 +61,7 @@ input[type=text] {
     }
     .nav-bar {
         height: 90vh;
-        width: 15vw;
+        width: 15.1vw;
         z-index: 1;
         background: $white;
     }
@@ -80,7 +81,7 @@ input[type=text] {
     .mail-container {
         z-index: -1;
         width: 30vw; //pixel value
-        height: 100vh;
+        height: 88vh;
         overflow: scroll;
         margin-top: 15px;
     }
@@ -133,17 +134,18 @@ input[type=text] {
         background: none;
     }
     .trash-slide-left {
-        position: absolute;
-        right: 0;
-        vertical-align: middle;
-        margin-top: 1vh;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
     }
     .trash-slide-right {
-        position: absolute;
-        left: 0;
-        vertical-align: middle;
-        margin-left: 10px;
-        margin-top: 1vh;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
     }
     .unread-badge {
         position: relative;
@@ -173,13 +175,25 @@ input[type=text] {
             height: 15px;
             fill: #C2C2C2;
         }
+        .mailbox--name {
+          display: inline;
+          color: #8E95A0;
+        }
+        .glyphicon-heart {
+          color: $coralRed;
+        }
+        .glyphicon-tag {
+          color: $sunOrange;
+        }
+        .glyphicon-inbox {
+          color: $medGray;
+        }
         width: 85%;
         margin-top: 5px;
         margin-left: auto;
         margin-right: auto;
         border-radius: 5px;
         padding: 4px;
-        color: #8E95A0;
         cursor: default;
         transition: background 0.1s;
     }
@@ -191,13 +205,18 @@ input[type=text] {
     }
     .nav-container:hover {
         background: $celestialBlue;
-        color: white;
+        .mailbox--name {
+          color: white;
+        }
     }
     .nav-container.selected {
         background: $celestialBlue;
         color: white;
         .badge {
             color: white;
+        }
+        .mailbox--name {
+          color: white;
         }
     }
     .mail-content {
@@ -257,23 +276,34 @@ input[type=text] {
         cursor: default;
     }
     .user {
+        img {
+            border-radius: 5px 0 0 5px;
+            box-shadow: inset 0 -4px 0 0 rgba(0, 0, 0, 1);
+        }
         height: 150px;
         width: 15vw;
         position: absolute;
-        bottom: 0;
+        bottom: -50px;
+        background: white;
+        border-radius: 5px;
     }
     .username {
         .name {
-            margin-left: 5px;
+            display: inline;
+            padding-left: 10px;
         }
+        width: 85%;
         font-family: "Open Sans", helvetica, arial, sans-serif;
         font-weight: 300;
-        position: absolute;
-        bottom: 40px;
-        margin-left: 30px;
-        color: $athensGray;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        color: $white;
         font-size: 16px;
-        border-radius: 100%;
+        padding-right: 15px;
+        background: $coralRed;
+        border-radius: 5px;
+        box-shadow: inset 0 -4px 0 0 rgba(0, 0, 0, 0.2);
     }
     .icon {
         width: 25px;
@@ -628,10 +658,13 @@ input[type=text] {
 }
 .email {
     height: 100vh;
-    background: #fff;
+    background: $white;
     color: $textGray;
     .mail-header {
-        padding: 15px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 10px;
         border-bottom: 1px solid $athensGray;
     }
     .mail-title {
@@ -640,18 +673,19 @@ input[type=text] {
     }
     .mail-body {
         position: relative;
-        padding: 15px;
+        padding: 0;
     }
     // slider
-    .green {
-        background: $limeGreen;
-    }
-    .red-glyph {
+    .red {
         background: $coralRed;
-        color: $coralRed;
+    }
+    .blue {
+        background: $celestialBlue;
     }
     .red-icon {
         color: $coralRed;
+        background: $coralRed;
+        background-color: $coralRed;
     }
     .grey {
         background: #454545;
@@ -697,5 +731,11 @@ input[type=text] {
     .panes.animate > .pane {
         transition: all 0.3s;
         -webkit-transition: all 0.3s;
+    }
+    .favorited {
+      font: 30px 'Open Sans', Helvetica, Arial, sans-serif;
+      position: absolute;
+      margin-left: 100px;
+      transform: translateX(-50%);
     }
 }

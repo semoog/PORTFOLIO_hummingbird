@@ -1,5 +1,7 @@
 <div class="app-container">
 
+    <!-- load -->
+
     <div class="load">
         <i></i>
         <i></i>
@@ -7,15 +9,21 @@
         <i></i>
     </div>
 
+    <!-- top-bar -->
+
     <div class="app-bar">
 
         <h1 class="logo">hummingbird</h1>
         <div class="user">
             <h3 class="username">
                 <img src="{{user.profileimg}}" alt=""/>
-                {{firstName}}
+                <div class="name">
+                    {{firstName}}
+                </div>
             </h3>
         </div>
+
+        <!-- search -->
 
         <div class="input-group search">
             <span class="input-group-addon" id="basic-addon1">
@@ -25,41 +33,45 @@
         </div>
     </div>
 
+    <!-- compose -->
+
     <a href="#compose-modal" data-toggle="modal">
         <div class="compose-container--nav compose" ng-click="">
             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
         </div>
     </a>
 
+    <!-- nav-bar -->
+
     <div class="nav-bar pull-left">
         <div class="nav-container selected" ng-click="getMail('INBOX')">
             <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
-            Inbox
+            <div class="mailbox--name">Inbox</div>
             <span class="badge pull-right">{{unreadCounter}}</span>
         </div>
         <div class="nav-container" ng-click="getMail('IMPORTANT')">
             <div class="title-only">
-                Important
+                <div class="mailbox--name">Important</div>
             </div>
         </div>
         <div class="nav-container" ng-click="getMail('WORK')">
             <div class="title-only">
-                Work
+                <div class="mailbox--name">Work</div>
             </div>
         </div>
         <div class="nav-container" ng-click="getMail('NOTES')">
             <div class="title-only">
-                Notes
+                <div class="mailbox--name">Notes</div>
             </div>
         </div>
         <div class="nav-container" ng-click="getMail('SPAM')">
             <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-            Spam
+            <div class="mailbox--name">Spam</div>
             <span class="badge pull-right">99</span>
         </div>
         <div class="nav-container" ng-click="getMail('STARRED')">
-            <span class="glyphicon glyphicon-heart red-glyph" aria-hidden="true"></span>
-            Favorites
+            <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+            <div class="mailbox--name">Favorites</div>
         </div>
 
     </div>
@@ -84,9 +96,13 @@
         </svg>
     </div>
 
+    <!-- mail-container -->
+
     <div class="mail-container">
 
-        <div class="mail-container--mailbox" ng-repeat="mail in mails track by mail.messageId | filter:searchText" message-id="mail.messageId">
+        <!-- mails -->
+
+        <div class="mail-container--mailbox" ng-repeat="mail in mails | filter:searchText track by mail.messageId" message-id="mail.messageId">
             <mail-list-item class="email" message-id="mail.messageId">
 
                 <div class="message-link mailbox--mail" data-toggle="modal" id="{{mail.index}}" messageId="{{mail.id}}">
@@ -120,6 +136,8 @@
 
         </div>
 
+        <!-- compose modal -->
+
         <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -151,6 +169,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- mail-content -->
 
         <div class="mail-content">
             <div class="email">

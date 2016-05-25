@@ -67,11 +67,11 @@ angular.module('meanmail').directive('mailListItem', function() {
             $(this.panes[2]).addClass('grey');
             if (percent > 20) {
                 $(this.panes[0]).removeClass('grey');
-                $(this.panes[0]).addClass('red');
+                $(this.panes[0]).addClass('blue');
             }
             if (percent < -20) {
                 $(this.panes[2]).removeClass('grey');
-                $(this.panes[2]).addClass('green');
+                $(this.panes[2]).addClass('red');
             }
             if (ev.type == 'panend' || ev.type == 'pancancel') {
                 if (Math.abs(percent) > 20 && ev.type == 'panend') {
