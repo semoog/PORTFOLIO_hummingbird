@@ -194,12 +194,12 @@ refresh.use(strategy);
 
 function ensureAuthenticated(req, res, next) {
     console.log("checking auth...");
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && req.user.accessToken !== undefined) {
         console.log("authentication good");
         return next();
     } else {
         console.log("bad auth. redirecting to login?");
-        res.redirect('/#/login'); // NOT!
+        res.redirect('/login'); // NOT!
     }
 }
 
