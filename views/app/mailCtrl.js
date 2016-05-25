@@ -330,6 +330,8 @@ angular.module("meanmail").controller("mailCtrl", function($scope, $http, user, 
 
     $scope.getMail('INBOX');
 
+    $(".favorited").hide();
+
 
     const animationDelay = 600;
 
