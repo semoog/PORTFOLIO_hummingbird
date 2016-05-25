@@ -32,60 +32,60 @@ google.options({
 }); // set auth as a global default
 
 // Initialize gcloud
-var gcloud = require('gcloud')({
-    projectId: keys.GOOGLE_CLOUD_ID,
-    keyFilename: 'keyfile.json'
-});
-
-// Get a reference to the pubsub component
-var pubsub = gcloud.pubsub();
-
-// Create init topic for gcloud notifications
-function createTopic(topicName, callback) {
-    var topic = pubsub.topic(topicName);
-
-    // Get the topic if it exists. Create it if it does not exist.
-    topic.get({
-        autoCreate: true
-    }, function(err, topic, apiResponse) {
-        if (err) {
-            return callback(err);
-        }
-
-        // Created the topic
-        console.log('Created topic ' + topicName);
-        callback(null, topic, apiResponse);
-    });
-}
-
-createTopic('pull-topic', function(e) {
-    console.log("topic: ", e);
-});
-
-// Create subscription
-function subscribe(topicName, subscriptionName, callback) {
-    var options = {
-        reuseExisting: true
-    };
-    pubsub.subscribe(
-        topicName,
-        subscriptionName,
-        options,
-        function(err, subscription, apiResponse) {
-            if (err) {
-                return callback(err);
-            }
-
-            // Got the subscription
-            console.log('Subscribed to ' + topicName);
-            callback(null, subscription, apiResponse);
-        }
-    );
-}
-
-subscribe('pull-topic', 'pull-subscription', function(e) {
-    console.log("subscription: ", e);
-});
+// var gcloud = require('gcloud')({
+//     projectId: keys.GOOGLE_CLOUD_ID,
+//     keyFilename: 'keyfile.json'
+// });
+//
+// // Get a reference to the pubsub component
+// var pubsub = gcloud.pubsub();
+//
+// // Create init topic for gcloud notifications
+// function createTopic(topicName, callback) {
+//     var topic = pubsub.topic(topicName);
+//
+//     // Get the topic if it exists. Create it if it does not exist.
+//     topic.get({
+//         autoCreate: true
+//     }, function(err, topic, apiResponse) {
+//         if (err) {
+//             return callback(err);
+//         }
+//
+//         // Created the topic
+//         console.log('Created topic ' + topicName);
+//         callback(null, topic, apiResponse);
+//     });
+// }
+//
+// createTopic('pull-topic', function(e) {
+//     console.log("topic: ", e);
+// });
+//
+// // Create subscription
+// function subscribe(topicName, subscriptionName, callback) {
+//     var options = {
+//         reuseExisting: true
+//     };
+//     pubsub.subscribe(
+//         topicName,
+//         subscriptionName,
+//         options,
+//         function(err, subscription, apiResponse) {
+//             if (err) {
+//                 return callback(err);
+//             }
+//
+//             // Got the subscription
+//             console.log('Subscribed to ' + topicName);
+//             callback(null, subscription, apiResponse);
+//         }
+//     );
+// }
+//
+// subscribe('pull-topic', 'pull-subscription', function(e) {
+//     console.log("subscription: ", e);
+// });
 
 // express init
 
@@ -133,7 +133,7 @@ const User = mongoose.model("User", userSchema);
 // cors init
 
 const corsOptions = {
-    origin: 'http://localhost:80'
+    origin: 'http://localhost:3000'
 };
 
 app.use(cors(corsOptions));

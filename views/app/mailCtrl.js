@@ -219,7 +219,7 @@ angular.module("meanmail").controller("mailCtrl", function($scope, $http, user, 
         });
     };
 
-    $scope.watchMail();
+    // $scope.watchMail();
 
     // trash mail
 
@@ -298,23 +298,31 @@ angular.module("meanmail").controller("mailCtrl", function($scope, $http, user, 
 
     // scroll-helper
 
-    var s = $("#scroll");
-    var r = console.log("DONE");
-    var t = new TimelineMax({
-        repeat: -1,
-        repeatDelay: 0.9,
-        onComplete: r,
-        ease: Expo.easeIn
-    });
-    t.to(s, 0.3, {
-        y: 10
-    }).to(s, 0.2, {
-        opacity: 0
-    }, 0.2).to(s, 0.5, {
-        y: 0
-    }).to(s, 0.3, {
-        opacity: 1
-    });
+    // var s = $("#scroll");
+    // var r = console.log("DONE");
+    // var t = new TimelineMax({
+    //     repeat: -1,
+    //     repeatDelay: 0.9,
+    //     onComplete: r,
+    //     ease: Expo.easeIn
+    // });
+    // t.to(s, 0.3, {
+    //     y: 10
+    // }).to(s, 0.2, {
+    //     opacity: 0
+    // }, 0.2).to(s, 0.5, {
+    //     y: 0
+    // }).to(s, 0.3, {
+    //     opacity: 1
+    // });
+
+    // tech showcase
+
+    $scope.showTech = () => {
+      $('.notouch').fadeToggle('fast', function() {
+        $('.notouch').toggleClass('hidden');
+      });
+    };
 
     // hotkeys
 
@@ -323,6 +331,14 @@ angular.module("meanmail").controller("mailCtrl", function($scope, $http, user, 
         description: 'Refresh Inbox',
         callback: function() {
             $scope.getMail('INBOX');
+        }
+    });
+
+    hotkeys.add({
+        combo: 't',
+        description: 'Technologies Used',
+        callback: function() {
+            $scope.showTech();
         }
     });
 
