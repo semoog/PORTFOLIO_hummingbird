@@ -8,7 +8,7 @@ angular.module("meanmail").controller("masterCtrl", function($scope, $http, mast
 
     $('.login').on('submit', function(e) {
         e.preventDefault();
-        openedWindow = window.open("http://159.203.255.205:80/auth/google", "Hummingbird Auth", "width=500px, height=500px, top=400, left=600");
+        openedWindow = window.open("http://hummingbird.email:80/auth/google", "Hummingbird Auth", "width=500px, height=500px, top=400, left=600");
         var $this = $(this),
             $btnstate = $this.find('button > .state');
         $this.addClass('loading');
@@ -48,7 +48,7 @@ angular.module("meanmail").controller("masterCtrl", function($scope, $http, mast
 
     $scope.login = () => {
 
-        return window.open("http://159.203.255.205:80/auth/google", "Hummingbird Auth");
+        return window.open("http://hummingbird.email:80/auth/google", "Hummingbird Auth");
 
     };
 
