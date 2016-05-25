@@ -103,7 +103,7 @@
       opacity: 1;
       top: 40%; }
   .loginContainer .login.ok button {
-    background-color: #38C128; }
+    background-color: #38C229; }
     .loginContainer .login.ok button .spinner {
       border-radius: 0;
       border-top-color: transparent;
@@ -195,28 +195,50 @@
 
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.5) !important;
-  border-radius: 0px; }
+  border-radius: 0; }
 
 input[type=text] {
   border-radius: 5px; }
 
 .notouch {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
-  background: -o-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
-  z-index: 1; }
+  top: 60px;
+  left: 15vw;
+  width: 30vw;
+  height: 89.6vh;
+  background: -webkit-linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.8));
+  background: -o-linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.8));
+  background: linear-gradient(rgba(255, 255, 255, 0.6), white);
+  z-index: 3;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-radius: 10px; }
+  .notouch .showcase-img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-25%);
+    padding: 20px; }
+    .notouch .showcase-img img {
+      margin-top: 50px;
+      margin-bottom: 50px;
+      display: block;
+      margin-left: 20px;
+      max-width: 100px; }
 
 .blur {
-  -webkit-filter: blur(3px);
-  -moz-filter: blur(3px);
-  -o-filter: blur(3px);
-  -ms-filter: blur(3px);
-  filter: blur(3px);
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
   z-index: 10; }
 
 .app-container {
@@ -225,7 +247,8 @@ input[type=text] {
   left: 0;
   width: 100vw;
   height: 100vh;
-  overflow: hidden; }
+  overflow: hidden;
+  overflow-x: hidden; }
   .app-container body {
     color: #fff;
     font-family: "Open Sans", helvetica, arial, sans-serif;
@@ -247,7 +270,7 @@ input[type=text] {
     bottom: 0; }
   .app-container .nav-bar {
     height: 90vh;
-    width: 15.1vw;
+    width: 15vw;
     z-index: 1;
     background: #fff; }
   .app-container .side-bar {
@@ -633,172 +656,96 @@ input[type=text] {
     top: 70vh;
     left: 18.5vw; }
   .app-container .load {
-    width: 20px;
-    height: 20px;
-    transform: rotate(45deg);
-    animation: load-ani1 3s ease-in-out infinite;
     position: absolute;
-    left: 29vw;
-    top: 50vh;
+    top: 50%;
+    left: 29.5vw;
+    transform: translate(-50%, -50%);
     z-index: 2; }
-  .app-container .load i {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    border-radius: 100%;
-    position: absolute; }
-  .app-container .load i:nth-child(1) {
-    background: #F64545;
-    transform: translate(0, 35px);
-    animation: load-ani2 3s ease-in-out infinite; }
-  .app-container .load i:nth-child(2) {
-    background: #38C128;
-    transform: rotate(90deg) translate(0, 35px);
-    animation: load-ani3 3s ease-in-out infinite; }
-  .app-container .load i:nth-child(3) {
-    background: #4FA6CF;
-    transform: rotate(180deg) translate(0, 35px);
-    animation: load-ani4 3s ease-in-out infinite; }
-  .app-container .load i:nth-child(4) {
-    background: #FCC14A;
-    transform: rotate(270deg) translate(0, 35px);
-    animation: load-ani5 3s ease-in-out infinite; }
+  .app-container .load > div {
+    float: left;
+    z-index: 2;
+    margin: 5px;
+    height: 50px;
+    width: 5px;
+    background: #1D1F20;
+    animation: load 1.4s infinite ease-in-out; }
+  .app-container .load .load1 {
+    animation-delay: -1.3s; }
+  .app-container .load .load2 {
+    animation-delay: -1.2s; }
+  .app-container .load .load3 {
+    animation-delay: -1.1s; }
+  .app-container .load .load4 {
+    animation-delay: -1.0s; }
 
-@keyframes load-ani1 {
-  25% {
-    transform: rotate(135deg); }
+@keyframes load {
+  0%,
+  100%,
   50% {
-    transform: rotate(225deg); }
-  75% {
-    transform: rotate(315deg); }
-  100% {
-    transform: rotate(405deg); } }
-
-@keyframes load-ani2 {
-  100%,
-  17.5%,
-  25%,
-  42.5%,
-  50%,
-  67.5%,
-  75%,
-  92.5% {
-    transform: translate(0, 35px); }
-  12.5%,
-  37.5%,
-  62.5%,
-  87.5% {
-    transform: translate(0, 15px); } }
-
-@keyframes load-ani3 {
-  100%,
-  17.5%,
-  25%,
-  42.5%,
-  50%,
-  67.5%,
-  75%,
-  92.5% {
-    transform: rotate(90deg) translate(0, 35px); }
-  12.5%,
-  37.5%,
-  62.5%,
-  87.5% {
-    transform: rotate(90deg) translate(0, 15px); } }
-
-@keyframes load-ani4 {
-  100%,
-  17.5%,
-  25%,
-  42.5%,
-  50%,
-  67.5%,
-  75%,
-  92.5% {
-    transform: rotate(180deg) translate(0, 35px); }
-  12.5%,
-  37.5%,
-  62.5%,
-  87.5% {
-    transform: rotate(180deg) translate(0, 15px); } }
-
-@keyframes load-ani5 {
-  100%,
-  17.5%,
-  25%,
-  42.5%,
-  50%,
-  67.5%,
-  75%,
-  92.5% {
-    transform: rotate(270deg) translate(0, 35px); }
-  12.5%,
-  37.5%,
-  62.5%,
-  87.5% {
-    transform: rotate(270deg) translate(0, 15px); } }
-
-.email {
-  height: 100vh;
-  background: #fff;
-  color: #393E3F; }
-  .email .mail-header {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    padding: 10px;
-    border-bottom: 1px solid #DFDFDF; }
-  .email .mail-title {
-    margin: 0;
-    line-height: 1.42857143; }
-  .email .mail-body {
-    position: relative;
-    padding: 0; }
-  .email .red {
-    background: #F64545; }
-  .email .blue {
-    background: #4FA6CF; }
-  .email .red-icon {
-    color: #F64545;
-    background: #F64545;
-    background-color: #F64545; }
-  .email .grey {
-    background: #454545; }
-  .email .clear {
-    clear: both; }
-  .email .panes.wrapper {
-    background: #fff; }
-  .email .panes {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: relative; }
-  .email .pane {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition: background-color 0.4s ease; }
-  .email .pane-email {
+    transform: scaleY(0.3); }
+  25% {
+    transform: scaleY(1); } }
+  .app-container .email {
+    height: 80vh;
     background: #fff;
-    padding: 15px;
-    border-radius: 5px;
-    border-bottom: 1px solid #DFDFDF; }
-  .email .pane-email:hover {
-    background: #EFEFEF; }
-  .email .pane-email.selected {
-    background: #EFEFEF;
-    border: 1px solid #D0D0D0; }
-  .email .pane-action {
-    text-align: center;
-    font: bold 60px/250px 'Open Sans', Helvetica, Arial, sans-serif;
-    color: #fff; }
-  .email .panes.animate > .pane {
-    transition: all 0.3s;
-    -webkit-transition: all 0.3s; }
-  .email .favorited {
-    font: 30px 'Open Sans', Helvetica, Arial, sans-serif;
-    position: absolute;
-    margin-left: 100px;
-    transform: translateX(-50%); }
+    color: #393E3F; }
+    .app-container .email .mail-header {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 10px;
+      z-index: 99; }
+    .app-container .email .mail-title {
+      margin: 0;
+      line-height: 1.42857143; }
+    .app-container .email .mail-body {
+      position: relative;
+      padding: 0; }
+    .app-container .email .red {
+      background: #F64545; }
+    .app-container .email .blue {
+      background: #4FA6CF; }
+    .app-container .email .red-icon {
+      color: #F64545;
+      background: #F64545;
+      background-color: #F64545; }
+    .app-container .email .grey {
+      background: #454545; }
+    .app-container .email .clear {
+      clear: both; }
+    .app-container .email .panes.wrapper {
+      background: #fff; }
+    .app-container .email .panes {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative; }
+    .app-container .email .pane {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: background-color 0.4s ease; }
+    .app-container .email .pane-email {
+      background: #fff;
+      padding: 15px;
+      border-radius: 5px;
+      border-bottom: 1px solid #DFDFDF; }
+    .app-container .email .pane-email:hover {
+      background: #EFEFEF; }
+    .app-container .email .pane-email.selected {
+      background: #EFEFEF;
+      border: 1px solid #D0D0D0; }
+    .app-container .email .pane-action {
+      text-align: center;
+      font: bold 60px/250px 'Open Sans', Helvetica, Arial, sans-serif;
+      color: #fff; }
+    .app-container .email .panes.animate > .pane {
+      transition: all 0.3s;
+      -webkit-transition: all 0.3s; }
+    .app-container .email .favorited {
+      font: 30px 'Open Sans', Helvetica, Arial, sans-serif;
+      position: absolute;
+      margin-left: 100px;
+      transform: translateX(-50%); }
