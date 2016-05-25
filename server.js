@@ -133,7 +133,7 @@ const User = mongoose.model("User", userSchema);
 // cors init
 
 const corsOptions = {
-    origin: 'http://localhost:3000'
+    origin: 'http://localhost:80'
 };
 
 app.use(cors(corsOptions));
