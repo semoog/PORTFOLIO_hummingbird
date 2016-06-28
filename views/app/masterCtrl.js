@@ -1,55 +1,53 @@
 /* jshint esversion: 6 */
 
-angular.module("meanmail").controller("masterCtrl", function($scope, $http, masterService, $state) {
+angular.module( "meanmail" ).controller( "masterCtrl", function ( $scope, $http, masterService, $state ) {
 
-    var openedWindow;
+	var openedWindow;
 
-    var auth;
+	var auth;
 
-    $('.login').on('submit', function(e) {
-        e.preventDefault();
-        openedWindow = window.open("http://hummingbird.email:80/auth/google", "Hummingbird Auth", "width=500px, height=500px, top=400, left=600");
-        var $this = $(this),
-            $btnstate = $this.find('button > .state');
-        $this.addClass('loading');
-        $btnstate.html('Authenticating');
+	$( '.login' ).on( 'submit', function ( e ) {
+		e.preventDefault();
+		openedWindow = window.open( "http://hummingbird.email:80/auth/google", "Hummingbird Auth", "width=500px, height=500px, top=400, left=600" );
+		var $this = $( this ),
+			$btnstate = $this.find( 'button > .state' );
+		$this.addClass( 'loading' );
+		$btnstate.html( 'Authenticating' );
 
-        var refreshAuth = setInterval(function() {
-            masterService.checkAuth().then(function(data) {
-                console.log("data", data);
-                if (data.status) {
-                    auth = data.status;
-                } else {
-                    auth = data;
-                }
-            });
-            if (auth === 200) { // IF AUTH WHAT?
-                openedWindow.close();
-                console.log("good status! yay");
-                $this.addClass('ok');
-                $btnstate.html('Welcome back!');
-                setTimeout(function() {
+		var refreshAuth = setInterval( function () {
+			masterService.checkAuth().then( function ( data ) {
+				if ( data.status ) {
+					auth = data.status;
+				} else {
+					auth = data;
+				}
+			} );
+			if ( auth === 200 ) { // IF AUTH WHAT?
+				openedWindow.close();
+				$this.addClass( 'ok' );
+				$btnstate.html( 'Welcome back!' );
+				setTimeout( function () {
 
-                    $('.background').addClass('bg-white');
-                    $('.login').fadeOut(400, function() {
-                        $state.go('mail');
-                    });
+					$( '.background' ).addClass( 'bg-white' );
+					$( '.login' ).fadeOut( 400, function () {
+						$state.go( 'mail' );
+					} );
 
-                }, 2000);
-                setTimeout(function() {
-                    $btnstate.html('Log in');
-                    $this.removeClass('ok loading');
-                }, 4000);
-                clearInterval(refreshAuth);
-            }
-        }, 1000);
+				}, 2000 );
+				setTimeout( function () {
+					$btnstate.html( 'Log in' );
+					$this.removeClass( 'ok loading' );
+				}, 4000 );
+				clearInterval( refreshAuth );
+			}
+		}, 1000 );
 
-    });
+	} );
 
-    $scope.login = () => {
+	$scope.login = () => {
 
-        return window.open("http://hummingbird.email:80/auth/google", "Hummingbird Auth");
+		return window.open( "http://hummingbird.email:80/auth/google", "Hummingbird Auth" );
 
-    };
+	};
 
-});
+} );
