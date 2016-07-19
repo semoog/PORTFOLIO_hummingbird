@@ -12,7 +12,7 @@ import async from 'asyncawait/async';
 import await from 'asyncawait/await';
 import cors from 'cors';
 import keys from './keys';
-import mail from './mailController';
+import mail from './mailService';
 
 // mongoose init
 

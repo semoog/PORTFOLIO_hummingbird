@@ -1,6 +1,4 @@
-/* jshint esversion: 6 */
-
-angular.module( 'meanmail', [ 'ui.bootstrap', 'ui.router', 'cfp.hotkeys', 'ngAnimate' ] )
+angular.module( 'hummingbird', [ 'ui.bootstrap', 'ui.router', 'cfp.hotkeys', 'ngAnimate' ] )
 	.config( function ( $stateProvider, $urlRouterProvider ) {
 
 		$stateProvider

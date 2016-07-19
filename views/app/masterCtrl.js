@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
 
-angular.module( "meanmail" ).controller( "masterCtrl", function ( $scope, $http, masterService, $state ) {
+angular.module( 'hummingbird' ).controller( "masterCtrl", function ( $scope, $http, masterService, $state ) {
 
 	var openedWindow;
 
@@ -8,7 +8,7 @@ angular.module( "meanmail" ).controller( "masterCtrl", function ( $scope, $http,
 
 	$( '.login' ).on( 'submit', function ( e ) {
 		e.preventDefault();
-		openedWindow = window.open( "http://hummingbird.email:80/auth/google", "Hummingbird Auth", "width=500px, height=500px, top=400, left=600" );
+		openedWindow = window.open( "http://localhost:3000/auth/google", "Hummingbird Auth", "width=500px, height=500px, top=400, left=600" );
 		var $this = $( this ),
 			$btnstate = $this.find( 'button > .state' );
 		$this.addClass( 'loading' );
@@ -46,7 +46,7 @@ angular.module( "meanmail" ).controller( "masterCtrl", function ( $scope, $http,
 
 	$scope.login = () => {
 
-		return window.open( "http://hummingbird.email:80/auth/google", "Hummingbird Auth" );
+		return window.open( "http://localhost:3000/auth/google", "Hummingbird Auth" );
 
 	};
 

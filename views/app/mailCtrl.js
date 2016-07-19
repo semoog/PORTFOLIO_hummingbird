@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
 
-angular.module( "meanmail" ).controller( "mailCtrl", function ( $scope, $http, user, $state, hotkeys ) {
+angular.module( 'hummingbird' ).controller( "mailCtrl", function ( $scope, $http, user, $state, hotkeys ) {
 
 	// vars
 
@@ -16,45 +16,6 @@ angular.module( "meanmail" ).controller( "mailCtrl", function ( $scope, $http, u
 
 	$scope.mails = {};
 	$scope.mailbox_title = 'inbox';
-
-	var scrolled = false;
-
-	// jquery init
-
-	$( ".scroll_container" ).hide();
-
-	$( document ).on( 'click', '.icon-container--nav', function () {
-		$( ".icon-container--nav" ).removeClass( "selected" );
-		$( this ).addClass( "selected" );
-	} );
-	$( document ).on( 'click', '.compose-container--nav', function () {
-		$( this ).addClass( "selected" );
-		setTimeout( function () {
-			$( this ).removeClass( "selected" );
-		}, 500 );
-	} );
-	$( document ).on( 'click', '.label-container--nav', function () {
-		$( ".label-container--nav" ).removeClass( "selected" );
-		$( this ).addClass( "selected" );
-	} );
-	$( document ).on( 'click', '.pane-email', function () {
-		$( ".pane-email" ).removeClass( "selected" );
-		$( this ).addClass( "selected" );
-	} );
-	$( document ).on( 'click', '.nav-container', function () {
-		$( ".nav-container" ).removeClass( "selected" );
-		$( this ).addClass( "selected" );
-	} );
-
-	// scroll-tip
-
-	$( ".mail-container" ).scroll( function () {
-		scrolled = true;
-	} );
-
-	$( ".mail-container" ).scroll( function () {
-		$( ".scroll_container" ).fadeOut( 'slow' );
-	} );
 
 	// tidy compose modal after send
 

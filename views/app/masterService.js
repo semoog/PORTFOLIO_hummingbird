@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
 
-angular.module( 'meanmail' ).service( 'masterService', function ( $http ) {
+angular.module( 'hummingbird' ).service( 'masterService', function ( $http ) {
 
 	this.getUser = function () {
 		return $http.get( '/getUser' ).then( function ( response ) {
@@ -15,5 +15,7 @@ angular.module( 'meanmail' ).service( 'masterService', function ( $http ) {
 			return false;
 		} );
 	};
+
+
 
 } );

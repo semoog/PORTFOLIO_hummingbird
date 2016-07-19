@@ -1,4 +1,4 @@
-angular.module( 'meanmail' ).directive( 'mailListItem', function () {
+angular.module( 'hummingbird' ).directive( 'mailListItem', function () {
 
 	function mailItemController( $element, $scope ) {
 		this.$scope = $scope;
